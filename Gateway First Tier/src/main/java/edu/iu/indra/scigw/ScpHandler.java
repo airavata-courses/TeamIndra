@@ -8,15 +8,21 @@ import java.io.OutputStream;
 
 import com.jcraft.jsch.Channel;
 import com.jcraft.jsch.ChannelExec;
+import com.jcraft.jsch.Session;
 
 public class ScpHandler
 {
-	public void copyJobFilesToHost(Channel channel, String destFile, String sourceFile) throws Exception
+	public void copyJobFilesToHost(String destFile, String sourceFile) throws Exception
 	{
 		boolean ptimestamp = true;
 
 		FileInputStream fis = null;
 
+		Connector connector = Connector.getInstance();
+
+		Session session = connector.getSession();
+
+		Channel channel = session.openChannel("exec");
 		// exec 'scp -t rfile' remotely
 		String command = "scp " + (ptimestamp ? "-p" : "") + " -t " + destFile;
 		((ChannelExec) channel).setCommand(command);
@@ -87,7 +93,7 @@ public class ScpHandler
 			System.exit(0);
 		}
 		out.close();
-
+		channel.disconnect();
 	}
 
 	static int checkAck(InputStream in) throws IOException

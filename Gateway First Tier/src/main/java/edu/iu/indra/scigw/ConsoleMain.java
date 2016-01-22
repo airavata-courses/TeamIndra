@@ -1,15 +1,14 @@
 package edu.iu.indra.scigw;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.Scanner;
 
 import org.apache.log4j.Logger;
 
-import com.jcraft.jsch.Channel;
-import com.jcraft.jsch.JSchException;
-import com.jcraft.jsch.Session;
-
 import edu.iu.indra.scigw.input.UserInput;
+import edu.iu.indra.scigw.util.CommandHelper;
+import edu.iu.indra.scigw.util.Constants;
 
 public class ConsoleMain
 {
@@ -35,25 +34,17 @@ public class ConsoleMain
 		main.placeJob(userInput);
 	}
 
-	public Channel getExecToHost(Session session) throws JSchException
-	{
-		return session.openChannel("exec");
-	}
-
 	public void placeJob(UserInput userInput)
 	{
 		Scanner scanner = null;
-		Session session = null;
-		Channel channel = null;
+		Connector connector = null;
+
 		try
 		{
-			Connector connector = new Connector();
-			session = connector.getSessionToHost(userInput);
-
-			channel = getExecToHost(session);
+			connector = Connector.createInstance(userInput);
 
 			// get job file tar from user and the command for scheduling
-			System.out.println("Please provide path of schdule job tar file");
+			logger.info("Please provide path of schdule job tar file");
 
 			scanner = new Scanner(System.in);
 			String jobFile = scanner.nextLine();
@@ -66,25 +57,42 @@ public class ConsoleMain
 				System.exit(-1);
 			}
 
-			System.out.println("Thank you! copying files to server ... ");
+			logger.info("Thank you! copying files to server ... ");
 
-			String destFile = "//N//dc2//scratch//" + userInput.getUsername() + "//job.tar";
-			
+			String destFile = Constants.scratch_dir_path + userInput.getUsername() + "//"
+					+ Constants.default_filename;
+
 			ScpHandler scpHandler = new ScpHandler();
-			
-			scpHandler.copyJobFilesToHost(channel, destFile, jobFile);
-			
+
+			scpHandler.copyJobFilesToHost(destFile, jobFile);
+
+			logger.info("File copied to server, unzipping the file");
+
+			String commands[] = {
+					CommandHelper.getChangeDirectoryCommand(
+							Constants.scratch_dir_path + userInput.getUsername()),
+					CommandHelper.getUntarCommand(Constants.default_filename) };
+
+			logger.info("File extracted, following files exists in directory");
+
+			connector.executeCommands(commands);
+
+			connector.disconnect();
+
 		} catch (Exception e)
 		{
 			logger.error("Exception in connecting to host", e);
 		} finally
 		{
-			channel.disconnect();
-			session.disconnect();
-
-			if (scanner != null)
+			try
 			{
-				scanner.close();
+				connector.disconnect();
+				if (scanner != null)
+				{
+					scanner.close();
+				}
+			} catch (IOException e)
+			{
 			}
 		}
 	}
