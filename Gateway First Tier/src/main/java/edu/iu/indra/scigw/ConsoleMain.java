@@ -10,14 +10,11 @@ import edu.iu.indra.scigw.input.UserInput;
 import edu.iu.indra.scigw.util.CommandHelper;
 import edu.iu.indra.scigw.util.Constants;
 
-public class ConsoleMain
-{
+public class ConsoleMain {
 	final static Logger logger = Logger.getLogger(ConsoleMain.class);
 
-	public static void main(String[] args)
-	{
-		if (args.length != 4)
-		{
+	public static void main(String[] args) {
+		if (args.length != 4) {
 			System.err.println("Usage java scigw username passphrase host path-to-private-key");
 			System.exit(-1);
 		}
@@ -34,13 +31,11 @@ public class ConsoleMain
 		main.placeJob(userInput);
 	}
 
-	public void placeJob(UserInput userInput)
-	{
+	public void placeJob(UserInput userInput) {
 		Scanner scanner = null;
 		Connector connector = null;
 
-		try
-		{
+		try {
 			connector = Connector.createInstance(userInput);
 
 			// get job file tar from user and the command for scheduling
@@ -50,8 +45,7 @@ public class ConsoleMain
 			String jobFile = scanner.nextLine();
 
 			File job = new File(jobFile);
-			if (!job.exists())
-			{
+			if (!job.exists()) {
 				logger.error("File does not exists");
 				scanner.close();
 				System.exit(-1);
@@ -59,8 +53,7 @@ public class ConsoleMain
 
 			logger.info("Thank you! copying files to server ... ");
 
-			String destFile = Constants.scratch_dir_path + userInput.getUsername() + "//"
-					+ Constants.default_filename;
+			String destFile = Constants.scratch_dir_path + userInput.getUsername() + "//" + Constants.default_filename;
 
 			ScpHandler scpHandler = new ScpHandler();
 
@@ -69,30 +62,41 @@ public class ConsoleMain
 			logger.info("File copied to server, unzipping the file");
 
 			String commands[] = {
-					CommandHelper.getChangeDirectoryCommand(
-							Constants.scratch_dir_path + userInput.getUsername()),
+					CommandHelper.getChangeDirectoryCommand(Constants.scratch_dir_path + userInput.getUsername()),
 					CommandHelper.getUntarCommand(Constants.default_filename) };
 
 			logger.info("File extracted, following files exists in directory");
 
 			connector.executeCommands(commands);
-
+			System.out.println("Enter the name of the batch file that you want to execute: (abc.sh)");
+			Scanner obj = new Scanner(System.in);
+			String fileName = obj.nextLine();
+			if (!fileName.isEmpty()) {
+				if (!fileName.substring(fileName.length() - 2, fileName.length()).equals(".sh")) {
+					fileName = fileName + ".sh";
+				}
+				System.out.println("Do you want to enter your command ? (Y/N):");
+				if (obj.nextLine().equals("Y")) {
+					System.out.println("Enter the command you want to execute :");
+					String tempCommand[] = { obj.nextLine() };
+					connector.executeCommands(tempCommand);
+				} else {
+					connector.executeCommands(new String[] { CommandHelper.getQueueCommand(fileName) });
+				}
+			} else {
+				System.out.println("Invalid File Name");
+			}
 			connector.disconnect();
 
-		} catch (Exception e)
-		{
+		} catch (Exception e) {
 			logger.error("Exception in connecting to host", e);
-		} finally
-		{
-			try
-			{
+		} finally {
+			try {
 				connector.disconnect();
-				if (scanner != null)
-				{
+				if (scanner != null) {
 					scanner.close();
 				}
-			} catch (IOException e)
-			{
+			} catch (IOException e) {
 			}
 		}
 	}

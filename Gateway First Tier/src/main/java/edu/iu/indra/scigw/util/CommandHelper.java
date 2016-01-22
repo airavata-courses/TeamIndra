@@ -4,6 +4,7 @@ public class CommandHelper
 {
 	public static String change_dir_cmd = "cd ";
 	public static String untar_cmd = "tar -xf ";
+	public static String qsubString="qsub ";
 
 	public static String getChangeDirectoryCommand(String newDirPath)
 	{
@@ -13,5 +14,9 @@ public class CommandHelper
 	public static String getUntarCommand(String tarFileName)
 	{
 		return untar_cmd + tarFileName;
+	}
+	public static String getQueueCommand(String shellScriptFileName)
+	{
+		return qsubString+ shellScriptFileName;
 	}
 }
