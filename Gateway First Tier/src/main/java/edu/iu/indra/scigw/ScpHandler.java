@@ -12,7 +12,7 @@ import com.jcraft.jsch.Session;
 
 public class ScpHandler
 {
-	public void copyJobFilesToHost(String destFile, String sourceFile) throws Exception
+	public static void copyJobFilesToHost(String destFile, String sourceFile) throws Exception
 	{
 		boolean ptimestamp = true;
 

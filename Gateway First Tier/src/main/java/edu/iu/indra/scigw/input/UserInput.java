@@ -95,5 +95,4 @@ public class UserInput implements UserInfo
 	{
 		this.passphrase = passphrase;
 	}
-
 }

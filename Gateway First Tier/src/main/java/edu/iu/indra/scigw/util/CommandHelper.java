@@ -4,7 +4,11 @@ public class CommandHelper
 {
 	public static String change_dir_cmd = "cd ";
 	public static String untar_cmd = "tar -xf ";
-	public static String qsubString="qsub ";
+
+	public static String getBashScriptStart()
+	{
+		return "#!/bin/bash";
+	}
 
 	public static String getChangeDirectoryCommand(String newDirPath)
 	{
@@ -15,8 +19,29 @@ public class CommandHelper
 	{
 		return untar_cmd + tarFileName;
 	}
-	public static String getQueueCommand(String shellScriptFileName)
+
+	public static String getNodeCountCommand(int nodeCount, int coreCount)
 	{
-		return qsubString+ shellScriptFileName;
+		return "#PBS -l nodes=" + nodeCount + ":ppn=" + coreCount;
+	}
+
+	public static String getEmailCommand()
+	{
+		return "#PBS -m abe";
+	}
+
+	public static String getAddEmailCommand(String email)
+	{
+		return "#PBS -M " + email;
+	}
+
+	public static String getQueueNameCommand(String qname)
+	{
+		return "#PBS -q " + qname;
+	}
+
+	public static String getJobNameCommand(String name)
+	{
+		return "#PBS -N " + name;
 	}
 }

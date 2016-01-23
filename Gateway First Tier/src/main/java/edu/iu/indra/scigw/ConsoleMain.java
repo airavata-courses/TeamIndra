@@ -1,20 +1,25 @@
 package edu.iu.indra.scigw;
 
-import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 import org.apache.log4j.Logger;
 
+import edu.iu.indra.scigw.config.ApplicationHandler;
+import edu.iu.indra.scigw.config.SortingApplicationHandler;
 import edu.iu.indra.scigw.input.UserInput;
-import edu.iu.indra.scigw.util.CommandHelper;
 import edu.iu.indra.scigw.util.Constants;
 
-public class ConsoleMain {
+public class ConsoleMain
+{
 	final static Logger logger = Logger.getLogger(ConsoleMain.class);
 
-	public static void main(String[] args) {
-		if (args.length != 4) {
+	public static void main(String[] args)
+	{
+		if (args.length != 4)
+		{
 			System.err.println("Usage java scigw username passphrase host path-to-private-key");
 			System.exit(-1);
 		}
@@ -26,79 +31,65 @@ public class ConsoleMain {
 
 		// required parameters from user for authentication with server
 		final UserInput userInput = new UserInput(host, passphrase, keyFile, username);
+		Constants.setUserNane(username);
 
 		ConsoleMain main = new ConsoleMain();
 		main.placeJob(userInput);
 	}
 
-	public void placeJob(UserInput userInput) {
+	public void placeJob(UserInput userInput)
+	{
 		Scanner scanner = null;
 		Connector connector = null;
 
-		try {
+		try
+		{
 			connector = Connector.createInstance(userInput);
 
-			// get job file tar from user and the command for scheduling
-			logger.info("Please provide path of schdule job tar file");
+			// Ask user to select application to run
+			System.out.println("Please select application to run from following(Enter Id)\n");
 
+			// TODO: fetch from separate listing
+			List<String> applications = new ArrayList<String>();
+
+			applications.add("1. Hello MPI world");
+			applications.add("2. Large number Sorter");
+
+			for (String application : applications)
+			{
+				System.out.println(application);
+			}
+			
 			scanner = new Scanner(System.in);
-			String jobFile = scanner.nextLine();
 
-			File job = new File(jobFile);
-			if (!job.exists()) {
-				logger.error("File does not exists");
-				scanner.close();
-				System.exit(-1);
+			int pid = scanner.nextInt();
+
+			if (pid == 2)
+			{
+				ApplicationHandler applicationHandler = new SortingApplicationHandler();
+				applicationHandler.submitJob();
+			} else
+			{
+				System.out.println("Try something else :P ");
 			}
 
-			logger.info("Thank you! copying files to server ... ");
-
-			String destFile = Constants.scratch_dir_path + userInput.getUsername() + "//" + Constants.default_filename;
-
-			ScpHandler scpHandler = new ScpHandler();
-
-			scpHandler.copyJobFilesToHost(destFile, jobFile);
-
-			logger.info("File copied to server, unzipping the file");
-
-			String commands[] = {
-					CommandHelper.getChangeDirectoryCommand(Constants.scratch_dir_path + userInput.getUsername()),
-					CommandHelper.getUntarCommand(Constants.default_filename) };
-
-			logger.info("File extracted, following files exists in directory");
-
-			connector.executeCommands(commands);
-			System.out.println("Enter the name of the batch file that you want to execute: (abc.sh)");
-			Scanner obj = new Scanner(System.in);
-			String fileName = obj.nextLine();
-			if (!fileName.isEmpty()) {
-				if (!fileName.substring(fileName.length() - 2, fileName.length()).equals(".sh")) {
-					fileName = fileName + ".sh";
-				}
-				System.out.println("Do you want to enter your command ? (Y/N):");
-				if (obj.nextLine().equals("Y")) {
-					System.out.println("Enter the command you want to execute :");
-					String tempCommand[] = { obj.nextLine() };
-					connector.executeCommands(tempCommand);
-				} else {
-					connector.executeCommands(new String[] { CommandHelper.getQueueCommand(fileName) });
-				}
-			} else {
-				System.out.println("Invalid File Name");
-			}
 			connector.disconnect();
 
-		} catch (Exception e) {
+		} catch (Exception e)
+		{
 			logger.error("Exception in connecting to host", e);
-		} finally {
-			try {
+		} finally
+		{
+			try
+			{
 				connector.disconnect();
-				if (scanner != null) {
+				if (scanner != null)
+				{
 					scanner.close();
 				}
-			} catch (IOException e) {
+			} catch (IOException e)
+			{
 			}
 		}
 	}
-
 }

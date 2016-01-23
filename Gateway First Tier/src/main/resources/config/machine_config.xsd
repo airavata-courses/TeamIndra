@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema xmlns="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.example.org/config"
+	xmlns:tns="http://www.example.org/config" elementFormDefault="qualified">
+
+	<element name="machine" type="tns:machine"></element>
+
+	<complexType name="machine">
+		<sequence>
+			<element name="name" type="string" maxOccurs="1" minOccurs="1"></element>
+			<element name="application" type="tns:application" maxOccurs="unbounded"
+				minOccurs="1"></element>
+    	</sequence>
+	</complexType>
+
+    <complexType name="application">
+		<sequence>
+			<element name="name" type="string" maxOccurs="1" minOccurs="1"></element>
+    	</sequence>
+	</complexType>
+   
+</schema>

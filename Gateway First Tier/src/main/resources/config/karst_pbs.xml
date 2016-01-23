@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<tns:script xmlns:tns="http://www.example.org/pbs_config"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.example.org/pbs_config pbs_config.xsd ">
+	<tns:parameters>
+		<tns:name>Queue</tns:name>
+		<tns:command>q</tns:command>
+		<tns:desc>Queue in which job will be placed</tns:desc>
+		<tns:default>normal</tns:default>
+	</tns:parameters>
+	<tns:parameters>
+		<tns:name>Mail</tns:name>
+		<tns:command>m</tns:command>
+		<tns:desc>Send email on job status change</tns:desc>
+		<tns:default></tns:default>
+	</tns:parameters>
+	<tns:parameters>
+		<tns:name>Name</tns:name>
+		<tns:command>N</tns:command>
+		<tns:desc>Name of job</tns:desc>
+		<tns:default>test</tns:default>
+	</tns:parameters>
+	<tns:parameters>
+		<tns:name>Memory Limit</tns:name>
+		<tns:command>l mem</tns:command>
+		<tns:desc>Queue in which job will be placed</tns:desc>
+		<tns:default>normal</tns:default>
+	</tns:parameters>
+</tns:script>
