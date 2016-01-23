@@ -4,6 +4,7 @@ public class Constants
 {
 	public static String username;
 	public static final String scratch_dir_path = "//N//dc2//scratch//";
+	public static final String scratch_dir_path_wo_quotes = "/N/dc2/scratch/";
 	public static final String default_filename = "job.tar";
 	public static final String sortAppExe = "sortApp";
 
