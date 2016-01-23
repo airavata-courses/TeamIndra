@@ -1,0 +1,165 @@
+2016-01-22 02:36:06 INFO  ConsoleMain:42 - Please provide path of schdule job tar file
+2016-01-22 02:36:44 INFO  ConsoleMain:54 - Thank you! copying files to server ... 
+2016-01-22 02:36:44 INFO  ConsoleMain:62 - File copied to server, unzipping the file
+2016-01-22 02:36:44 INFO  ConsoleMain:68 - File extracted, following files exists in directory
+2016-01-22 02:38:40 INFO  ConsoleMain:42 - Please provide path of schdule job tar file
+2016-01-22 02:38:48 INFO  ConsoleMain:54 - Thank you! copying files to server ... 
+2016-01-22 02:38:49 INFO  ConsoleMain:62 - File copied to server, unzipping the file
+2016-01-22 02:38:49 INFO  ConsoleMain:68 - File extracted, following files exists in directory
+2016-01-23 00:18:21 INFO  ConsoleMain:42 - Please provide path of schdule job tar file
+2016-01-23 00:19:03 INFO  ConsoleMain:54 - Thank you! copying files to server ... 
+2016-01-23 00:19:04 INFO  ConsoleMain:62 - File copied to server, unzipping the file
+2016-01-23 00:19:04 INFO  ConsoleMain:68 - File extracted, following files exists in directory
+2016-01-23 00:20:13 INFO  ConsoleMain:42 - Please provide path of schdule job tar file
+2016-01-23 00:21:01 INFO  ConsoleMain:54 - Thank you! copying files to server ... 
+2016-01-23 00:21:02 INFO  ConsoleMain:62 - File copied to server, unzipping the file
+2016-01-23 00:21:02 INFO  ConsoleMain:68 - File extracted, following files exists in directory
+2016-01-23 01:05:25 INFO  ConsoleMain:42 - Please provide path of schdule job tar file
+2016-01-23 01:06:37 INFO  ConsoleMain:54 - Thank you! copying files to server ... 
+2016-01-23 01:06:38 INFO  ConsoleMain:62 - File copied to server, unzipping the file
+2016-01-23 01:06:38 INFO  ConsoleMain:68 - File extracted, following files exists in directory
+2016-01-23 01:09:19 INFO  ConsoleMain:42 - Please provide path of schdule job tar file
+2016-01-23 01:09:38 INFO  ConsoleMain:54 - Thank you! copying files to server ... 
+2016-01-23 01:09:38 INFO  ConsoleMain:62 - File copied to server, unzipping the file
+2016-01-23 01:09:38 INFO  ConsoleMain:68 - File extracted, following files exists in directory
+2016-01-23 01:14:53 INFO  ConsoleMain:42 - Please provide path of schdule job tar file
+2016-01-23 01:16:39 INFO  ConsoleMain:54 - Thank you! copying files to server ... 
+2016-01-23 01:16:39 INFO  ConsoleMain:62 - File copied to server, unzipping the file
+2016-01-23 01:16:39 INFO  ConsoleMain:68 - File extracted, following files exists in directory
+2016-01-23 01:19:07 INFO  ConsoleMain:42 - Please provide path of schdule job tar file
+2016-01-23 01:19:25 INFO  ConsoleMain:54 - Thank you! copying files to server ... 
+2016-01-23 01:19:26 INFO  ConsoleMain:62 - File copied to server, unzipping the file
+2016-01-23 01:19:26 INFO  ConsoleMain:68 - File extracted, following files exists in directory
+2016-01-23 01:19:49 INFO  ConsoleMain:42 - Please provide path of schdule job tar file
+2016-01-23 01:20:13 INFO  ConsoleMain:54 - Thank you! copying files to server ... 
+2016-01-23 01:20:13 INFO  ConsoleMain:62 - File copied to server, unzipping the file
+2016-01-23 01:20:13 INFO  ConsoleMain:68 - File extracted, following files exists in directory
+2016-01-23 01:22:48 INFO  ConsoleMain:42 - Please provide path of schdule job tar file
+2016-01-23 01:23:00 INFO  ConsoleMain:54 - Thank you! copying files to server ... 
+2016-01-23 01:23:00 INFO  ConsoleMain:62 - File copied to server, unzipping the file
+2016-01-23 01:23:00 INFO  ConsoleMain:68 - File extracted, following files exists in directory
+2016-01-23 01:24:40 INFO  ConsoleMain:42 - Please provide path of schdule job tar file
+2016-01-23 01:25:27 INFO  ConsoleMain:42 - Please provide path of schdule job tar file
+2016-01-23 01:25:52 INFO  ConsoleMain:54 - Thank you! copying files to server ... 
+2016-01-23 01:25:52 INFO  ConsoleMain:62 - File copied to server, unzipping the file
+2016-01-23 01:25:52 INFO  ConsoleMain:68 - File extracted, following files exists in directory
+2016-01-23 01:28:18 INFO  ConsoleMain:42 - Please provide path of schdule job tar file
+2016-01-23 01:28:27 INFO  ConsoleMain:54 - Thank you! copying files to server ... 
+2016-01-23 01:28:28 INFO  ConsoleMain:62 - File copied to server, unzipping the file
+2016-01-23 01:28:28 INFO  ConsoleMain:68 - File extracted, following files exists in directory
+2016-01-23 01:29:44 INFO  ConsoleMain:42 - Please provide path of schdule job tar file
+2016-01-23 01:29:52 INFO  ConsoleMain:54 - Thank you! copying files to server ... 
+2016-01-23 01:29:53 INFO  ConsoleMain:62 - File copied to server, unzipping the file
+2016-01-23 01:29:53 INFO  ConsoleMain:68 - File extracted, following files exists in directory
+2016-01-23 01:30:49 INFO  ConsoleMain:42 - Please provide path of schdule job tar file
+2016-01-23 01:30:51 ERROR ConsoleMain:99 - Exception in connecting to host
+java.util.NoSuchElementException: No line found
+	at java.util.Scanner.nextLine(Scanner.java:1540)
+	at edu.iu.indra.scigw.ConsoleMain.placeJob(ConsoleMain.java:45)
+	at edu.iu.indra.scigw.ConsoleMain.main(ConsoleMain.java:31)
+2016-01-23 01:30:55 INFO  ConsoleMain:42 - Please provide path of schdule job tar file
+2016-01-23 01:31:07 INFO  ConsoleMain:54 - Thank you! copying files to server ... 
+2016-01-23 01:31:08 INFO  ConsoleMain:62 - File copied to server, unzipping the file
+2016-01-23 01:31:08 INFO  ConsoleMain:68 - File extracted, following files exists in directory
+2016-01-23 01:32:19 INFO  ConsoleMain:42 - Please provide path of schdule job tar file
+2016-01-23 01:32:46 INFO  ConsoleMain:54 - Thank you! copying files to server ... 
+2016-01-23 01:32:47 INFO  ConsoleMain:62 - File copied to server, unzipping the file
+2016-01-23 01:32:47 INFO  ConsoleMain:68 - File extracted, following files exists in directory
+2016-01-23 01:35:31 INFO  ConsoleMain:42 - Please provide path of schdule job tar file
+2016-01-23 01:35:41 INFO  ConsoleMain:54 - Thank you! copying files to server ... 
+2016-01-23 01:35:41 INFO  ConsoleMain:62 - File copied to server, unzipping the file
+2016-01-23 01:35:41 INFO  ConsoleMain:68 - File extracted, following files exists in directory
+2016-01-23 01:41:59 INFO  ConsoleMain:42 - Please provide path of schdule job tar file
+2016-01-23 01:42:08 INFO  ConsoleMain:54 - Thank you! copying files to server ... 
+2016-01-23 01:42:09 INFO  ConsoleMain:62 - File copied to server, unzipping the file
+2016-01-23 01:42:09 INFO  ConsoleMain:68 - File extracted, following files exists in directory
+2016-01-23 01:43:24 INFO  ConsoleMain:42 - Please provide path of schdule job tar file
+2016-01-23 01:43:35 INFO  ConsoleMain:54 - Thank you! copying files to server ... 
+2016-01-23 01:43:36 INFO  ConsoleMain:62 - File copied to server, unzipping the file
+2016-01-23 01:43:36 INFO  ConsoleMain:68 - File extracted, following files exists in directory
+2016-01-23 01:50:48 INFO  ConsoleMain:42 - Please provide path of schdule job tar file
+2016-01-23 01:50:57 INFO  ConsoleMain:54 - Thank you! copying files to server ... 
+2016-01-23 01:50:57 INFO  ConsoleMain:62 - File copied to server, unzipping the file
+2016-01-23 01:50:57 INFO  ConsoleMain:68 - File extracted, following files exists in directory
+2016-01-23 01:51:09 INFO  ConsoleMain:42 - Please provide path of schdule job tar file
+2016-01-23 01:51:16 INFO  ConsoleMain:54 - Thank you! copying files to server ... 
+2016-01-23 01:51:17 INFO  ConsoleMain:62 - File copied to server, unzipping the file
+2016-01-23 01:51:17 INFO  ConsoleMain:68 - File extracted, following files exists in directory
+2016-01-23 01:51:46 INFO  ConsoleMain:42 - Please provide path of schdule job tar file
+2016-01-23 01:51:54 INFO  ConsoleMain:54 - Thank you! copying files to server ... 
+2016-01-23 01:51:54 INFO  ConsoleMain:62 - File copied to server, unzipping the file
+2016-01-23 01:51:54 INFO  ConsoleMain:68 - File extracted, following files exists in directory
+2016-01-23 02:23:09 INFO  ConsoleMain:42 - Please provide path of schdule job tar file
+2016-01-23 02:23:35 INFO  ConsoleMain:54 - Thank you! copying files to server ... 
+2016-01-23 02:23:35 INFO  ConsoleMain:62 - File copied to server, unzipping the file
+2016-01-23 02:23:35 INFO  ConsoleMain:68 - File extracted, following files exists in directory
+2016-01-23 02:24:33 INFO  ConsoleMain:42 - Please provide path of schdule job tar file
+2016-01-23 02:24:37 INFO  ConsoleMain:54 - Thank you! copying files to server ... 
+2016-01-23 02:24:38 INFO  ConsoleMain:62 - File copied to server, unzipping the file
+2016-01-23 02:24:38 INFO  ConsoleMain:68 - File extracted, following files exists in directory
+2016-01-23 02:26:28 INFO  ConsoleMain:42 - Please provide path of schdule job tar file
+2016-01-23 02:26:36 INFO  ConsoleMain:54 - Thank you! copying files to server ... 
+2016-01-23 02:26:37 INFO  ConsoleMain:62 - File copied to server, unzipping the file
+2016-01-23 02:26:37 INFO  ConsoleMain:68 - File extracted, following files exists in directory
+2016-01-23 10:41:56 INFO  ConsoleMain:42 - Please provide path of schdule job tar file
+2016-01-23 10:42:06 INFO  ConsoleMain:54 - Thank you! copying files to server ... 
+2016-01-23 10:42:06 INFO  ConsoleMain:62 - File copied to server, unzipping the file
+2016-01-23 10:42:06 INFO  ConsoleMain:68 - File extracted, following files exists in directory
+2016-01-23 10:45:41 INFO  ConsoleMain:42 - Please provide path of schdule job tar file
+2016-01-23 10:45:45 ERROR ConsoleMain:104 - Exception in connecting to host
+java.util.NoSuchElementException: No line found
+	at java.util.Scanner.nextLine(Scanner.java:1540)
+	at edu.iu.indra.scigw.ConsoleMain.placeJob(ConsoleMain.java:45)
+	at edu.iu.indra.scigw.ConsoleMain.main(ConsoleMain.java:31)
+2016-01-23 10:45:48 INFO  ConsoleMain:42 - Please provide path of schdule job tar file
+2016-01-23 10:46:00 INFO  ConsoleMain:54 - Thank you! copying files to server ... 
+2016-01-23 10:46:00 INFO  ConsoleMain:62 - File copied to server, unzipping the file
+2016-01-23 10:46:00 INFO  ConsoleMain:68 - File extracted, following files exists in directory
+2016-01-23 10:49:05 INFO  ConsoleMain:42 - Please provide path of schdule job tar file
+2016-01-23 10:49:52 INFO  ConsoleMain:54 - Thank you! copying files to server ... 
+2016-01-23 10:49:53 INFO  ConsoleMain:62 - File copied to server, unzipping the file
+2016-01-23 10:49:53 INFO  ConsoleMain:68 - File extracted, following files exists in directory
+2016-01-23 10:51:32 INFO  ConsoleMain:42 - Please provide path of schdule job tar file
+2016-01-23 10:51:45 INFO  ConsoleMain:54 - Thank you! copying files to server ... 
+2016-01-23 10:51:45 INFO  ConsoleMain:62 - File copied to server, unzipping the file
+2016-01-23 10:51:45 INFO  ConsoleMain:68 - File extracted, following files exists in directory
+2016-01-23 10:52:46 INFO  ConsoleMain:42 - Please provide path of schdule job tar file
+2016-01-23 10:52:50 INFO  ConsoleMain:54 - Thank you! copying files to server ... 
+2016-01-23 10:52:51 INFO  ConsoleMain:62 - File copied to server, unzipping the file
+2016-01-23 10:52:51 INFO  ConsoleMain:68 - File extracted, following files exists in directory
+2016-01-23 11:01:14 INFO  ConsoleMain:42 - Please provide path of schdule job tar file
+2016-01-23 11:02:25 INFO  ConsoleMain:54 - Thank you! copying files to server ... 
+2016-01-23 11:02:26 INFO  ConsoleMain:62 - File copied to server, unzipping the file
+2016-01-23 11:02:26 INFO  ConsoleMain:68 - File extracted, following files exists in directory
+2016-01-23 11:02:56 INFO  ConsoleMain:42 - Please provide path of schdule job tar file
+2016-01-23 11:02:57 INFO  ConsoleMain:54 - Thank you! copying files to server ... 
+2016-01-23 11:02:58 INFO  ConsoleMain:62 - File copied to server, unzipping the file
+2016-01-23 11:02:58 INFO  ConsoleMain:68 - File extracted, following files exists in directory
+2016-01-23 11:03:57 INFO  ConsoleMain:42 - Please provide path of schdule job tar file
+2016-01-23 11:04:06 INFO  ConsoleMain:54 - Thank you! copying files to server ... 
+2016-01-23 11:04:06 INFO  ConsoleMain:62 - File copied to server, unzipping the file
+2016-01-23 11:04:06 INFO  ConsoleMain:68 - File extracted, following files exists in directory
+2016-01-23 11:05:18 INFO  ConsoleMain:42 - Please provide path of schdule job tar file
+2016-01-23 11:05:22 INFO  ConsoleMain:54 - Thank you! copying files to server ... 
+2016-01-23 11:05:23 INFO  ConsoleMain:62 - File copied to server, unzipping the file
+2016-01-23 11:05:23 INFO  ConsoleMain:68 - File extracted, following files exists in directory
+2016-01-23 11:05:46 INFO  ConsoleMain:42 - Please provide path of schdule job tar file
+2016-01-23 11:05:48 INFO  ConsoleMain:54 - Thank you! copying files to server ... 
+2016-01-23 11:05:49 INFO  ConsoleMain:62 - File copied to server, unzipping the file
+2016-01-23 11:05:49 INFO  ConsoleMain:68 - File extracted, following files exists in directory
+2016-01-23 11:18:50 INFO  ConsoleMain:42 - Please provide path of schdule job tar file
+2016-01-23 11:18:56 INFO  ConsoleMain:54 - Thank you! copying files to server ... 
+2016-01-23 11:18:57 INFO  ConsoleMain:62 - File copied to server, unzipping the file
+2016-01-23 11:18:57 INFO  ConsoleMain:68 - File extracted, following files exists in directory
+2016-01-23 11:23:01 INFO  ConsoleMain:42 - Please provide path of schdule job tar file
+2016-01-23 11:23:07 INFO  ConsoleMain:54 - Thank you! copying files to server ... 
+2016-01-23 11:23:08 INFO  ConsoleMain:62 - File copied to server, unzipping the file
+2016-01-23 11:23:08 INFO  ConsoleMain:68 - File extracted, following files exists in directory
+2016-01-23 11:29:48 INFO  ConsoleMain:42 - Please provide path of schdule job tar file
+2016-01-23 11:29:49 INFO  ConsoleMain:54 - Thank you! copying files to server ... 
+2016-01-23 11:29:50 INFO  ConsoleMain:62 - File copied to server, unzipping the file
+2016-01-23 11:29:50 INFO  ConsoleMain:68 - File extracted, following files exists in directory
+2016-01-23 11:30:33 INFO  ConsoleMain:42 - Please provide path of schdule job tar file
+2016-01-23 11:30:35 INFO  ConsoleMain:54 - Thank you! copying files to server ... 
+2016-01-23 11:30:36 INFO  ConsoleMain:62 - File copied to server, unzipping the file
+2016-01-23 11:30:36 INFO  ConsoleMain:68 - File extracted, following files exists in directory

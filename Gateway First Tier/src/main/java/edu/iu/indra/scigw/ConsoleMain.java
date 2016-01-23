@@ -71,17 +71,30 @@ public class ConsoleMain {
 			System.out.println("Enter the name of the batch file that you want to execute: (abc.sh)");
 			Scanner obj = new Scanner(System.in);
 			String fileName = obj.nextLine();
+			
 			if (!fileName.isEmpty()) {
 				if (!fileName.substring(fileName.length() - 2, fileName.length()).equals(".sh")) {
 					fileName = fileName + ".sh";
 				}
-				System.out.println("Do you want to enter your command ? (Y/N):");
+				System.out.println("Do you want to enter your command ? (Y/N):");	
 				if (obj.nextLine().equals("Y")) {
 					System.out.println("Enter the command you want to execute :");
 					String tempCommand[] = { obj.nextLine() };
 					connector.executeCommands(tempCommand);
+					
 				} else {
-					connector.executeCommands(new String[] { CommandHelper.getQueueCommand(fileName) });
+
+//					System.out.println(pwdout);
+					String cd = "cd " + Constants.scratch_dir_path_wo_quotes+userInput.getUsername()+"/";
+					System.out.println(cd);
+					connector.executeCommands( cd);
+					String pwdout = "";
+					pwdout = connector.executeCommandsWithReturn("pwd");
+					System.out.println(pwdout);
+					String temp = CommandHelper.getEmailOptions((CommandHelper.getEmailSelection(CommandHelper.getQueueCommand( Constants.scratch_dir_path_wo_quotes+userInput.getUsername()+"/" + fileName)) +"pratish.merchant@gmail.com" ));
+					System.out.println(temp);
+					connector.executeCommands(temp);
+
 				}
 			} else {
 				System.out.println("Invalid File Name");

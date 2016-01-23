@@ -5,6 +5,8 @@ public class CommandHelper
 	public static String change_dir_cmd = "cd ";
 	public static String untar_cmd = "tar -xf ";
 	public static String qsubString="qsub ";
+	public static String email_selection = " -M ";
+	public static String email_options = " -m bae ";
 
 	public static String getChangeDirectoryCommand(String newDirPath)
 	{
@@ -19,4 +21,14 @@ public class CommandHelper
 	{
 		return qsubString+ shellScriptFileName;
 	}
+	public static String getEmailSelection(String qsubCommand)
+	{
+		return qsubCommand + email_selection;
+	}
+	public static String getEmailOptions(String qsubCommand)
+	{
+		return qsubCommand + email_options;
+	}
+
+	
 }
