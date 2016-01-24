@@ -1,4 +1,5 @@
-<!-- <beans xmlns="http://www.springframework.org/schema/beans"
+
+<beans xmlns="http://www.springframework.org/schema/beans"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans
 	http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
@@ -6,7 +7,25 @@
 	http://www.springframework.org/schema/context/spring-context-2.5.xsd">
 
 	<context:annotation-config />
-	
-	<context:component-scan base-package="edu.iu.indra.scigw.." />
 
-</beans> -->
+	<context:component-scan base-package="edu.iu.indra.scigw.." />
+	<bean
+		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+		<property name="location">
+			<value>config.properties</value>
+		</property>
+	</bean>
+	<bean id="userConfig" class="edu.iu.indra.scigw.input.UserInput">
+		<property name="username" value="${host.username}" />
+		<property name="host" value="${host.url}" />
+		<property name="pathToSSHKey" value="${sshkey.key_path}" />
+	</bean>
+	<bean id="jobConfig" class="edu.iu.indra.scigw.config.JobConfig">
+		<property name="jobName" value="${job.name}" />
+		<property name="nodes" value="${job.nodes}" />
+		<property name="maxMemory" value="${job.maxMemory}" />
+		<property name="wallTime" value="${job.wallTime}" />
+		<property name="cores" value="${job.cores}" />
+		<property name="email" value="${job.email}" />
+	</bean>
+</beans> 

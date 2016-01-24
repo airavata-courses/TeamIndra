@@ -1,13 +1,16 @@
 package edu.iu.indra.scigw;
 
+import java.io.Console;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
 import org.apache.log4j.Logger;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import edu.iu.indra.scigw.config.ApplicationHandler;
+import edu.iu.indra.scigw.config.JobConfig;
 import edu.iu.indra.scigw.config.SortingApplicationHandler;
 import edu.iu.indra.scigw.input.UserInput;
 import edu.iu.indra.scigw.util.Constants;
@@ -18,36 +21,48 @@ public class ConsoleMain
 
 	public static void main(String[] args)
 	{
-		if (args.length != 4)
+		ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext(
+				"application-context.xml");
+
+		// required parameters from user for authentication with server from
+		// config.properties file
+		final UserInput userConfig = context.getBean("userConfig", UserInput.class);
+
+		// input passphrase for the key from the user
+		String password = "";
+		Console console = System.console();
+
+		if (console != null)
 		{
-			System.err.println("Usage java scigw username passphrase host path-to-private-key");
-			System.exit(-1);
+			password = new String(
+					console.readPassword("Please enter the passphrase for your SSH key :"));
+		} else
+		{
+			Scanner scanner = new Scanner(System.in);
+			System.out.println("Please enter the passphrase for your SSH key :");
+			password = scanner.nextLine();
 		}
 
-		String username = args[0];
-		String passphrase = args[1];
-		String host = args[2];
-		String keyFile = args[3];
+		userConfig.setPassphrase(password);
 
-		// required parameters from user for authentication with server
-		final UserInput userInput = new UserInput(host, passphrase, keyFile, username);
-		Constants.setUserNane(username);
+		// set username in constants for dynamic directory path formation
+		Constants.setUserNane(userConfig.getUsername());
 
 		ConsoleMain main = new ConsoleMain();
-		main.placeJob(userInput);
+		main.placeJob(userConfig);
 	}
 
 	public void placeJob(UserInput userInput)
 	{
-		Scanner scanner = null;
 		Connector connector = null;
-
+		Scanner scanner = new Scanner(System.in);
+		
 		try
 		{
 			connector = Connector.createInstance(userInput);
 
 			// Ask user to select application to run
-			System.out.println("Please select application to run from following(Enter Id)\n");
+			System.out.println("Please select application to run from following(Enter Id)");
 
 			// TODO: fetch from separate listing
 			List<String> applications = new ArrayList<String>();
@@ -59,10 +74,12 @@ public class ConsoleMain
 			{
 				System.out.println(application);
 			}
-			
+
 			scanner = new Scanner(System.in);
 
-			int pid = scanner.nextInt();
+			int pid = 0;
+
+			pid = scanner.nextInt();
 
 			if (pid == 2)
 			{

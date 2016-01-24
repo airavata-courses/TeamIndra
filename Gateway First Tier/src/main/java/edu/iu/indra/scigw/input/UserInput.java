@@ -7,7 +7,7 @@ public class UserInput implements UserInfo
 
 	private String host;
 	private String passphrase;
-	private String pathToFile;
+	private String pathToSSHKey;
 	private String username;
 
 	public UserInput(String host, String passphrase, String pathToFile, String username)
@@ -15,7 +15,7 @@ public class UserInput implements UserInfo
 		super();
 		this.host = host;
 		this.passphrase = passphrase;
-		this.pathToFile = pathToFile;
+		this.pathToSSHKey = pathToFile;
 		this.username = username;
 	}
 
@@ -71,14 +71,14 @@ public class UserInput implements UserInfo
 		this.host = host;
 	}
 
-	public String getPathToFile()
+	public String getPathToSSHKey()
 	{
-		return this.pathToFile;
+		return pathToSSHKey;
 	}
 
-	public void setPathToFile(String pathToFile)
+	public void setPathToSSHKey(String pathToSSHKey)
 	{
-		this.pathToFile = pathToFile;
+		this.pathToSSHKey = pathToSSHKey;
 	}
 
 	public String getUsername()

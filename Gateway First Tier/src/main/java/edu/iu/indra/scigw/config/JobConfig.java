@@ -7,10 +7,10 @@ import java.util.UUID;
 public class JobConfig
 {
 	private final UUID uid = UUID.randomUUID();
-	private String name;
+	private String jobName;
 	private int nodes = 0;
 	private int maxMemory = 0;
-	private String walltme;
+	private String wallTime;
 	private int cput = 0;
 	private int cores = 0;
 	private boolean sendMail = false;
@@ -19,14 +19,14 @@ public class JobConfig
 	private Map<String, String> inputFiles;
 	private String pbsScriptPath;
 
-	public String getName()
+	public String getJobName()
 	{
-		return this.name;
+		return this.jobName;
 	}
 
-	public void setName(String name)
+	public void setJobName(String name)
 	{
-		this.name = name;
+		this.jobName = name;
 	}
 
 	public int getNodes()
@@ -49,14 +49,14 @@ public class JobConfig
 		this.maxMemory = maxMemory;
 	}
 
-	public String getWalltme()
+	public String getWallTime()
 	{
-		return this.walltme;
+		return wallTime;
 	}
 
-	public void setWalltme(String walltme)
+	public void setWallTime(String wallTime)
 	{
-		this.walltme = walltme;
+		this.wallTime = wallTime;
 	}
 
 	public int getCput()

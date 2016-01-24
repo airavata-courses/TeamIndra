@@ -15,7 +15,7 @@ public class PbsScriptUtil
 
 		appendWithNewLine(script, CommandHelper.getBashScriptStart());
 
-		String name = config.getName();
+		String name = config.getJobName();
 		appendWithNewLine(script, CommandHelper.getJobNameCommand(name));
 
 		int nodes = config.getNodes();
