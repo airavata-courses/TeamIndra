@@ -8,9 +8,15 @@ import org.hibernate.bytecode.buildtime.spi.ExecutionException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
+import com.jcraft.jsch.Session;
+
 import edu.iu.indra.scigw.applications.ApplicationHandlerFactory;
 import edu.iu.indra.scigw.applications.ApplicationManager;
+import edu.iu.indra.scigw.applications.JobMonitor;
 import edu.iu.indra.scigw.config.JobConfig;
+import edu.iu.indra.scigw.connectionhandler.ConnectionHandler;
+import edu.iu.indra.scigw.connectionhandler.ConnectionHandlerImpl;
+import edu.iu.indra.scigw.exceptions.ConnectionFaliedException;
 
 public class ConsoleMain
 {
@@ -44,17 +50,42 @@ public class ConsoleMain
 			}
 
 			int pid = 0;
-
 			pid = scanner.nextInt();
-
 			applicationManager.runApplication(jobConfig, pid);
 
-			context.close();
-			
+			JobMonitor jobObj = context.getBean(JobMonitor.class);
+
+			while (true)
+			{
+				String inp = "";
+				System.out.println("Press 1 to get job status and 2 to quit the application:");
+				inp = scanner.nextLine();
+
+				if (inp.trim().equals("2"))
+				{
+					break;
+				}
+				System.out.println(jobObj.getJobStatusByUser());
+			}
+
+			scanner.close();
 		} catch (Exception e)
 		{
 			throw new ExecutionException("Failed to run the application", e);
+		} finally
+		{
+			// destroy session on exit
+			ConnectionHandler con = context.getBean(ConnectionHandler.class);
+			context.close();
+			Session session;
+			try
+			{
+				session = con.getSession();
+				session.disconnect();
+			} catch (ConnectionFaliedException e)
+			{
+				logger.error("Failed to close the session");
+			}
 		}
 	}
-
 }

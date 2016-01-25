@@ -1,7 +1,10 @@
 package edu.iu.indra.scigw.util;
 
+import org.springframework.stereotype.Component;
+@Component
 public class CommandHelper
 {
+
 	public static String change_dir_cmd = "cd ";
 	public static String untar_cmd = "tar -xf ";
 
@@ -48,5 +51,10 @@ public class CommandHelper
 	public static String getQsubCommand(String exePath)
 	{
 		return "qsub " + exePath;
+	}
+
+	public static String getJobStatusCommand(String userName )
+	{
+		return "qstat " + "-u " + userName;
 	}
 }

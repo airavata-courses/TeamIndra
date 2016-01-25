@@ -40,7 +40,12 @@ public abstract class ApplicationHandler
 
 		getInputForJob();
 	}
-
+	public String getJobStatus()
+	{
+		
+		return null;
+		
+	}
 	public void submitJob() throws SciGwException
 	{
 		try
