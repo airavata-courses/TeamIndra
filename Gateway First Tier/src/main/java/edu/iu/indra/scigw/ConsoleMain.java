@@ -1,23 +1,26 @@
 package edu.iu.indra.scigw;
 
-import java.io.Console;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
 import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
-import edu.iu.indra.scigw.config.ApplicationHandler;
-import edu.iu.indra.scigw.config.JobConfig;
-import edu.iu.indra.scigw.config.SortingApplicationHandler;
+import edu.iu.indra.scigw.applications.ApplicationHandler;
+import edu.iu.indra.scigw.applications.ApplicationHandlerFactory;
 import edu.iu.indra.scigw.input.UserInput;
 import edu.iu.indra.scigw.util.Constants;
 
 public class ConsoleMain
 {
 	final static Logger logger = Logger.getLogger(ConsoleMain.class);
+
+	@Autowired
+	ApplicationHandlerFactory applicationHandlerFactory;
+
+	private Scanner scanner;
 
 	public static void main(String[] args)
 	{
@@ -28,39 +31,22 @@ public class ConsoleMain
 		// config.properties file
 		final UserInput userConfig = context.getBean("userConfig", UserInput.class);
 
-		// input passphrase for the key from the user
-		String password = "";
-		Console console = System.console();
-
-		if (console != null)
-		{
-			password = new String(
-					console.readPassword("Please enter the passphrase for your SSH key :"));
-		} else
-		{
-			Scanner scanner = new Scanner(System.in);
-			System.out.println("Please enter the passphrase for your SSH key :");
-			password = scanner.nextLine();
-		}
-
-		userConfig.setPassphrase(password);
+		context.close();
 
 		// set username in constants for dynamic directory path formation
 		Constants.setUserNane(userConfig.getUsername());
 
 		ConsoleMain main = new ConsoleMain();
+
 		main.placeJob(userConfig);
 	}
 
 	public void placeJob(UserInput userInput)
 	{
-		Connector connector = null;
-		Scanner scanner = new Scanner(System.in);
-		
 		try
 		{
-			connector = Connector.createInstance(userInput);
-
+			scanner = new Scanner(System.in);
+			
 			// Ask user to select application to run
 			System.out.println("Please select application to run from following(Enter Id)");
 
@@ -75,38 +61,18 @@ public class ConsoleMain
 				System.out.println(application);
 			}
 
-			scanner = new Scanner(System.in);
-
 			int pid = 0;
 
 			pid = scanner.nextInt();
 
-			if (pid == 2)
-			{
-				ApplicationHandler applicationHandler = new SortingApplicationHandler();
-				applicationHandler.submitJob();
-			} else
-			{
-				System.out.println("Try something else :P ");
-			}
+			ApplicationHandler applicationHandler = applicationHandlerFactory
+					.getApplicationHandler(pid);
 
-			connector.disconnect();
+			applicationHandler.submitJob();
 
 		} catch (Exception e)
 		{
 			logger.error("Exception in connecting to host", e);
-		} finally
-		{
-			try
-			{
-				connector.disconnect();
-				if (scanner != null)
-				{
-					scanner.close();
-				}
-			} catch (IOException e)
-			{
-			}
 		}
 	}
 }

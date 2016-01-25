@@ -24,7 +24,6 @@ public class Connector
 {
 	final static Logger logger = Logger.getLogger(Connector.class);
 	private static Connector connector;
-
 	private Session session;
 	private JSch jsch;
 	private Channel shell;
@@ -35,7 +34,6 @@ public class Connector
 
 	private Connector(UserInput userInput) throws JSchException
 	{
-		// singleton
 		this.userInfo = userInput;
 		init();
 	}
@@ -45,6 +43,7 @@ public class Connector
 		jsch = new JSch();
 		jsch.addIdentity(userInfo.getPathToSSHKey());
 		session = jsch.getSession(userInfo.getUsername(), userInfo.getHost(), 22);
+		session.setConfig("StrictHostKeyChecking", "no");
 		session.setUserInfo(userInfo);
 		session.connect();
 		shell = session.openChannel("shell");

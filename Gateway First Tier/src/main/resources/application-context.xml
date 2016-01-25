@@ -1,4 +1,3 @@
-
 <beans xmlns="http://www.springframework.org/schema/beans"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans
@@ -9,17 +8,22 @@
 	<context:annotation-config />
 
 	<context:component-scan base-package="edu.iu.indra.scigw.." />
+
 	<bean
 		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
 		<property name="location">
 			<value>config.properties</value>
 		</property>
 	</bean>
+
+	<!-- Configuration for user authentication -->
 	<bean id="userConfig" class="edu.iu.indra.scigw.input.UserInput">
 		<property name="username" value="${host.username}" />
 		<property name="host" value="${host.url}" />
 		<property name="pathToSSHKey" value="${sshkey.key_path}" />
 	</bean>
+
+	<!-- Configuration for scheduling the job -->
 	<bean id="jobConfig" class="edu.iu.indra.scigw.config.JobConfig">
 		<property name="jobName" value="${job.name}" />
 		<property name="nodes" value="${job.nodes}" />
@@ -28,4 +32,5 @@
 		<property name="cores" value="${job.cores}" />
 		<property name="email" value="${job.email}" />
 	</bean>
+
 </beans> 

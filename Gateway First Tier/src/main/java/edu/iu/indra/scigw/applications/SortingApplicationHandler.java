@@ -1,4 +1,4 @@
-package edu.iu.indra.scigw.config;
+package edu.iu.indra.scigw.applications;
 
 import java.io.BufferedWriter;
 import java.io.File;

@@ -44,4 +44,9 @@ public class CommandHelper
 	{
 		return "#PBS -N " + name;
 	}
+
+	public static String getQsubCommand(String exePath)
+	{
+		return "qsub " + exePath;
+	}
 }

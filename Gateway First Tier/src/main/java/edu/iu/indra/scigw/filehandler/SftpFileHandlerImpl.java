@@ -1,25 +1,34 @@
-package edu.iu.indra.scigw.config;
+package edu.iu.indra.scigw.filehandler;
 
 import java.util.Map;
 
 import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import edu.iu.indra.scigw.Connector;
 import edu.iu.indra.scigw.ScpHandler;
+import edu.iu.indra.scigw.config.JobConfig;
+import edu.iu.indra.scigw.connectionhandler.ConnectionHandler;
 import edu.iu.indra.scigw.util.Constants;
 
-public class ApplicationFileTransferHelper
+@Service
+public class SftpFileHandlerImpl implements FileHandler
 {
-	final static Logger logger = Logger.getLogger(ApplicationFileTransferHelper.class);
+	final static Logger logger = Logger.getLogger(SftpFileHandlerImpl.class);
+	
+	@Autowired
+	ConnectionHandler connectionHandler;
 
-	/**
-	 * transfers job files to server and returns destination path of pbs script
-	 * for scheduling
-	 * 
-	 * @param config
-	 * @return PBS script path on server
-	 */
-	public static String transferApplicationFiles(JobConfig config)
+	@Override
+	public void copyFile(String source, String destination)
+	{
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public String transferApplicationFiles(JobConfig config)
 	{
 		logger.info("Transferring files to server");
 
@@ -67,11 +76,11 @@ public class ApplicationFileTransferHelper
 
 		} catch (Exception e)
 		{
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
 		return destPbsScriptPath;
+
 	}
 
 }
