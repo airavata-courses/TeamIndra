@@ -37,7 +37,10 @@ public class CommandHelper
 	{
 		return "#PBS -M " + email;
 	}
-
+	public static String getJobWallTime(String wallTime)
+	{
+		return "#PBS -l walltime="+wallTime;
+	}
 	public static String getQueueNameCommand(String qname)
 	{
 		return "#PBS -q " + qname;

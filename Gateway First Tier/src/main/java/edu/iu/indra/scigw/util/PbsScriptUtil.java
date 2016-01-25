@@ -20,10 +20,14 @@ public class PbsScriptUtil
 
 		int nodes = config.getNodes();
 		int cores = config.getCores();
-
+		String wallTime = config.getWallTime();
 		if (nodes > 0)
 		{
 			appendWithNewLine(script, CommandHelper.getNodeCountCommand(nodes, cores));
+		}
+		if (!wallTime.isEmpty())
+		{
+			appendWithNewLine(script, CommandHelper.getJobWallTime(wallTime));
 		}
 
 		if (config.isSendMail())
