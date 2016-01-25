@@ -1,60 +1,42 @@
 package edu.iu.indra.scigw;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
 import org.apache.log4j.Logger;
+import org.hibernate.bytecode.buildtime.spi.ExecutionException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
-import edu.iu.indra.scigw.applications.ApplicationHandler;
 import edu.iu.indra.scigw.applications.ApplicationHandlerFactory;
-import edu.iu.indra.scigw.input.UserInput;
-import edu.iu.indra.scigw.util.Constants;
+import edu.iu.indra.scigw.applications.ApplicationManager;
+import edu.iu.indra.scigw.config.JobConfig;
 
 public class ConsoleMain
 {
 	final static Logger logger = Logger.getLogger(ConsoleMain.class);
 
-	@Autowired
-	ApplicationHandlerFactory applicationHandlerFactory;
-
-	private Scanner scanner;
+	@Autowired(required = true)
+	static ApplicationHandlerFactory applicationHandlerFactory;
 
 	public static void main(String[] args)
 	{
 		ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext(
 				"application-context.xml");
 
-		// required parameters from user for authentication with server from
-		// config.properties file
-		final UserInput userConfig = context.getBean("userConfig", UserInput.class);
-
-		context.close();
-
-		// set username in constants for dynamic directory path formation
-		Constants.setUserNane(userConfig.getUsername());
-
-		ConsoleMain main = new ConsoleMain();
-
-		main.placeJob(userConfig);
-	}
-
-	public void placeJob(UserInput userInput)
-	{
 		try
 		{
-			scanner = new Scanner(System.in);
-			
+			Scanner scanner = new Scanner(System.in);
+
+			ApplicationManager applicationManager = context.getBean("applicationManager",
+					ApplicationManager.class);
+
+			JobConfig jobConfig = context.getBean("jobConfig", JobConfig.class);
+
+			List<String> applications = applicationManager.getAvailableApplications();
+
 			// Ask user to select application to run
 			System.out.println("Please select application to run from following(Enter Id)");
-
-			// TODO: fetch from separate listing
-			List<String> applications = new ArrayList<String>();
-
-			applications.add("1. Hello MPI world");
-			applications.add("2. Large number Sorter");
 
 			for (String application : applications)
 			{
@@ -65,14 +47,14 @@ public class ConsoleMain
 
 			pid = scanner.nextInt();
 
-			ApplicationHandler applicationHandler = applicationHandlerFactory
-					.getApplicationHandler(pid);
+			applicationManager.runApplication(jobConfig, pid);
 
-			applicationHandler.submitJob();
-
+			context.close();
+			
 		} catch (Exception e)
 		{
-			logger.error("Exception in connecting to host", e);
+			throw new ExecutionException("Failed to run the application", e);
 		}
 	}
+
 }

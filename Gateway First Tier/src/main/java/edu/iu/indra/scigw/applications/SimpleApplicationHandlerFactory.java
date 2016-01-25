@@ -2,7 +2,7 @@ package edu.iu.indra.scigw.applications;
 
 import org.springframework.stereotype.Service;
 
-@Service
+@Service("applicationHandlerFactory")
 public class SimpleApplicationHandlerFactory implements ApplicationHandlerFactory
 {
 

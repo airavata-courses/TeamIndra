@@ -1,33 +1,41 @@
 package edu.iu.indra.scigw.util;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
+import edu.iu.indra.scigw.input.UserInput;
+
+@Component
 public class Constants
 {
-	public static String username;
+	@Autowired
+	public UserInput userConfig;
+
 	public static final String scratch_dir_path = "//N//dc2//scratch//";
 	public static final String default_filename = "job.tar";
 	public static final String sortAppExe = "sortApp";
 
-	public static void setUserNane(String username)
+	public String getUsername()
 	{
-		Constants.username = username;
+		return this.userConfig.getUsername();
 	}
 
-	public static String getScratchDirPath()
+	public String getScratchDirPath()
 	{
-		return scratch_dir_path + username + "//";
+		return scratch_dir_path + getUsername() + "//";
 	}
 
-	public static String getSortAppDirPath()
+	public String getSortAppDirPath()
 	{
-		return scratch_dir_path + username + "//" + "sortapp" + "//";
+		return scratch_dir_path + getUsername() + "//" + "sortapp" + "//";
 	}
 
-	public static String getSortAppExeCommand(String inputFile)
+	public String getSortAppExeCommand(String inputFile)
 	{
 		return getSortAppDirPath() + sortAppExe + " " + inputFile;
 	}
 
-	public static String getJobDirPath(String uuid)
+	public String getJobDirPath(String uuid)
 	{
 		return getScratchDirPath() + uuid + "//";
 	}

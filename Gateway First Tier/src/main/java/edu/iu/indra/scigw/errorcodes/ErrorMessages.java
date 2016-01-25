@@ -16,19 +16,19 @@ import org.springframework.stereotype.Component;
 public class ErrorMessages
 {
 	@Autowired
-	static MessageSource messageSource;
+	MessageSource messageSource;
 
-	public static String getErrorMessage(final String errorCode)
+	public String getErrorMessage(final String errorCode)
 	{
 		return messageSource.getMessage(errorCode, null, errorCode, null);
 	}
 
-	public static String getErrorMessage(final String errorCode, Object[] args)
+	public String getErrorMessage(final String errorCode, Object[] args)
 	{
 		return messageSource.getMessage(errorCode, args, errorCode, null);
 	}
 
-	public static String getErrorMessage(final String errorCode, Object[] args, Locale locale)
+	public String getErrorMessage(final String errorCode, Object[] args, Locale locale)
 	{
 		return messageSource.getMessage(errorCode, args, errorCode, locale);
 	}

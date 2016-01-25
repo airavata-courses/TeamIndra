@@ -6,7 +6,6 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.UUID;
 
-import edu.iu.indra.scigw.util.Constants;
 import edu.iu.indra.scigw.util.PbsScriptUtil;
 
 public class SortingApplicationHandler extends ApplicationHandler
@@ -19,7 +18,7 @@ public class SortingApplicationHandler extends ApplicationHandler
 		System.out.println("Please enter path of file containing comma separated numbers to sort");
 		String filePath = scanner.nextLine();
 		UUID jobId = jobConfig.getUid();
-		String jobDirPath = Constants.getJobDirPath(jobId.toString());
+		String jobDirPath = constants.getJobDirPath(jobId.toString());
 		jobConfig.addInputFile(filePath, jobDirPath + "input.txt");
 	}
 
@@ -29,10 +28,10 @@ public class SortingApplicationHandler extends ApplicationHandler
 		StringBuilder script = PbsScriptUtil.createPbsScript(jobConfig);
 
 		UUID jobId = jobConfig.getUid();
-		String inputFile = Constants.getJobDirPath(jobId.toString()) + "input.txt";
+		String inputFile = constants.getJobDirPath(jobId.toString()) + "input.txt";
 
 		// append exe file path to script
-		String exeCommand = Constants.getSortAppExeCommand(inputFile);
+		String exeCommand = constants.getSortAppExeCommand(inputFile);
 
 		script.append(exeCommand);
 

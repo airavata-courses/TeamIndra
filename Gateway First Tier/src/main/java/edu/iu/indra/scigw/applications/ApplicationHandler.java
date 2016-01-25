@@ -10,6 +10,7 @@ import edu.iu.indra.scigw.connectionhandler.ConnectionHandler;
 import edu.iu.indra.scigw.exceptions.SciGwException;
 import edu.iu.indra.scigw.filehandler.FileHandler;
 import edu.iu.indra.scigw.util.CommandHelper;
+import edu.iu.indra.scigw.util.Constants;
 
 public abstract class ApplicationHandler
 {
@@ -17,6 +18,9 @@ public abstract class ApplicationHandler
 
 	@Autowired
 	protected JobConfig jobConfig;
+	
+	@Autowired
+	Constants constants;
 
 	@Autowired
 	protected ConnectionHandler connectionHandler;
