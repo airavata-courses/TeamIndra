@@ -3,13 +3,18 @@ package edu.iu.indra.scigw.applications;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import edu.iu.indra.scigw.config.JobConfig;
+import edu.iu.indra.scigw.exceptions.SciGwException;
 
 @Component
 public class ApplicationManager
 {
+	@Autowired
+	ApplicationHandlerFactory applicationHandlerFactory;
+
 	public List<String> getAvailableApplications()
 	{
 		// TODO: fetch from separate listing
@@ -21,8 +26,11 @@ public class ApplicationManager
 		return applications;
 	}
 
-	public void runApplication(JobConfig jobConfig, int appId)
+	public void runApplication(JobConfig jobConfig, int appId) throws SciGwException
 	{
-		
+		ApplicationHandler applicationHandler = applicationHandlerFactory
+				.getApplicationHandler(appId);
+
+		applicationHandler.submitJob();
 	}
 }

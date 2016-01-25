@@ -13,9 +13,8 @@ public class JobConfig
 	private String wallTime;
 	private int cput = 0;
 	private int cores = 0;
-	private boolean sendMail = false;
+	private boolean sendMail = true;
 	private String email;
-	private String qname = "normal";
 	private Map<String, String> inputFiles;
 	private String pbsScriptPath;
 
@@ -89,16 +88,6 @@ public class JobConfig
 		this.email = email;
 	}
 
-	public String getQname()
-	{
-		return this.qname;
-	}
-
-	public void setQname(String qname)
-	{
-		this.qname = qname;
-	}
-
 	public int getCores()
 	{
 		return this.cores;
@@ -141,6 +130,16 @@ public class JobConfig
 	public void setPbsScriptPath(String pbsScriptPath)
 	{
 		this.pbsScriptPath = pbsScriptPath;
+	}
+
+	@Override
+	public String toString()
+	{
+		return "JobConfig [uid=" + this.uid + ", jobName=" + this.jobName + ", nodes=" + this.nodes
+				+ ", maxMemory=" + this.maxMemory + ", wallTime=" + this.wallTime + ", cput="
+				+ this.cput + ", cores=" + this.cores + ", sendMail=" + this.sendMail + ", email="
+				+ this.email + ", inputFiles=" + this.inputFiles + ", pbsScriptPath="
+				+ this.pbsScriptPath + "]";
 	}
 
 }

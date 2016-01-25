@@ -43,19 +43,15 @@ public class Constants
 		return getScratchDirPath() + uuid + "//";
 	}
 
+	public String getMpiHelloRunCommand(JobConfig jobconfig)
+	{
+		return mpiAppExe + " -n " + (jobconfig.getNodes() * jobconfig.getCores()) + " "
+				+ getMpiAppExePath();
+	}
+
 	public String getMpiAppExePath()
 	{
-		return scratch_dir_path + getUsername() + "//mpiHelloApp";
-	}
-
-	public String getMpiAppExeCommand()
-	{
-		return scratch_dir_path + getUsername() + "//" + mpiAppExe;
-	}
-
-	public String getMpiAppNodes(String command, JobConfig jobconfig)
-	{
-		return command + " -n " + (jobconfig.getNodes() * jobconfig.getCores());
+		return scratch_dir_path + getUsername() + "//helloapp//hello";
 	}
 
 	public String sendMailwithAttachment(String pbsout, JobConfig jc)

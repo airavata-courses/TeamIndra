@@ -1,10 +1,16 @@
 package edu.iu.indra.scigw.applications;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service("applicationHandlerFactory")
 public class SimpleApplicationHandlerFactory implements ApplicationHandlerFactory
 {
+	@Autowired
+	SortingApplicationHandler sortHandler;
+
+	@Autowired
+	MpiHelloApplicationHandler mpiHandler;
 
 	@Override
 	public ApplicationHandler getApplicationHandler(int id)
@@ -12,12 +18,11 @@ public class SimpleApplicationHandlerFactory implements ApplicationHandlerFactor
 		ApplicationHandler applicationHandler = null;
 		if (id == 2)
 		{
-			applicationHandler = new SortingApplicationHandler();
-		}
-		else if (id == 3){
-			applicationHandler = new MpiHelloApplicationHandler();
-		}
-		else
+			applicationHandler = sortHandler;
+		} else if (id == 1)
+		{
+			applicationHandler = mpiHandler;
+		} else
 		{
 			System.out.println("Try something else :P ");
 

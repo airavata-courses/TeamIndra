@@ -4,6 +4,7 @@ import java.util.Scanner;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import edu.iu.indra.scigw.config.JobConfig;
 import edu.iu.indra.scigw.connectionhandler.ConnectionHandler;
@@ -12,13 +13,14 @@ import edu.iu.indra.scigw.filehandler.FileHandler;
 import edu.iu.indra.scigw.util.CommandHelper;
 import edu.iu.indra.scigw.util.Constants;
 
+@Component
 public abstract class ApplicationHandler
 {
 	final static Logger logger = Logger.getLogger(ApplicationHandler.class);
 
 	@Autowired
 	protected JobConfig jobConfig;
-	
+
 	@Autowired
 	Constants constants;
 
@@ -78,4 +80,45 @@ public abstract class ApplicationHandler
 	 * @return PBS script file path
 	 */
 	protected abstract String generatePbsScriptFile();
+
+	public JobConfig getJobConfig()
+	{
+		return this.jobConfig;
+	}
+
+	public void setJobConfig(JobConfig jobConfig)
+	{
+		this.jobConfig = jobConfig;
+	}
+
+	public Constants getConstants()
+	{
+		return this.constants;
+	}
+
+	public void setConstants(Constants constants)
+	{
+		this.constants = constants;
+	}
+
+	public ConnectionHandler getConnectionHandler()
+	{
+		return this.connectionHandler;
+	}
+
+	public void setConnectionHandler(ConnectionHandler connectionHandler)
+	{
+		this.connectionHandler = connectionHandler;
+	}
+
+	public FileHandler getFileHandler()
+	{
+		return this.fileHandler;
+	}
+
+	public void setFileHandler(FileHandler fileHandler)
+	{
+		this.fileHandler = fileHandler;
+	}
+
 }

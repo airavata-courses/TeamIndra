@@ -34,4 +34,20 @@
 		<property name="email" value="${job.email}" />
 	</bean>
 
+	<bean id="applicationHandler" class="edu.iu.indra.scigw.applications.ApplicationHandler"
+		abstract="true">
+		<property name="jobConfig" ref="jobConfig" />
+		<property name="constants" ref="constants" />
+		<property name="connectionHandler" ref="connectionHandler" />
+		<property name="fileHandler" ref="fileHandler" />
+	</bean>
+
+	<bean class="edu.iu.indra.scigw.applications.SortingApplicationHandler"
+		parent="applicationHandler">
+	</bean>
+
+	<bean class="edu.iu.indra.scigw.applications.MpiHelloApplicationHandler"
+		parent="applicationHandler">
+	</bean>
+
 </beans> 

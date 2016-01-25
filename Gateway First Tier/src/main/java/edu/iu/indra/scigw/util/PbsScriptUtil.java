@@ -20,7 +20,6 @@ public class PbsScriptUtil
 
 		int nodes = config.getNodes();
 		int cores = config.getCores();
-		cores = cores / nodes < 1 ? 8 : cores / nodes;
 
 		if (nodes > 0)
 		{
@@ -31,13 +30,6 @@ public class PbsScriptUtil
 		{
 			appendWithNewLine(script, CommandHelper.getEmailCommand());
 			appendWithNewLine(script, CommandHelper.getAddEmailCommand(config.getEmail()));
-		}
-
-		String qname = config.getQname();
-
-		if (qname != null && qname.length() > 0)
-		{
-			appendWithNewLine(script, CommandHelper.getQueueNameCommand(qname));
 		}
 
 		return script;

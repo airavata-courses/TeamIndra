@@ -13,11 +13,13 @@ public class MpiHelloApplicationHandler extends ApplicationHandler
 	@Override
 	protected void getInputForJob()
 	{
-		// get path of file having comma separated numbers
+		//no input required for mpi hello as of now
+		/*// get path of file having comma separated numbers
+		System.out.println("Please input message file path for MPI hello app");
 		String filePath = scanner.nextLine();
 		UUID jobId = jobConfig.getUid();
 		String jobDirPath = constants.getJobDirPath(jobId.toString());
-		jobConfig.addInputFile(filePath, jobDirPath + "input.txt");
+		jobConfig.addInputFile(filePath, jobDirPath + "input.txt");*/
 	}
 
 	@Override
@@ -26,10 +28,9 @@ public class MpiHelloApplicationHandler extends ApplicationHandler
 		StringBuilder script = PbsScriptUtil.createPbsScript(jobConfig);
 
 		// append exe file path to script
-		String exeCommand = constants.getMpiAppNodes(constants.getMpiAppExeCommand(), jobConfig)
-				+ " " + constants.getMpiAppExePath();
+		String exeCommand = constants.getMpiHelloRunCommand(jobConfig);
 
-		script.append("\n" + exeCommand);
+		script.append(exeCommand);
 
 		// write script to file
 		File bashScript = new File("mpi.sh");

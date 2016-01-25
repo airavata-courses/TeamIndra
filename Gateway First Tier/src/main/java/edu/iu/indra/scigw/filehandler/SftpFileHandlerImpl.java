@@ -18,7 +18,7 @@ import edu.iu.indra.scigw.exceptions.ConnectionFaliedException;
 import edu.iu.indra.scigw.exceptions.FileTransferException;
 import edu.iu.indra.scigw.util.Constants;
 
-@Service
+@Service("fileHandler")
 public class SftpFileHandlerImpl implements FileHandler
 {
 	final static Logger logger = Logger.getLogger(SftpFileHandlerImpl.class);
@@ -74,9 +74,10 @@ public class SftpFileHandlerImpl implements FileHandler
 			// create a new directory for job
 			String dirPath = constants.getJobDirPath(uid);
 			ChannelSftp sftp = connectionHandler.getSftpChannel();
+			sftp.connect();
 			sftp.mkdir(dirPath);
 			sftp.cd(dirPath);
-			destPbsScriptPath += "pbs.sh";
+			destPbsScriptPath = dirPath + "pbs.sh";
 
 			// transfer pbs script to the directory
 			sftp.put(new FileInputStream(pbsScript), "pbs.sh");
