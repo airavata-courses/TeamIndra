@@ -20,6 +20,7 @@
 	<bean id="userConfig" class="edu.iu.indra.scigw.input.UserInput">
 		<property name="username" value="${host.username}" />
 		<property name="host" value="${host.url}" />
+		<property name="passphrase" value="${sshkey.passphrase}" />
 		<property name="pathToSSHKey" value="${sshkey.key_path}" />
 	</bean>
 
