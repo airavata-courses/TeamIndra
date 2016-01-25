@@ -1,6 +1,9 @@
 package edu.iu.indra.scigw.connectionhandler;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.PrintStream;
 
@@ -86,9 +89,11 @@ public class ConnectionHandlerImpl implements ConnectionHandler
 		return mGetSession();
 	}
 
+	
 	@Override
 	public void executeCommand(String command) throws ExecutionFailedException
 	{
+		
 		try
 		{
 			ChannelExec exec = getExecChannel();
@@ -117,11 +122,52 @@ public class ConnectionHandlerImpl implements ConnectionHandler
 
 	@Override
 	public void executeCommand(String[] commands) throws ExecutionFailedException
-	{
+	{   
 		for (String command : commands)
 		{
 			executeCommand(command);
 		}
 	}
 
+	@Override
+	public String executeCommandGetResult(String command) throws ExecutionFailedException {
+		// TODO Auto-generated method stub
+		StringBuilder out = new StringBuilder();
+		
+		
+		try {
+			ChannelExec exec = getExecChannel();
+			exec.setCommand(command);
+			exec.setInputStream(null);
+			InputStream in = exec.getInputStream();
+			exec.connect();
+			String temp=null;
+			byte[] tmp = new byte[1024];
+			while (true) {
+				while (in.available() > 0) {
+					int i = in.read(tmp, 0, 1024);
+					if (i < 0)
+						break;
+					out.append(new String(tmp, 0, i));
+					
+				}
+				if (exec.isClosed()) {
+					if (in.available() > 0)
+						continue;
+					System.out.println("exit-status: " + exec.getExitStatus());
+					break;
+				}
+
+			}
+			 try {
+			 Thread.sleep(1000);
+			 } catch (Exception ee) {
+			 }
+		}catch (Exception e) {
+			e.printStackTrace();
+			throw new ExecutionFailedException();
+		}
+			 return out.toString();
+	}
+		
 }

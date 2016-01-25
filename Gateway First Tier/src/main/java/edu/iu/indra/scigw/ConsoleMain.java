@@ -55,6 +55,7 @@ public class ConsoleMain
 
 			applications.add("1. Hello MPI world");
 			applications.add("2. Large number Sorter");
+			applications.add("3. MPI Hello World");
 
 			for (String application : applications)
 			{

@@ -18,4 +18,6 @@ public interface ConnectionHandler
 	public void executeCommand(String command) throws ExecutionFailedException;
 	
 	public void executeCommand(String [] commands) throws ExecutionFailedException;
+	
+	public String executeCommandGetResult (String command) throws ExecutionFailedException; 
 }

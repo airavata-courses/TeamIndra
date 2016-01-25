@@ -13,7 +13,11 @@ public class SimpleApplicationHandlerFactory implements ApplicationHandlerFactor
 		if (id == 2)
 		{
 			applicationHandler = new SortingApplicationHandler();
-		} else
+		}
+		else if (id == 3){
+			applicationHandler = new MpiHelloApplicationHandler();
+		}
+		else
 		{
 			System.out.println("Try something else :P ");
 
