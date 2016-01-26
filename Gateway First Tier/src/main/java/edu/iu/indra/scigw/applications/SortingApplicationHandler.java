@@ -23,33 +23,18 @@ public class SortingApplicationHandler extends ApplicationHandler
 	}
 
 	@Override
-	protected String generatePbsScriptFile()
+	protected String generatePBSCommandList()
 	{
-		StringBuilder script = PbsScriptUtil.createPbsScript(jobConfig);
-
+		StringBuilder script = new StringBuilder();
 		UUID jobId = jobConfig.getUid();
 		String inputFile = constants.getJobDirPath(jobId.toString()) + "input.txt";
-
 		// append exe file path to script
 		String exeCommand = constants.getSortAppExeCommand(inputFile);
-
 		script.append(exeCommand);
-
-		// write script to file
-		File bashScript = new File("pbs.sh");
-
-		try
-		{
-			BufferedWriter writer = new BufferedWriter(new FileWriter(bashScript));
-			writer.write(script.toString());
-			writer.flush();
-			writer.close();
-		} catch (IOException e)
-		{
-			e.printStackTrace();
-		}
-
-		return bashScript.getAbsolutePath();
+		return script.toString();
 	}
+
+
+
 
 }

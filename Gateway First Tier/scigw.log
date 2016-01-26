@@ -163,3 +163,164 @@ java.util.NoSuchElementException: No line found
 2016-01-23 11:30:35 INFO  ConsoleMain:54 - Thank you! copying files to server ... 
 2016-01-23 11:30:36 INFO  ConsoleMain:62 - File copied to server, unzipping the file
 2016-01-23 11:30:36 INFO  ConsoleMain:68 - File extracted, following files exists in directory
+2016-01-26 01:49:47 INFO  ClassPathXmlApplicationContext:510 - Refreshing org.springframework.context.support.ClassPathXmlApplicationContext@5fcfe4b2: startup date [Tue Jan 26 01:49:47 EST 2016]; root of context hierarchy
+2016-01-26 01:49:47 INFO  XmlBeanDefinitionReader:315 - Loading XML bean definitions from class path resource [application-context.xml]
+2016-01-26 01:49:48 INFO  PropertyPlaceholderConfigurer:172 - Loading properties file from class path resource [config.properties]
+2016-01-26 01:49:48 INFO  DefaultListableBeanFactory:596 - Pre-instantiating singletons in org.springframework.beans.factory.support.DefaultListableBeanFactory@13a5fe33: defining beans [org.springframework.context.annotation.internalConfigurationAnnotationProcessor,org.springframework.context.annotation.internalAutowiredAnnotationProcessor,org.springframework.context.annotation.internalRequiredAnnotationProcessor,org.springframework.context.annotation.internalCommonAnnotationProcessor,applicationManager,jobMonitor,applicationHandlerFactory,connectionHandler,errorMessages,sciGwException,fileHandler,commandHelper,constants,org.springframework.beans.factory.config.PropertyPlaceholderConfigurer#0,userConfig,jobConfig,applicationHandler,edu.iu.indra.scigw.applications.SortingApplicationHandler#0,edu.iu.indra.scigw.applications.MpiHelloApplicationHandler#0,org.springframework.context.annotation.ConfigurationClassPostProcessor.importAwareProcessor]; root of factory hierarchy
+2016-01-26 01:50:02 INFO  ClassPathXmlApplicationContext:510 - Refreshing org.springframework.context.support.ClassPathXmlApplicationContext@1e397ed7: startup date [Tue Jan 26 01:50:02 EST 2016]; root of context hierarchy
+2016-01-26 01:50:02 INFO  XmlBeanDefinitionReader:315 - Loading XML bean definitions from class path resource [application-context.xml]
+2016-01-26 01:50:02 INFO  PropertyPlaceholderConfigurer:172 - Loading properties file from class path resource [config.properties]
+2016-01-26 01:50:02 INFO  DefaultListableBeanFactory:596 - Pre-instantiating singletons in org.springframework.beans.factory.support.DefaultListableBeanFactory@77c2494c: defining beans [org.springframework.context.annotation.internalConfigurationAnnotationProcessor,org.springframework.context.annotation.internalAutowiredAnnotationProcessor,org.springframework.context.annotation.internalRequiredAnnotationProcessor,org.springframework.context.annotation.internalCommonAnnotationProcessor,applicationManager,jobMonitor,applicationHandlerFactory,connectionHandler,errorMessages,sciGwException,fileHandler,commandHelper,constants,org.springframework.beans.factory.config.PropertyPlaceholderConfigurer#0,userConfig,jobConfig,applicationHandler,edu.iu.indra.scigw.applications.SortingApplicationHandler#0,edu.iu.indra.scigw.applications.MpiHelloApplicationHandler#0,org.springframework.context.annotation.ConfigurationClassPostProcessor.importAwareProcessor]; root of factory hierarchy
+2016-01-26 01:50:20 INFO  ApplicationHandler:44 - Reading application specific configuration from user
+2016-01-26 01:50:23 INFO  ApplicationHandler:61 - Reading config complete
+2016-01-26 01:50:25 INFO  ApplicationHandler:65 - Generating PBS script
+2016-01-26 01:51:09 INFO  ClassPathXmlApplicationContext:510 - Refreshing org.springframework.context.support.ClassPathXmlApplicationContext@1e397ed7: startup date [Tue Jan 26 01:51:09 EST 2016]; root of context hierarchy
+2016-01-26 01:51:09 INFO  XmlBeanDefinitionReader:315 - Loading XML bean definitions from class path resource [application-context.xml]
+2016-01-26 01:51:09 INFO  PropertyPlaceholderConfigurer:172 - Loading properties file from class path resource [config.properties]
+2016-01-26 01:51:09 INFO  DefaultListableBeanFactory:596 - Pre-instantiating singletons in org.springframework.beans.factory.support.DefaultListableBeanFactory@77c2494c: defining beans [org.springframework.context.annotation.internalConfigurationAnnotationProcessor,org.springframework.context.annotation.internalAutowiredAnnotationProcessor,org.springframework.context.annotation.internalRequiredAnnotationProcessor,org.springframework.context.annotation.internalCommonAnnotationProcessor,applicationManager,jobMonitor,applicationHandlerFactory,connectionHandler,errorMessages,sciGwException,fileHandler,commandHelper,constants,org.springframework.beans.factory.config.PropertyPlaceholderConfigurer#0,userConfig,jobConfig,applicationHandler,edu.iu.indra.scigw.applications.SortingApplicationHandler#0,edu.iu.indra.scigw.applications.MpiHelloApplicationHandler#0,org.springframework.context.annotation.ConfigurationClassPostProcessor.importAwareProcessor]; root of factory hierarchy
+2016-01-26 01:51:15 INFO  ApplicationHandler:44 - Reading application specific configuration from user
+2016-01-26 01:51:16 INFO  ApplicationHandler:61 - Reading config complete
+2016-01-26 01:51:17 INFO  ApplicationHandler:65 - Generating PBS script
+2016-01-26 01:55:23 INFO  SftpFileHandlerImpl:56 - Transferring files to server
+2016-01-26 01:55:23 ERROR ConnectionHandlerImpl:45 - Error in creating session
+com.jcraft.jsch.JSchException: java.io.FileNotFoundException: C:\Users\Sanket\Documents\GitHub\SSH\putty_export_key (The system cannot find the path specified)
+	at com.jcraft.jsch.KeyPair.load(KeyPair.java:543)
+	at com.jcraft.jsch.IdentityFile.newInstance(IdentityFile.java:40)
+	at com.jcraft.jsch.JSch.addIdentity(JSch.java:407)
+	at com.jcraft.jsch.JSch.addIdentity(JSch.java:367)
+	at edu.iu.indra.scigw.connectionhandler.ConnectionHandlerImpl.mGetSession(ConnectionHandlerImpl.java:38)
+	at edu.iu.indra.scigw.connectionhandler.ConnectionHandlerImpl.getSftpChannel(ConnectionHandlerImpl.java:56)
+	at edu.iu.indra.scigw.filehandler.SftpFileHandlerImpl.transferApplicationFiles(SftpFileHandlerImpl.java:76)
+	at edu.iu.indra.scigw.applications.ApplicationHandler.submitJob(ApplicationHandler.java:71)
+	at edu.iu.indra.scigw.applications.ApplicationManager.runApplication(ApplicationManager.java:34)
+	at edu.iu.indra.scigw.ConsoleMain.main(ConsoleMain.java:54)
+Caused by: java.io.FileNotFoundException: C:\Users\Sanket\Documents\GitHub\SSH\putty_export_key (The system cannot find the path specified)
+	at java.io.FileInputStream.open0(Native Method)
+	at java.io.FileInputStream.open(FileInputStream.java:195)
+	at java.io.FileInputStream.<init>(FileInputStream.java:138)
+	at java.io.FileInputStream.<init>(FileInputStream.java:93)
+	at com.jcraft.jsch.Util.fromFile(Util.java:508)
+	at com.jcraft.jsch.KeyPair.load(KeyPair.java:540)
+	... 9 more
+2016-01-26 01:55:23 ERROR ApplicationHandler:77 - Error in submitting job
+2016-01-26 01:55:23 INFO  ClassPathXmlApplicationContext:1042 - Closing org.springframework.context.support.ClassPathXmlApplicationContext@1e397ed7: startup date [Tue Jan 26 01:51:09 EST 2016]; root of context hierarchy
+2016-01-26 01:55:23 INFO  DefaultListableBeanFactory:444 - Destroying singletons in org.springframework.beans.factory.support.DefaultListableBeanFactory@77c2494c: defining beans [org.springframework.context.annotation.internalConfigurationAnnotationProcessor,org.springframework.context.annotation.internalAutowiredAnnotationProcessor,org.springframework.context.annotation.internalRequiredAnnotationProcessor,org.springframework.context.annotation.internalCommonAnnotationProcessor,applicationManager,jobMonitor,applicationHandlerFactory,connectionHandler,errorMessages,sciGwException,fileHandler,commandHelper,constants,org.springframework.beans.factory.config.PropertyPlaceholderConfigurer#0,userConfig,jobConfig,applicationHandler,edu.iu.indra.scigw.applications.SortingApplicationHandler#0,edu.iu.indra.scigw.applications.MpiHelloApplicationHandler#0,org.springframework.context.annotation.ConfigurationClassPostProcessor.importAwareProcessor]; root of factory hierarchy
+2016-01-26 01:55:23 ERROR ConnectionHandlerImpl:45 - Error in creating session
+com.jcraft.jsch.JSchException: java.io.FileNotFoundException: C:\Users\Sanket\Documents\GitHub\SSH\putty_export_key (The system cannot find the path specified)
+	at com.jcraft.jsch.KeyPair.load(KeyPair.java:543)
+	at com.jcraft.jsch.IdentityFile.newInstance(IdentityFile.java:40)
+	at com.jcraft.jsch.JSch.addIdentity(JSch.java:407)
+	at com.jcraft.jsch.JSch.addIdentity(JSch.java:367)
+	at edu.iu.indra.scigw.connectionhandler.ConnectionHandlerImpl.mGetSession(ConnectionHandlerImpl.java:38)
+	at edu.iu.indra.scigw.connectionhandler.ConnectionHandlerImpl.getSession(ConnectionHandlerImpl.java:84)
+	at edu.iu.indra.scigw.ConsoleMain.main(ConsoleMain.java:83)
+Caused by: java.io.FileNotFoundException: C:\Users\Sanket\Documents\GitHub\SSH\putty_export_key (The system cannot find the path specified)
+	at java.io.FileInputStream.open0(Native Method)
+	at java.io.FileInputStream.open(FileInputStream.java:195)
+	at java.io.FileInputStream.<init>(FileInputStream.java:138)
+	at java.io.FileInputStream.<init>(FileInputStream.java:93)
+	at com.jcraft.jsch.Util.fromFile(Util.java:508)
+	at com.jcraft.jsch.KeyPair.load(KeyPair.java:540)
+	... 6 more
+2016-01-26 01:55:23 ERROR ConsoleMain:87 - Failed to close the session
+2016-01-26 02:01:13 INFO  ClassPathXmlApplicationContext:510 - Refreshing org.springframework.context.support.ClassPathXmlApplicationContext@5fcfe4b2: startup date [Tue Jan 26 02:01:13 EST 2016]; root of context hierarchy
+2016-01-26 02:01:13 INFO  XmlBeanDefinitionReader:315 - Loading XML bean definitions from class path resource [application-context.xml]
+2016-01-26 02:01:14 INFO  PropertyPlaceholderConfigurer:172 - Loading properties file from class path resource [config.properties]
+2016-01-26 02:01:14 INFO  DefaultListableBeanFactory:596 - Pre-instantiating singletons in org.springframework.beans.factory.support.DefaultListableBeanFactory@13a5fe33: defining beans [org.springframework.context.annotation.internalConfigurationAnnotationProcessor,org.springframework.context.annotation.internalAutowiredAnnotationProcessor,org.springframework.context.annotation.internalRequiredAnnotationProcessor,org.springframework.context.annotation.internalCommonAnnotationProcessor,applicationManager,jobMonitor,applicationHandlerFactory,connectionHandler,errorMessages,sciGwException,fileHandler,commandHelper,constants,org.springframework.beans.factory.config.PropertyPlaceholderConfigurer#0,userConfig,jobConfig,applicationHandler,edu.iu.indra.scigw.applications.SortingApplicationHandler#0,edu.iu.indra.scigw.applications.MpiHelloApplicationHandler#0,org.springframework.context.annotation.ConfigurationClassPostProcessor.importAwareProcessor]; root of factory hierarchy
+2016-01-26 02:01:19 INFO  ApplicationHandler:44 - Reading application specific configuration from user
+2016-01-26 02:01:19 INFO  ApplicationHandler:61 - Reading config complete
+2016-01-26 02:01:19 INFO  ApplicationHandler:65 - Generating PBS script
+2016-01-26 02:01:19 INFO  SftpFileHandlerImpl:56 - Transferring files to server
+2016-01-26 02:01:19 ERROR ConnectionHandlerImpl:45 - Error in creating session
+com.jcraft.jsch.JSchException: java.io.FileNotFoundException: C:UsersPratishDocumentsAssignmentsSGPutty Relatedopenshhkey (The system cannot find the file specified)
+	at com.jcraft.jsch.KeyPair.load(KeyPair.java:543)
+	at com.jcraft.jsch.IdentityFile.newInstance(IdentityFile.java:40)
+	at com.jcraft.jsch.JSch.addIdentity(JSch.java:407)
+	at com.jcraft.jsch.JSch.addIdentity(JSch.java:367)
+	at edu.iu.indra.scigw.connectionhandler.ConnectionHandlerImpl.mGetSession(ConnectionHandlerImpl.java:38)
+	at edu.iu.indra.scigw.connectionhandler.ConnectionHandlerImpl.getSftpChannel(ConnectionHandlerImpl.java:56)
+	at edu.iu.indra.scigw.filehandler.SftpFileHandlerImpl.transferApplicationFiles(SftpFileHandlerImpl.java:76)
+	at edu.iu.indra.scigw.applications.ApplicationHandler.submitJob(ApplicationHandler.java:71)
+	at edu.iu.indra.scigw.applications.ApplicationManager.runApplication(ApplicationManager.java:34)
+	at edu.iu.indra.scigw.ConsoleMain.main(ConsoleMain.java:54)
+Caused by: java.io.FileNotFoundException: C:UsersPratishDocumentsAssignmentsSGPutty Relatedopenshhkey (The system cannot find the file specified)
+	at java.io.FileInputStream.open0(Native Method)
+	at java.io.FileInputStream.open(FileInputStream.java:195)
+	at java.io.FileInputStream.<init>(FileInputStream.java:138)
+	at java.io.FileInputStream.<init>(FileInputStream.java:93)
+	at com.jcraft.jsch.Util.fromFile(Util.java:508)
+	at com.jcraft.jsch.KeyPair.load(KeyPair.java:540)
+	... 9 more
+2016-01-26 02:01:19 ERROR ApplicationHandler:77 - Error in submitting job
+2016-01-26 02:01:19 INFO  ClassPathXmlApplicationContext:1042 - Closing org.springframework.context.support.ClassPathXmlApplicationContext@5fcfe4b2: startup date [Tue Jan 26 02:01:13 EST 2016]; root of context hierarchy
+2016-01-26 02:01:19 INFO  DefaultListableBeanFactory:444 - Destroying singletons in org.springframework.beans.factory.support.DefaultListableBeanFactory@13a5fe33: defining beans [org.springframework.context.annotation.internalConfigurationAnnotationProcessor,org.springframework.context.annotation.internalAutowiredAnnotationProcessor,org.springframework.context.annotation.internalRequiredAnnotationProcessor,org.springframework.context.annotation.internalCommonAnnotationProcessor,applicationManager,jobMonitor,applicationHandlerFactory,connectionHandler,errorMessages,sciGwException,fileHandler,commandHelper,constants,org.springframework.beans.factory.config.PropertyPlaceholderConfigurer#0,userConfig,jobConfig,applicationHandler,edu.iu.indra.scigw.applications.SortingApplicationHandler#0,edu.iu.indra.scigw.applications.MpiHelloApplicationHandler#0,org.springframework.context.annotation.ConfigurationClassPostProcessor.importAwareProcessor]; root of factory hierarchy
+2016-01-26 02:01:19 ERROR ConnectionHandlerImpl:45 - Error in creating session
+com.jcraft.jsch.JSchException: java.io.FileNotFoundException: C:UsersPratishDocumentsAssignmentsSGPutty Relatedopenshhkey (The system cannot find the file specified)
+	at com.jcraft.jsch.KeyPair.load(KeyPair.java:543)
+	at com.jcraft.jsch.IdentityFile.newInstance(IdentityFile.java:40)
+	at com.jcraft.jsch.JSch.addIdentity(JSch.java:407)
+	at com.jcraft.jsch.JSch.addIdentity(JSch.java:367)
+	at edu.iu.indra.scigw.connectionhandler.ConnectionHandlerImpl.mGetSession(ConnectionHandlerImpl.java:38)
+	at edu.iu.indra.scigw.connectionhandler.ConnectionHandlerImpl.getSession(ConnectionHandlerImpl.java:84)
+	at edu.iu.indra.scigw.ConsoleMain.main(ConsoleMain.java:83)
+Caused by: java.io.FileNotFoundException: C:UsersPratishDocumentsAssignmentsSGPutty Relatedopenshhkey (The system cannot find the file specified)
+	at java.io.FileInputStream.open0(Native Method)
+	at java.io.FileInputStream.open(FileInputStream.java:195)
+	at java.io.FileInputStream.<init>(FileInputStream.java:138)
+	at java.io.FileInputStream.<init>(FileInputStream.java:93)
+	at com.jcraft.jsch.Util.fromFile(Util.java:508)
+	at com.jcraft.jsch.KeyPair.load(KeyPair.java:540)
+	... 6 more
+2016-01-26 02:01:19 ERROR ConsoleMain:87 - Failed to close the session
+2016-01-26 02:02:11 INFO  ClassPathXmlApplicationContext:510 - Refreshing org.springframework.context.support.ClassPathXmlApplicationContext@5fcfe4b2: startup date [Tue Jan 26 02:02:11 EST 2016]; root of context hierarchy
+2016-01-26 02:02:11 INFO  XmlBeanDefinitionReader:315 - Loading XML bean definitions from class path resource [application-context.xml]
+2016-01-26 02:02:11 INFO  PropertyPlaceholderConfigurer:172 - Loading properties file from class path resource [config.properties]
+2016-01-26 02:02:11 INFO  DefaultListableBeanFactory:596 - Pre-instantiating singletons in org.springframework.beans.factory.support.DefaultListableBeanFactory@13a5fe33: defining beans [org.springframework.context.annotation.internalConfigurationAnnotationProcessor,org.springframework.context.annotation.internalAutowiredAnnotationProcessor,org.springframework.context.annotation.internalRequiredAnnotationProcessor,org.springframework.context.annotation.internalCommonAnnotationProcessor,applicationManager,jobMonitor,applicationHandlerFactory,connectionHandler,errorMessages,sciGwException,fileHandler,commandHelper,constants,org.springframework.beans.factory.config.PropertyPlaceholderConfigurer#0,userConfig,jobConfig,applicationHandler,edu.iu.indra.scigw.applications.SortingApplicationHandler#0,edu.iu.indra.scigw.applications.MpiHelloApplicationHandler#0,org.springframework.context.annotation.ConfigurationClassPostProcessor.importAwareProcessor]; root of factory hierarchy
+2016-01-26 02:02:28 INFO  ClassPathXmlApplicationContext:510 - Refreshing org.springframework.context.support.ClassPathXmlApplicationContext@5fcfe4b2: startup date [Tue Jan 26 02:02:28 EST 2016]; root of context hierarchy
+2016-01-26 02:02:28 INFO  XmlBeanDefinitionReader:315 - Loading XML bean definitions from class path resource [application-context.xml]
+2016-01-26 02:02:29 INFO  PropertyPlaceholderConfigurer:172 - Loading properties file from class path resource [config.properties]
+2016-01-26 02:02:29 INFO  DefaultListableBeanFactory:596 - Pre-instantiating singletons in org.springframework.beans.factory.support.DefaultListableBeanFactory@13a5fe33: defining beans [org.springframework.context.annotation.internalConfigurationAnnotationProcessor,org.springframework.context.annotation.internalAutowiredAnnotationProcessor,org.springframework.context.annotation.internalRequiredAnnotationProcessor,org.springframework.context.annotation.internalCommonAnnotationProcessor,applicationManager,jobMonitor,applicationHandlerFactory,connectionHandler,errorMessages,sciGwException,fileHandler,commandHelper,constants,org.springframework.beans.factory.config.PropertyPlaceholderConfigurer#0,userConfig,jobConfig,applicationHandler,edu.iu.indra.scigw.applications.SortingApplicationHandler#0,edu.iu.indra.scigw.applications.MpiHelloApplicationHandler#0,org.springframework.context.annotation.ConfigurationClassPostProcessor.importAwareProcessor]; root of factory hierarchy
+2016-01-26 02:02:30 INFO  ApplicationHandler:44 - Reading application specific configuration from user
+2016-01-26 02:02:30 INFO  ApplicationHandler:61 - Reading config complete
+2016-01-26 02:02:30 INFO  ApplicationHandler:65 - Generating PBS script
+2016-01-26 02:02:30 INFO  SftpFileHandlerImpl:56 - Transferring files to server
+2016-01-26 02:02:32 INFO  SftpFileHandlerImpl:85 - PBS file transfer complete
+2016-01-26 02:02:32 INFO  SftpFileHandlerImpl:106 - File transfer complete
+2016-01-26 02:02:33 INFO  ApplicationHandler:81 - Scheduled execution for job ID: 572903f7-6f6a-45f7-bb16-3a137fa1f0f0
+2016-01-26 02:32:55 INFO  ClassPathXmlApplicationContext:510 - Refreshing org.springframework.context.support.ClassPathXmlApplicationContext@5fcfe4b2: startup date [Tue Jan 26 02:32:55 EST 2016]; root of context hierarchy
+2016-01-26 02:32:55 INFO  XmlBeanDefinitionReader:315 - Loading XML bean definitions from class path resource [application-context.xml]
+2016-01-26 02:32:56 INFO  PropertyPlaceholderConfigurer:172 - Loading properties file from class path resource [config.properties]
+2016-01-26 02:32:56 INFO  DefaultListableBeanFactory:596 - Pre-instantiating singletons in org.springframework.beans.factory.support.DefaultListableBeanFactory@13a5fe33: defining beans [org.springframework.context.annotation.internalConfigurationAnnotationProcessor,org.springframework.context.annotation.internalAutowiredAnnotationProcessor,org.springframework.context.annotation.internalRequiredAnnotationProcessor,org.springframework.context.annotation.internalCommonAnnotationProcessor,applicationManager,jobMonitor,applicationHandlerFactory,connectionHandler,errorMessages,sciGwException,fileHandler,commandHelper,constants,org.springframework.beans.factory.config.PropertyPlaceholderConfigurer#0,userConfig,jobConfig,applicationHandler,edu.iu.indra.scigw.applications.SortingApplicationHandler#0,edu.iu.indra.scigw.applications.MpiHelloApplicationHandler#0,org.springframework.context.annotation.ConfigurationClassPostProcessor.importAwareProcessor]; root of factory hierarchy
+2016-01-26 02:32:59 INFO  ApplicationHandler:44 - Reading application specific configuration from user
+2016-01-26 02:32:59 INFO  ApplicationHandler:61 - Reading config complete
+2016-01-26 02:32:59 INFO  ApplicationHandler:65 - Generating PBS script
+2016-01-26 02:32:59 INFO  SftpFileHandlerImpl:56 - Transferring files to server
+2016-01-26 02:33:01 INFO  SftpFileHandlerImpl:85 - PBS file transfer complete
+2016-01-26 02:33:01 INFO  SftpFileHandlerImpl:106 - File transfer complete
+2016-01-26 02:33:02 INFO  ApplicationHandler:81 - Scheduled execution for job ID: 2e7b7c26-7191-43ce-b70f-1e60c2585ea2
+2016-01-26 02:38:59 INFO  ClassPathXmlApplicationContext:510 - Refreshing org.springframework.context.support.ClassPathXmlApplicationContext@5fcfe4b2: startup date [Tue Jan 26 02:38:59 EST 2016]; root of context hierarchy
+2016-01-26 02:38:59 INFO  XmlBeanDefinitionReader:315 - Loading XML bean definitions from class path resource [application-context.xml]
+2016-01-26 02:38:59 INFO  PropertyPlaceholderConfigurer:172 - Loading properties file from class path resource [config.properties]
+2016-01-26 02:38:59 INFO  DefaultListableBeanFactory:596 - Pre-instantiating singletons in org.springframework.beans.factory.support.DefaultListableBeanFactory@13a5fe33: defining beans [org.springframework.context.annotation.internalConfigurationAnnotationProcessor,org.springframework.context.annotation.internalAutowiredAnnotationProcessor,org.springframework.context.annotation.internalRequiredAnnotationProcessor,org.springframework.context.annotation.internalCommonAnnotationProcessor,applicationManager,jobMonitor,applicationHandlerFactory,connectionHandler,errorMessages,sciGwException,fileHandler,commandHelper,constants,org.springframework.beans.factory.config.PropertyPlaceholderConfigurer#0,userConfig,jobConfig,applicationHandler,edu.iu.indra.scigw.applications.SortingApplicationHandler#0,edu.iu.indra.scigw.applications.MpiHelloApplicationHandler#0,org.springframework.context.annotation.ConfigurationClassPostProcessor.importAwareProcessor]; root of factory hierarchy
+2016-01-26 02:39:04 INFO  ApplicationHandler:44 - Reading application specific configuration from user
+2016-01-26 02:39:04 INFO  ApplicationHandler:61 - Reading config complete
+2016-01-26 02:39:04 INFO  ApplicationHandler:65 - Generating PBS script
+2016-01-26 02:39:04 INFO  SftpFileHandlerImpl:56 - Transferring files to server
+2016-01-26 02:39:05 INFO  SftpFileHandlerImpl:85 - PBS file transfer complete
+2016-01-26 02:39:05 INFO  SftpFileHandlerImpl:106 - File transfer complete
+2016-01-26 02:39:06 INFO  ApplicationHandler:81 - Scheduled execution for job ID: 251d7556-f65e-4927-9db4-f1ea824d208a
+2016-01-26 02:39:14 INFO  ClassPathXmlApplicationContext:1042 - Closing org.springframework.context.support.ClassPathXmlApplicationContext@5fcfe4b2: startup date [Tue Jan 26 02:38:59 EST 2016]; root of context hierarchy
+2016-01-26 02:39:14 INFO  DefaultListableBeanFactory:444 - Destroying singletons in org.springframework.beans.factory.support.DefaultListableBeanFactory@13a5fe33: defining beans [org.springframework.context.annotation.internalConfigurationAnnotationProcessor,org.springframework.context.annotation.internalAutowiredAnnotationProcessor,org.springframework.context.annotation.internalRequiredAnnotationProcessor,org.springframework.context.annotation.internalCommonAnnotationProcessor,applicationManager,jobMonitor,applicationHandlerFactory,connectionHandler,errorMessages,sciGwException,fileHandler,commandHelper,constants,org.springframework.beans.factory.config.PropertyPlaceholderConfigurer#0,userConfig,jobConfig,applicationHandler,edu.iu.indra.scigw.applications.SortingApplicationHandler#0,edu.iu.indra.scigw.applications.MpiHelloApplicationHandler#0,org.springframework.context.annotation.ConfigurationClassPostProcessor.importAwareProcessor]; root of factory hierarchy
+2016-01-26 02:44:37 INFO  ClassPathXmlApplicationContext:510 - Refreshing org.springframework.context.support.ClassPathXmlApplicationContext@5fcfe4b2: startup date [Tue Jan 26 02:44:37 EST 2016]; root of context hierarchy
+2016-01-26 02:44:37 INFO  XmlBeanDefinitionReader:315 - Loading XML bean definitions from class path resource [application-context.xml]
+2016-01-26 02:44:37 INFO  PropertyPlaceholderConfigurer:172 - Loading properties file from class path resource [config.properties]
+2016-01-26 02:44:37 INFO  DefaultListableBeanFactory:596 - Pre-instantiating singletons in org.springframework.beans.factory.support.DefaultListableBeanFactory@13a5fe33: defining beans [org.springframework.context.annotation.internalConfigurationAnnotationProcessor,org.springframework.context.annotation.internalAutowiredAnnotationProcessor,org.springframework.context.annotation.internalRequiredAnnotationProcessor,org.springframework.context.annotation.internalCommonAnnotationProcessor,applicationManager,jobMonitor,applicationHandlerFactory,connectionHandler,errorMessages,sciGwException,fileHandler,commandHelper,constants,org.springframework.beans.factory.config.PropertyPlaceholderConfigurer#0,userConfig,jobConfig,applicationHandler,edu.iu.indra.scigw.applications.SortingApplicationHandler#0,edu.iu.indra.scigw.applications.MpiHelloApplicationHandler#0,org.springframework.context.annotation.ConfigurationClassPostProcessor.importAwareProcessor]; root of factory hierarchy
+2016-01-26 02:44:43 INFO  ApplicationHandler:44 - Reading application specific configuration from user
+2016-01-26 02:44:43 INFO  ApplicationHandler:61 - Reading config complete
+2016-01-26 02:44:43 INFO  ApplicationHandler:65 - Generating PBS script
+2016-01-26 02:44:43 INFO  SftpFileHandlerImpl:56 - Transferring files to server
+2016-01-26 02:44:44 INFO  SftpFileHandlerImpl:85 - PBS file transfer complete
+2016-01-26 02:44:44 INFO  SftpFileHandlerImpl:106 - File transfer complete
+2016-01-26 02:44:45 INFO  ApplicationHandler:81 - Scheduled execution for job ID: 6492dc8b-6d04-4549-b96d-db8bdfa15fc0
+2016-01-26 02:44:51 INFO  ClassPathXmlApplicationContext:1042 - Closing org.springframework.context.support.ClassPathXmlApplicationContext@5fcfe4b2: startup date [Tue Jan 26 02:44:37 EST 2016]; root of context hierarchy
+2016-01-26 02:44:51 INFO  DefaultListableBeanFactory:444 - Destroying singletons in org.springframework.beans.factory.support.DefaultListableBeanFactory@13a5fe33: defining beans [org.springframework.context.annotation.internalConfigurationAnnotationProcessor,org.springframework.context.annotation.internalAutowiredAnnotationProcessor,org.springframework.context.annotation.internalRequiredAnnotationProcessor,org.springframework.context.annotation.internalCommonAnnotationProcessor,applicationManager,jobMonitor,applicationHandlerFactory,connectionHandler,errorMessages,sciGwException,fileHandler,commandHelper,constants,org.springframework.beans.factory.config.PropertyPlaceholderConfigurer#0,userConfig,jobConfig,applicationHandler,edu.iu.indra.scigw.applications.SortingApplicationHandler#0,edu.iu.indra.scigw.applications.MpiHelloApplicationHandler#0,org.springframework.context.annotation.ConfigurationClassPostProcessor.importAwareProcessor]; root of factory hierarchy

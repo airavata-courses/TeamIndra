@@ -1,5 +1,9 @@
 package edu.iu.indra.scigw.applications;
 
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.Scanner;
 
 import org.apache.log4j.Logger;
@@ -12,6 +16,7 @@ import edu.iu.indra.scigw.exceptions.SciGwException;
 import edu.iu.indra.scigw.filehandler.FileHandler;
 import edu.iu.indra.scigw.util.CommandHelper;
 import edu.iu.indra.scigw.util.Constants;
+import edu.iu.indra.scigw.util.PbsScriptUtil;
 
 @Component
 public abstract class ApplicationHandler
@@ -84,7 +89,43 @@ public abstract class ApplicationHandler
 	 * 
 	 * @return PBS script file path
 	 */
-	protected abstract String generatePbsScriptFile();
+	protected abstract String generatePBSCommandList();
+	
+	protected  String generatePbsScriptFile()
+	{
+		StringBuilder script = PbsScriptUtil.createPbsScript(jobConfig);
+		
+		String commandList = generatePBSCommandList();
+		
+		if (commandList != null && commandList.length() > 0){
+			script.append(commandList);
+		}
+		else {
+			// TODO Auto-generated catch block
+			logger.warn("Application didnt return any executable commands.Continuing with no execution command");
+
+		}
+		
+		script.append(constants.sendMailwithAttachment(jobConfig));
+		
+		
+		// write script to file
+		File bashScript = new File("pbs.sh");
+
+		try
+		{
+			BufferedWriter writer = new BufferedWriter(new FileWriter(bashScript));
+			writer.write(script.toString());
+			writer.flush();
+			writer.close();
+		} catch (IOException e)
+		{
+			e.printStackTrace();
+		}
+
+		return bashScript.getAbsolutePath();
+		
+	}
 
 	public JobConfig getJobConfig()
 	{

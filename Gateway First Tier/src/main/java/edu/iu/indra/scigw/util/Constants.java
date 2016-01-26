@@ -54,20 +54,11 @@ public class Constants
 		return scratch_dir_path + getUsername() + "//helloapp//hello";
 	}
 
-	public String sendMailwithAttachment(String pbsout, JobConfig jc)
+	public String sendMailwithAttachment(JobConfig jc)
 	{
 		StringBuilder out = new StringBuilder();
-
-		out.append("if [ -f " + scratch_dir_path + getUsername() + "/" + jc.getJobName() + "e"
-				+ pbsout + " && -f " + scratch_dir_path + getUsername() + "/" + jc.getJobName()
-				+ "o" + pbsout + "] \n");
-		out.append("then \n");
-		out.append(
-				"\techo \"The job has been executed . The output files are attached\" | mailx -r \"TeamIndra\" -s \"[Attention] : Job Completion Mail(Attachments)\" -a \""
-						+ scratch_dir_path + getUsername() + "/" + jc.getJobName() + "o" + pbsout
-						+ " \"" + jc.getEmail() + "\"\n");
-		out.append("fi");
-
+		out.append("\n");
+		out.append("if ls " + getJobDirPath(jc.getUid().toString()) + jc.getJobName() + ".o* " + "1> /dev/null 2>&1; then\n" + "\techo \"The job has been executed . The output files are attached\" | mailx -r \"TeamIndra\" -s \"[Attention] : Job Completion Mail(Attachments)\" -a " + getJobDirPath(jc.getUid().toString()) + jc.getJobName() + ".o* \"pmmercha@iu.edu\" \nfi");
 		return out.toString();
 	}
 

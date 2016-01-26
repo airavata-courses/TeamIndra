@@ -22,31 +22,12 @@ public class MpiHelloApplicationHandler extends ApplicationHandler
 		jobConfig.addInputFile(filePath, jobDirPath + "input.txt");*/
 	}
 
-	@Override
-	protected String generatePbsScriptFile()
-	{
-		StringBuilder script = PbsScriptUtil.createPbsScript(jobConfig);
 
+	@Override
+	protected String generatePBSCommandList() {
 		// append exe file path to script
 		String exeCommand = constants.getMpiHelloRunCommand(jobConfig);
-
-		script.append(exeCommand);
-
-		// write script to file
-		File bashScript = new File("mpi.sh");
-
-		try
-		{
-			BufferedWriter writer = new BufferedWriter(new FileWriter(bashScript));
-			writer.write(script.toString());
-			writer.flush();
-			writer.close();
-		} catch (IOException e)
-		{
-			e.printStackTrace();
-		}
-
-		return bashScript.getAbsolutePath();
+		return exeCommand;
 	}
 
 }
