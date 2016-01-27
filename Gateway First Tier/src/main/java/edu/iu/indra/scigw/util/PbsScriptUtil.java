@@ -35,6 +35,7 @@ public class PbsScriptUtil
 			appendWithNewLine(script, CommandHelper.getEmailCommand());
 			appendWithNewLine(script, CommandHelper.getAddEmailCommand(config.getEmail()));
 		}
+		
 
 		return script;
 	}

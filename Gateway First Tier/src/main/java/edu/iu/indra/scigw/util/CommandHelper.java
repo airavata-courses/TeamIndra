@@ -45,6 +45,14 @@ public class CommandHelper
 	{
 		return "#PBS -q " + qname;
 	}
+	public static String getOutputFilePathCommand(String outpath)
+	{
+		return "#PBS -o " + outpath ;
+	}
+	public static String getErrorFilePathCommand(String errorpath)
+	{
+		return "#PBS -e " + errorpath ;
+	}
 
 	public static String getJobNameCommand(String name)
 	{

@@ -95,6 +95,17 @@ public abstract class ApplicationHandler
 	{
 		StringBuilder script = PbsScriptUtil.createPbsScript(jobConfig);
 		
+		String getOutpath = CommandHelper.getOutputFilePathCommand(constants.getJobDirPath(jobConfig.getUid().toString()));
+		
+		script.append(getOutpath);
+		script.append("\n");
+		
+		String getErrorpath = CommandHelper.getErrorFilePathCommand(constants.getJobDirPath(jobConfig.getUid().toString()));
+		
+		script.append(getErrorpath);
+		script.append("\n");
+		
+		
 		String commandList = generatePBSCommandList();
 		
 		if (commandList != null && commandList.length() > 0){
