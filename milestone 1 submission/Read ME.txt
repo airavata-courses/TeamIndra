@@ -1,5 +1,6 @@
 
 Before running the jar file: Please copy folders helloapp amd sortapp to /N//dc2//scratch//<username>//  directory. This is required as jobs are scheduled for these applications. 
+Set the appropriate permission to file using command : chmod 777 filename
 
 Running the jar file: java -jar Gateway_First_Tier-0.0.1-SNAPSHOT-shaded.jar
 
