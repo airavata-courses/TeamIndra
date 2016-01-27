@@ -33,4 +33,15 @@ public class ApplicationManager
 
 		applicationHandler.submitJob();
 	}
+
+	public ApplicationHandlerFactory getApplicationHandlerFactory()
+	{
+		return this.applicationHandlerFactory;
+	}
+
+	public void setApplicationHandlerFactory(ApplicationHandlerFactory applicationHandlerFactory)
+	{
+		this.applicationHandlerFactory = applicationHandlerFactory;
+	}
+
 }

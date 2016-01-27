@@ -31,4 +31,24 @@ public class SimpleApplicationHandlerFactory implements ApplicationHandlerFactor
 		return applicationHandler;
 	}
 
+	public SortingApplicationHandler getSortHandler()
+	{
+		return this.sortHandler;
+	}
+
+	public void setSortHandler(SortingApplicationHandler sortHandler)
+	{
+		this.sortHandler = sortHandler;
+	}
+
+	public MpiHelloApplicationHandler getMpiHandler()
+	{
+		return this.mpiHandler;
+	}
+
+	public void setMpiHandler(MpiHelloApplicationHandler mpiHandler)
+	{
+		this.mpiHandler = mpiHandler;
+	}
+
 }

@@ -112,4 +112,25 @@ public class SftpFileHandlerImpl implements FileHandler
 
 		return destPbsScriptPath;
 	}
+
+	public ConnectionHandler getConnectionHandler()
+	{
+		return this.connectionHandler;
+	}
+
+	public void setConnectionHandler(ConnectionHandler connectionHandler)
+	{
+		this.connectionHandler = connectionHandler;
+	}
+
+	public Constants getConstants()
+	{
+		return this.constants;
+	}
+
+	public void setConstants(Constants constants)
+	{
+		this.constants = constants;
+	}
+
 }

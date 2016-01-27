@@ -165,4 +165,14 @@ public class ConnectionHandlerImpl implements ConnectionHandler
 		return out.toString();
 	}
 
+	public UserInput getUserInput()
+	{
+		return this.userInput;
+	}
+
+	public void setUserInput(UserInput userInput)
+	{
+		this.userInput = userInput;
+	}
+
 }

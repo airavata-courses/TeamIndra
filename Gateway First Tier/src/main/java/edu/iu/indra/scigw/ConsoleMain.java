@@ -69,6 +69,7 @@ public class ConsoleMain
 			}
 
 			scanner.close();
+			
 		} catch (Exception e)
 		{
 			throw new ExecutionException("Failed to run the application", e);

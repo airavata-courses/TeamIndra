@@ -11,8 +11,13 @@
 
 	<bean
 		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
-		<property name="location">
-			<value>config.properties</value>
+		<property name="ignoreUnresolvablePlaceholders" value="true" />
+		<property name="ignoreResourceNotFound" value="true" />
+		<property name="locations">
+			<list>
+				<value>config.properties</value>
+				<value>file:./conf/override_config.properties</value>
+			</list>
 		</property>
 	</bean>
 
@@ -42,12 +47,50 @@
 		<property name="fileHandler" ref="fileHandler" />
 	</bean>
 
-	<bean class="edu.iu.indra.scigw.applications.SortingApplicationHandler"
+	<bean id="sortHandler"
+		class="edu.iu.indra.scigw.applications.SortingApplicationHandler"
 		parent="applicationHandler">
 	</bean>
 
-	<bean class="edu.iu.indra.scigw.applications.MpiHelloApplicationHandler"
+
+	<bean id="constants" class="edu.iu.indra.scigw.util.Constants">
+		<property name="userConfig" ref="userConfig"></property>
+	</bean>
+
+	<bean id="mpiHandler"
+		class="edu.iu.indra.scigw.applications.MpiHelloApplicationHandler"
 		parent="applicationHandler">
+	</bean>
+
+	<bean id="connectionHandler"
+		class="edu.iu.indra.scigw.connectionhandler.ConnectionHandlerImpl">
+		<property name="userInput" ref="userConfig"></property>
+	</bean>
+
+	<bean id="fileHandler" class="edu.iu.indra.scigw.filehandler.SftpFileHandlerImpl">
+		<property name="connectionHandler" ref="connectionHandler"></property>
+		<property name="constants">
+			<ref local="constants" />
+		</property>
+	</bean>
+
+	<bean id="applicationHandlerFactory"
+		class="edu.iu.indra.scigw.applications.SimpleApplicationHandlerFactory">
+		<property name="mpiHandler" ref="mpiHandler"></property>
+		<property name="sortHandler" ref="sortHandler"></property>
+	</bean>
+
+	<bean id="applicationManager" class="edu.iu.indra.scigw.applications.ApplicationManager">
+		<property name="applicationHandlerFactory" ref="applicationHandlerFactory"></property>
+	</bean>
+
+	<bean id="jobMonitor" class="edu.iu.indra.scigw.applications.JobMonitor">
+		<property name="connectionHandlerImpl" ref="connectionHandler"></property>
+		<property name="userConfig" ref="userConfig"></property>
+	</bean>
+
+	<bean id="errorMessages" class="edu.iu.indra.scigw.errorcodes.ErrorMessages">
+		<property name="messageSource" ref="messageSource"></property>
 	</bean>
 
 </beans> 

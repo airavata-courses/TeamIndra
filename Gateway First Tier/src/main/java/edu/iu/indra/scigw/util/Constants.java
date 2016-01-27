@@ -58,8 +58,22 @@ public class Constants
 	{
 		StringBuilder out = new StringBuilder();
 		out.append("\n");
-		out.append("if ls " + getJobDirPath(jc.getUid().toString()) + jc.getJobName() + ".o* " + "1> /dev/null 2>&1; then\n" + "\techo \"The job has been executed . The output files are attached\" | mailx -r \"TeamIndra\" -s \"[Attention] : Job Completion Mail(Attachments)\" -a " + getJobDirPath(jc.getUid().toString()) + jc.getJobName() + ".o* \"pmmercha@iu.edu\" \nfi");
+		out.append("if ls " + getJobDirPath(jc.getUid().toString()) + jc.getJobName() + ".o* "
+				+ "1> /dev/null 2>&1; then\n"
+				+ "\techo \"The job has been executed . The output files are attached\" | mailx -r \"TeamIndra\" -s \"[Attention] : Job Completion Mail(Attachments)\" -a "
+				+ getJobDirPath(jc.getUid().toString()) + jc.getJobName()
+				+ ".o* \"pmmercha@iu.edu\" \nfi");
 		return out.toString();
+	}
+
+	public UserInput getUserConfig()
+	{
+		return this.userConfig;
+	}
+
+	public void setUserConfig(UserInput userConfig)
+	{
+		this.userConfig = userConfig;
 	}
 
 }

@@ -33,4 +33,14 @@ public class ErrorMessages
 		return messageSource.getMessage(errorCode, args, errorCode, locale);
 	}
 
+	public MessageSource getMessageSource()
+	{
+		return this.messageSource;
+	}
+
+	public void setMessageSource(MessageSource messageSource)
+	{
+		this.messageSource = messageSource;
+	}
+
 }

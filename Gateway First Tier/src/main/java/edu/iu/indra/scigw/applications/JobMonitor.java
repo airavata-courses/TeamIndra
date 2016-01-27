@@ -38,4 +38,24 @@ public class JobMonitor implements JobStatusHandler
 		}
 	}
 
+	public ConnectionHandlerImpl getConnectionHandlerImpl()
+	{
+		return this.connectionHandlerImpl;
+	}
+
+	public void setConnectionHandlerImpl(ConnectionHandlerImpl connectionHandlerImpl)
+	{
+		this.connectionHandlerImpl = connectionHandlerImpl;
+	}
+
+	public UserInput getUserConfig()
+	{
+		return this.userConfig;
+	}
+
+	public void setUserConfig(UserInput userConfig)
+	{
+		this.userConfig = userConfig;
+	}
+
 }
