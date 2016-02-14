@@ -5,3 +5,9 @@ Gateway First Tier/mpi.sh
 Gateway First Tier/scigw.log
 Gateway First Tier/scigw.log
 *.log
+*.component
+Gateway Web Service/.settings/org.eclipse.jdt.core.prefs
+*.prefs
+Gateway Web Service/.springBeans
+*.project
+Gateway Web Service/.classpath
