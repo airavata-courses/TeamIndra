@@ -29,7 +29,7 @@ public class JobSubmitController
 	{
 		try
 		{
-			//run mpi run by default now
+			//run mpi run by default for now
 			applicationManager.runApplication(jobConfig, 1);
 		} catch (SciGwException e)
 		{

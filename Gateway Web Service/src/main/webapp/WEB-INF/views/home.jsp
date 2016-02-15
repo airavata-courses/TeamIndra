@@ -35,8 +35,10 @@
 
 		<!-- Collapsible Panels - START -->
 		<div class="container">
+			
+
 			<div class="row">
-				<div class="col-md-8">
+				<div class="col-md-6">
 					<div class="panel panel-default">
 						<div class="panel-heading">
 							<h3 class="panel-title">Submit Job</h3>
@@ -45,7 +47,15 @@
 						</div>
 						<div class="panel-body">
 
-							<form class="form-horizontal" role="form" id="submitJobForm" method="post"  action="./submitjob">
+							<form class="form-horizontal" role="form" id="submitJobForm"
+								method="post" action="./submitjob">
+
+								<div class="alert alert-success" id="result">
+									<a href="#" class="close" data-dismiss="alert"
+										aria-label="close" hidden="true">&times;</a> <strong>Yo!</strong>
+									Successfully submitted job to server
+								</div>
+
 								<div class="form-group">
 									<label class="control-label col-sm-2" for="jobName">Job-name:</label>
 									<div class="col-sm-10">
@@ -54,40 +64,47 @@
 									</div>
 								</div>
 								<div class="form-group">
-									<label class="control-label col-sm-2" for="email">IU Email:</label>
+									<label class="control-label col-sm-2" for="email">IU
+										Email:</label>
 									<div class="col-sm-10">
 										<input type="email" class="form-control" id="email"
 											placeholder="Enter IU email">
 									</div>
 								</div>
 								<div class="form-group">
-									<label class="control-label col-sm-2" for="nodes">Node count:</label>
+									<label class="control-label col-sm-2" for="nodes">Node
+										count:</label>
 									<div class="col-sm-10">
 										<input type="text" class="form-control" id="nodes"
 											placeholder="Enter node count">
 									</div>
 								</div>
 								<div class="form-group">
-									<label class="control-label col-sm-2" for="maxMemory">Max memory:</label>
+									<label class="control-label col-sm-2" for="maxMemory">Max
+										memory:</label>
 									<div class="col-sm-10">
 										<input type="text" class="form-control" id="maxMemory"
 											placeholder="Enter max memory">
 									</div>
 								</div>
 								<div class="form-group">
-									<label class="control-label col-sm-2" for="wallTime">Wall Time:</label>
+									<label class="control-label col-sm-2" for="wallTime">Wall
+										Time:</label>
 									<div class="col-sm-10">
 										<input type="text" class="form-control" id="wallTime"
 											placeholder="Enter wall time">
 									</div>
 								</div>
 								<div class="form-group">
-									<label class="control-label col-sm-2" for="cores">Core count:</label>
+									<label class="control-label col-sm-2" for="cores">Core
+										count:</label>
 									<div class="col-sm-10">
 										<input type="text" class="form-control" id="cores"
 											placeholder="Enter core count">
 									</div>
 								</div>
+
+
 								<!-- <div class="form-group">
 									<label class="control-label col-sm-2" for="userInputFile">Input file:</label>
 									<div class="col-sm-10">
@@ -98,22 +115,21 @@
 								<div class="form-group">
 									<div class="col-sm-offset-2 col-sm-10">
 										<div class="checkbox" id="sendMail">
-											<label><input type="checkbox" checked="checked"> Send notification</label>
+											<label><input type="checkbox" checked="checked">
+												Send notification</label>
 										</div>
 									</div>
 								</div>
 								<div class="form-group">
 									<div class="col-sm-offset-2 col-sm-10">
-										<button type="submit" class="btn btn-default" >Submit</button>
+										<button type="submit" class="btn btn-default">Submit</button>
 									</div>
 								</div>
 							</form>
 						</div>
-					</div>	
+					</div>
 				</div>
-			</div>
-			<div class="row">
-				<div class="col-md-8">
+				<div class="col-md-5">
 					<div class="panel panel-default">
 						<div class="panel-heading">
 							<h3 class="panel-title">Job Status Monitor</h3>
@@ -124,6 +140,7 @@
 					</div>
 				</div>
 			</div>
+
 		</div>
 		<style>
 .panel-heading span {
@@ -142,70 +159,85 @@
 </style>
 
 		<script type="text/javascript">
-    jQuery(function ($) {
-        $('.panel-heading span.clickable').on("click", function (e) {
-            if ($(this).hasClass('panel-collapsed')) {
-                // expand the panel
-                $(this).parents('.panel').find('.panel-body').slideDown();
-                $(this).removeClass('panel-collapsed');
-                $(this).find('i').removeClass('glyphicon-chevron-down').addClass('glyphicon-chevron-up');
-            }
-            else {
-                // collapse the panel
-                $(this).parents('.panel').find('.panel-body').slideUp();
-                $(this).addClass('panel-collapsed');
-                $(this).find('i').removeClass('glyphicon-chevron-up').addClass('glyphicon-chevron-down');
-            }
-        });
-    });
-</script>
+			jQuery(function($) {
+				$('.panel-heading span.clickable').on(
+						"click",
+						function(e) {
+							if ($(this).hasClass('panel-collapsed')) {
+								// expand the panel
+								$(this).parents('.panel').find('.panel-body')
+										.slideDown();
+								$(this).removeClass('panel-collapsed');
+								$(this).find('i').removeClass(
+										'glyphicon-chevron-down').addClass(
+										'glyphicon-chevron-up');
+							} else {
+								// collapse the panel
+								$(this).parents('.panel').find('.panel-body')
+										.slideUp();
+								$(this).addClass('panel-collapsed');
+								$(this).find('i').removeClass(
+										'glyphicon-chevron-up').addClass(
+										'glyphicon-chevron-down');
+							}
+						});
+			});
+		</script>
 
-<script type="text/javascript">
+		<script type="text/javascript">
+		
+		 $(window).load(function(){
+			 $("#result").hide();
+		    });
+		 
+			$("#submitJobForm").submit(function(event) {
+				// cancels the form submission
+				event.preventDefault();
+				submitForm();
+			});
 
-$("#submitJobForm").submit(function(event){
-    // cancels the form submission
-    event.preventDefault();
-    submitForm();
-});
+			function submitForm() {
+				// Initiate Variables With Form Content
+				var jobName = $("#jobName").val();
+				var email = $("#email").val();
+				var nodes = $("#nodes").val();
+				var maxMemory = $("#maxMemory").val();
+				var wallTime = $("#wallTime").val();
+				var cores = $("#cores").val();
+				var userInputFile = $("#userInputFile");
 
+				var jobConfig = {
+					jobName : jobName,
+					email : email,
+					nodes : nodes,
+					maxMemory : maxMemory,
+					wallTime : wallTime,
+					cores : cores
+				//userInputFile : userInputFile
+				};
 
-function submitForm(){
-    // Initiate Variables With Form Content
-    var jobName = $("#jobName").val();
-    var email = $("#email").val();
-    var nodes = $("#nodes").val();
-    var maxMemory = $("#maxMemory").val();
-    var wallTime = $("#wallTime").val();
-    var cores = $("#cores").val();
-    var userInputFile = $("#userInputFile");
- 	
-    var jobConfig = {
-    		jobName: jobName,
-    		email: email,
-    		nodes: nodes,
-    		maxMemory : maxMemory,
-    		wallTime : wallTime,
-    		cores : cores
-    		//userInputFile : userInputFile
-        };
-    
-    $.ajax({
-        type: "POST",
-        url: "./submitjob",
-        contentType: "application/json",
-        data: JSON.stringify(jobConfig),
-        success : function(text){
-            if (text == "success"){
-                formSuccess();
-            }
-        }
-    });
-}
-function formSuccess(){
-    $( "#msgSubmit" ).removeClass( "hidden" );
-}
-
-</script>
+				$.ajax({
+					type : "POST",
+					url : "./submitjob",
+					contentType : "application/json",
+					data : JSON.stringify(jobConfig),
+					success : function(response) {
+						if (response.success) {
+							formSuccess();
+						}
+					}
+				});
+			}
+			
+			function formSuccess() {
+				$("#result").show();
+				 window.setTimeout(function () {
+				     $("#result").slideUp(500, function () {
+				          $("#result").hide();
+				      });
+				 }, 5000);
+			}
+		</script>
 
 		<!-- Collapsible Panels - END -->
 
