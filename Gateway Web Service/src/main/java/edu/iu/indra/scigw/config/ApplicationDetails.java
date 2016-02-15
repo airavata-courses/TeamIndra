@@ -1,9 +1,13 @@
 package edu.iu.indra.scigw.config;
 
+import org.codehaus.jackson.annotate.JsonIgnore;
+import org.codehaus.jackson.annotate.JsonIgnoreProperties;
+
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class ApplicationDetails
 {
 	Integer appID;
-	JobConfig jobConfig;
+	WebJobConfig jobConfig;
 
 	public Integer getAppID()
 	{
@@ -20,22 +24,37 @@ public class ApplicationDetails
 		return this.jobConfig;
 	}
 
-	public void setJobConfig(JobConfig jobConfig)
+	public void setJobConfig(WebJobConfig jobConfig)
 	{
 		this.jobConfig = jobConfig;
 	}
 
-	@Override
-	public String toString()
-	{
-		return "ApplicationDetails [appID=" + this.appID + ", jobConfig=" + this.jobConfig + "]";
-	}
-
-	public ApplicationDetails(Integer appID, JobConfig jobConfig)
+	public ApplicationDetails(Integer appID, WebJobConfig jobConfig)
 	{
 		super();
 		this.appID = appID;
 		this.jobConfig = jobConfig;
+	}
+
+	@JsonIgnore
+	public JobConfig getBasicJobConfig()
+	{
+		if (jobConfig != null)
+		{
+			return jobConfig.getJobPopulatedJobConfig();
+		}
+
+		return null;
+	}
+
+	public ApplicationDetails()
+	{
+		super();
+	}
+
+	public static ApplicationDetails getSampleJobConfig()
+	{
+		return new ApplicationDetails(0, new WebJobConfig());
 	}
 
 }

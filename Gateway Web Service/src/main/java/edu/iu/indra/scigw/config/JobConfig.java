@@ -4,8 +4,11 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
+import org.codehaus.jackson.annotate.JsonIgnore;
+
 public class JobConfig
 {
+	@JsonIgnore
 	private final UUID uid = UUID.randomUUID();
 	private String jobName;
 	private int nodes = 0;
@@ -15,7 +18,11 @@ public class JobConfig
 	private int cores = 0;
 	private boolean sendMail = true;
 	private String email;
+	
+	@JsonIgnore
 	private Map<String, String> inputFiles;
+	
+	@JsonIgnore
 	private String pbsScriptPath;
 
 	public String getJobName()

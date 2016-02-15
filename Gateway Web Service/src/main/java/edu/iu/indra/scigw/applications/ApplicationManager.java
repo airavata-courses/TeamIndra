@@ -31,7 +31,7 @@ public class ApplicationManager
 		ApplicationHandler applicationHandler = applicationHandlerFactory
 				.getApplicationHandler(appId);
 
-		applicationHandler.submitJob();
+		applicationHandler.submitJob(jobConfig);
 	}
 
 	public ApplicationHandlerFactory getApplicationHandlerFactory()

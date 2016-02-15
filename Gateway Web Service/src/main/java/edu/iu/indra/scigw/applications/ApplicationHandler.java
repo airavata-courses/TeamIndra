@@ -24,9 +24,6 @@ public abstract class ApplicationHandler
 	final static Logger logger = Logger.getLogger(ApplicationHandler.class);
 
 	@Autowired
-	protected JobConfig jobConfig;
-
-	@Autowired
 	Constants constants;
 
 	@Autowired
@@ -37,33 +34,35 @@ public abstract class ApplicationHandler
 
 	protected Scanner scanner = null;
 
-	protected void readJobConfig()
+	protected void readJobConfig(JobConfig jobConfig)
 	{
 		scanner = new Scanner(System.in);
 
 		logger.info("Reading application specific configuration from user");
 
-		getInputForJob();
+		getInputForJob(jobConfig);
 	}
+
 	public String getJobStatus()
 	{
-		
+
 		return null;
-		
+
 	}
-	public void submitJob() throws SciGwException
+
+	public void submitJob(JobConfig jobConfig) throws SciGwException
 	{
 		try
 		{
 			// get required configuration from user
-			readJobConfig();
+			readJobConfig(jobConfig);
 
 			logger.info("Reading config complete");
 			// create PBS script based on input and add job specific execution
 			// line
 			// to script
 			logger.info("Generating PBS script");
-			String pbsFilePath = generatePbsScriptFile();
+			String pbsFilePath = generatePbsScriptFile(jobConfig);
 
 			jobConfig.setPbsScriptPath(pbsFilePath);
 
@@ -82,44 +81,46 @@ public abstract class ApplicationHandler
 
 	}
 
-	protected abstract void getInputForJob();
+	protected abstract void getInputForJob(JobConfig jobConfig);
 
 	/**
 	 * generates PBS script file
 	 * 
 	 * @return PBS script file path
 	 */
-	protected abstract String generatePBSCommandList();
-	
-	protected  String generatePbsScriptFile()
+	protected abstract String generatePBSCommandList(JobConfig jobConfig);
+
+	protected String generatePbsScriptFile(JobConfig jobConfig)
 	{
 		StringBuilder script = PbsScriptUtil.createPbsScript(jobConfig);
-		
-		String getOutpath = CommandHelper.getOutputFilePathCommand(constants.getJobDirPath(jobConfig.getUid().toString()));
-		
+
+		String getOutpath = CommandHelper
+				.getOutputFilePathCommand(constants.getJobDirPath(jobConfig.getUid().toString()));
+
 		script.append(getOutpath);
 		script.append("\n");
-		
-		String getErrorpath = CommandHelper.getErrorFilePathCommand(constants.getJobDirPath(jobConfig.getUid().toString()));
-		
+
+		String getErrorpath = CommandHelper
+				.getErrorFilePathCommand(constants.getJobDirPath(jobConfig.getUid().toString()));
+
 		script.append(getErrorpath);
 		script.append("\n");
-		
-		
-		String commandList = generatePBSCommandList();
-		
-		if (commandList != null && commandList.length() > 0){
+
+		String commandList = generatePBSCommandList(jobConfig);
+
+		if (commandList != null && commandList.length() > 0)
+		{
 			script.append(commandList);
-		}
-		else {
+		} else
+		{
 			// TODO Auto-generated catch block
-			logger.warn("Application didnt return any executable commands.Continuing with no execution command");
+			logger.warn(
+					"Application didnt return any executable commands.Continuing with no execution command");
 
 		}
-		
+
 		script.append(constants.sendMailwithAttachment(jobConfig));
-		
-		
+
 		// write script to file
 		File bashScript = new File("pbs.sh");
 
@@ -135,17 +136,7 @@ public abstract class ApplicationHandler
 		}
 
 		return bashScript.getAbsolutePath();
-		
-	}
 
-	public JobConfig getJobConfig()
-	{
-		return this.jobConfig;
-	}
-
-	public void setJobConfig(JobConfig jobConfig)
-	{
-		this.jobConfig = jobConfig;
 	}
 
 	public Constants getConstants()

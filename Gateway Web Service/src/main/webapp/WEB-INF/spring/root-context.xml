@@ -33,14 +33,14 @@
 	</bean>
 
 	<!-- Configuration for scheduling the job -->
-	<bean id="jobConfig" class="edu.iu.indra.scigw.config.JobConfig">
+	<!-- <bean id="jobConfig" class="edu.iu.indra.scigw.config.JobConfig">
 		<property name="jobName" value="${job.name}" />
 		<property name="nodes" value="${job.nodes}" />
 		<property name="maxMemory" value="${job.maxMemory}" />
 		<property name="wallTime" value="${job.wallTime}" />
 		<property name="cores" value="${job.cores}" />
 		<property name="email" value="${job.email}" />
-	</bean>
+	</bean> -->
 
 	<bean id="errorMessages" class="edu.iu.indra.scigw.errorcodes.ErrorMessages">
 		<property name="messageSource" ref="messageSource"></property>

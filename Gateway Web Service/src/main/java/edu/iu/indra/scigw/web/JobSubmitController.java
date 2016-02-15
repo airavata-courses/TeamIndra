@@ -1,6 +1,7 @@
 package edu.iu.indra.scigw.web;
 
 import org.apache.log4j.Logger;
+import org.codehaus.jackson.map.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -27,13 +28,29 @@ public class JobSubmitController
 	{
 		try
 		{
-			applicationManager.runApplication(appDetails.getJobConfig(), appDetails.getAppID());
+			applicationManager.runApplication(appDetails.getBasicJobConfig(),
+					appDetails.getAppID());
 		} catch (SciGwException e)
 		{
 			throw new SciGwWebException(e.getErrorCode(), e.getMessage());
 		}
 
 		return new SimpleResponse(true, "Submitted job successfully to server");
+	}
+
+	@RequestMapping(value = "/submitjob", method = RequestMethod.GET)
+	public @ResponseBody SimpleResponse submitJob()
+	{
+		ObjectMapper mapper = new ObjectMapper();
+		String submitFormat = "";
+		try
+		{
+			submitFormat = mapper.writeValueAsString(ApplicationDetails.getSampleJobConfig());
+		} catch (Exception e)
+		{
+			e.printStackTrace();
+		}
+		return new SimpleResponse(true, "Submit job in following format: " + submitFormat);
 	}
 
 }

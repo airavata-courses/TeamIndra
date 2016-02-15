@@ -17,8 +17,8 @@ import edu.iu.indra.scigw.connectionhandler.ConnectionHandler;
 import edu.iu.indra.scigw.exceptions.ConnectionFaliedException;
 import edu.iu.indra.scigw.exceptions.FileTransferException;
 import edu.iu.indra.scigw.util.Constants;
-
 @Service("fileHandler")
+
 public class SftpFileHandlerImpl implements FileHandler
 {
 	final static Logger logger = Logger.getLogger(SftpFileHandlerImpl.class);
