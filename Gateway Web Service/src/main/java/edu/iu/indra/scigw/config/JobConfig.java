@@ -11,53 +11,53 @@ public class JobConfig
 	@JsonIgnore
 	private final UUID uid = UUID.randomUUID();
 	private String jobName;
-	private int nodes = 0;
-	private int maxMemory = 0;
+	private Integer nodes = 0;
+	private Integer maxMemory = 0;
 	private String wallTime;
-	private int cput = 0;
-	private int cores = 0;
-	private boolean sendMail = true;
+	private Integer cput = 0;
+	private Integer cores = 0;
+	private Boolean sendMail = true;
 	private String email;
-	
+
 	@JsonIgnore
 	private Map<String, String> inputFiles;
-	
+
 	@JsonIgnore
 	private String pbsScriptPath;
-	
+
 	public String getJobName()
 	{
 		return this.jobName;
 	}
-
-	public void setJobName(String name)
+	
+	public void setJobName(String jobName)
 	{
-		this.jobName = name;
+		this.jobName = jobName;
 	}
 
-	public int getNodes()
+	public Integer getNodes()
 	{
 		return this.nodes;
 	}
 
-	public void setNodes(int nodes)
+	public void setNodes(Integer nodes)
 	{
 		this.nodes = nodes;
 	}
 
-	public int getMaxMemory()
+	public Integer getMaxMemory()
 	{
 		return this.maxMemory;
 	}
 
-	public void setMaxMemory(int maxMemory)
+	public void setMaxMemory(Integer maxMemory)
 	{
 		this.maxMemory = maxMemory;
 	}
 
 	public String getWallTime()
 	{
-		return wallTime;
+		return this.wallTime;
 	}
 
 	public void setWallTime(String wallTime)
@@ -65,22 +65,32 @@ public class JobConfig
 		this.wallTime = wallTime;
 	}
 
-	public int getCput()
+	public Integer getCput()
 	{
 		return this.cput;
 	}
 
-	public void setCput(int cput)
+	public void setCput(Integer cput)
 	{
 		this.cput = cput;
 	}
 
-	public boolean isSendMail()
+	public Integer getCores()
+	{
+		return this.cores;
+	}
+
+	public void setCores(Integer cores)
+	{
+		this.cores = cores;
+	}
+
+	public Boolean getSendMail()
 	{
 		return this.sendMail;
 	}
 
-	public void setSendMail(boolean sendMail)
+	public void setSendMail(Boolean sendMail)
 	{
 		this.sendMail = sendMail;
 	}
@@ -93,16 +103,6 @@ public class JobConfig
 	public void setEmail(String email)
 	{
 		this.email = email;
-	}
-
-	public int getCores()
-	{
-		return this.cores;
-	}
-
-	public void setCores(int cores)
-	{
-		this.cores = cores;
 	}
 
 	public Map<String, String> getInputFiles()

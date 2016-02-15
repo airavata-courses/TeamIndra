@@ -30,7 +30,7 @@ public class PbsScriptUtil
 			appendWithNewLine(script, CommandHelper.getJobWallTime(wallTime));
 		}
 
-		if (config.isSendMail())
+		if (config.getSendMail())
 		{
 			appendWithNewLine(script, CommandHelper.getEmailCommand());
 			appendWithNewLine(script, CommandHelper.getAddEmailCommand(config.getEmail()));

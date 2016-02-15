@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import edu.iu.indra.scigw.applications.ApplicationManager;
-import edu.iu.indra.scigw.config.ApplicationDetails;
+import edu.iu.indra.scigw.config.JobConfig;
 import edu.iu.indra.scigw.exceptions.SciGwException;
 import edu.iu.indra.scigw.exceptions.SciGwWebException;
 import edu.iu.indra.web.response.SimpleResponse;
@@ -24,13 +24,13 @@ public class JobSubmitController
 	@Autowired
 	ApplicationManager applicationManager;
 
-	@RequestMapping(value = "submitjob", method = RequestMethod.POST, consumes = {MediaType.TEXT_HTML_VALUE, MediaType.MULTIPART_FORM_DATA_VALUE})
-	public @ResponseBody SimpleResponse submitJob(@RequestBody ApplicationDetails appDetails)
+	@RequestMapping(value = "submitjob", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
+	public @ResponseBody SimpleResponse submitJob(@RequestBody JobConfig jobConfig)
 	{
 		try
 		{
-			applicationManager.runApplication(appDetails.getBasicJobConfig(),
-					appDetails.getAppID());
+			//run mpi run by default now
+			applicationManager.runApplication(jobConfig, 1);
 		} catch (SciGwException e)
 		{
 			throw new SciGwWebException(e.getErrorCode(), e.getMessage());
@@ -46,7 +46,7 @@ public class JobSubmitController
 		String submitFormat = "";
 		try
 		{
-			submitFormat = mapper.writeValueAsString(ApplicationDetails.getSampleJobConfig());
+			submitFormat = mapper.writeValueAsString(new JobConfig());
 		} catch (Exception e)
 		{
 			e.printStackTrace();

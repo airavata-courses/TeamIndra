@@ -45,9 +45,9 @@
 						</div>
 						<div class="panel-body">
 
-							<form class="form-horizontal" role="form"  method="post" action="./submitjob">
+							<form class="form-horizontal" role="form" id="submitJobForm" method="post"  action="./submitjob">
 								<div class="form-group">
-									<label class="control-label col-sm-2" for="email">Job-name:</label>
+									<label class="control-label col-sm-2" for="jobName">Job-name:</label>
 									<div class="col-sm-10">
 										<input type="text" class="form-control" id="jobName"
 											placeholder="Enter name for job">
@@ -61,40 +61,40 @@
 									</div>
 								</div>
 								<div class="form-group">
-									<label class="control-label col-sm-2" for="email">Node count:</label>
+									<label class="control-label col-sm-2" for="nodes">Node count:</label>
 									<div class="col-sm-10">
 										<input type="text" class="form-control" id="nodes"
 											placeholder="Enter node count">
 									</div>
 								</div>
 								<div class="form-group">
-									<label class="control-label col-sm-2" for="email">Max memory:</label>
+									<label class="control-label col-sm-2" for="maxMemory">Max memory:</label>
 									<div class="col-sm-10">
 										<input type="text" class="form-control" id="maxMemory"
 											placeholder="Enter max memory">
 									</div>
 								</div>
 								<div class="form-group">
-									<label class="control-label col-sm-2" for="email">Wall Time:</label>
+									<label class="control-label col-sm-2" for="wallTime">Wall Time:</label>
 									<div class="col-sm-10">
 										<input type="text" class="form-control" id="wallTime"
 											placeholder="Enter wall time">
 									</div>
 								</div>
 								<div class="form-group">
-									<label class="control-label col-sm-2" for="email">Core count:</label>
+									<label class="control-label col-sm-2" for="cores">Core count:</label>
 									<div class="col-sm-10">
 										<input type="text" class="form-control" id="cores"
 											placeholder="Enter core count">
 									</div>
 								</div>
-								<div class="form-group">
+								<!-- <div class="form-group">
 									<label class="control-label col-sm-2" for="userInputFile">Input file:</label>
 									<div class="col-sm-10">
 										<input
 										type="file" id="userInputFile" placeholder="Select input file">
 									</div>
-								</div>
+								</div> -->
 								<div class="form-group">
 									<div class="col-sm-offset-2 col-sm-10">
 										<div class="checkbox" id="sendMail">
@@ -162,23 +162,48 @@
 
 <script type="text/javascript">
 
-$(function() {
-	//twitter bootstrap script
-	 $("button#submit").click(function(){
-	         $.ajax({
-	     type: "POST",
-	 url: "process.php",
-	 data: $('form.contact').serialize(),
-	         success: function(msg){
-	                 $("#thanks").html(msg)
-	        $("#form-content").modal('hide'); 
-	         },
-	 error: function(){
-	 alert("failure");
-	 }
-	       });
-	 });
-	});
+$("#submitJobForm").submit(function(event){
+    // cancels the form submission
+    event.preventDefault();
+    submitForm();
+});
+
+
+function submitForm(){
+    // Initiate Variables With Form Content
+    var jobName = $("#jobName").val();
+    var email = $("#email").val();
+    var nodes = $("#nodes").val();
+    var maxMemory = $("#maxMemory").val();
+    var wallTime = $("#wallTime").val();
+    var cores = $("#cores").val();
+    var userInputFile = $("#userInputFile");
+ 	
+    var jobConfig = {
+    		jobName: jobName,
+    		email: email,
+    		nodes: nodes,
+    		maxMemory : maxMemory,
+    		wallTime : wallTime,
+    		cores : cores
+    		//userInputFile : userInputFile
+        };
+    
+    $.ajax({
+        type: "POST",
+        url: "./submitjob",
+        contentType: "application/json",
+        data: JSON.stringify(jobConfig),
+        success : function(text){
+            if (text == "success"){
+                formSuccess();
+            }
+        }
+    });
+}
+function formSuccess(){
+    $( "#msgSubmit" ).removeClass( "hidden" );
+}
 
 </script>
 
