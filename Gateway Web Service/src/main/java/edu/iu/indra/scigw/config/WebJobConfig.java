@@ -2,8 +2,6 @@ package edu.iu.indra.scigw.config;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 
 import org.codehaus.jackson.annotate.JsonIgnore;
 import org.codehaus.jackson.annotate.JsonIgnoreProperties;
@@ -13,41 +11,38 @@ import org.springframework.web.multipart.MultipartFile;
 public class WebJobConfig extends JobConfig
 {
 
-	private List<InputFile> inputFileList = new ArrayList<InputFile>();
+	private InputFile userInputFile;
 
-	public List<InputFile> getInputFileList()
+	public InputFile getUserInputFile()
 	{
-		return this.inputFileList;
+		return this.userInputFile;
 	}
 
-	public void setInputFileList(List<InputFile> inputFileList)
+	public void setUserInputFile(InputFile userInputFile)
 	{
-		this.inputFileList = inputFileList;
+		this.userInputFile = userInputFile;
 	}
 
 	@JsonIgnore
 	public JobConfig getJobPopulatedJobConfig()
 	{
-		if (inputFileList != null)
+		if (userInputFile != null)
 		{
-			for (InputFile file : inputFileList)
+			File tmpFile = new File(userInputFile.getFileName());
+
+			try
 			{
-				File tmpFile = new File(file.getFileName());
+				MultipartFile inputFile = userInputFile.getFile();
 
-				try
+				if (inputFile != null)
 				{
-					MultipartFile inputFile = file.getFile();
-
-					if (inputFile != null)
-					{
-						file.getFile().transferTo(tmpFile);
-						addInputFile(tmpFile.getName(), tmpFile.getAbsolutePath());
-					}
-
-				} catch (IOException e)
-				{
-					e.printStackTrace();
+					userInputFile.getFile().transferTo(tmpFile);
+					addInputFile(tmpFile.getName(), tmpFile.getAbsolutePath());
 				}
+
+			} catch (IOException e)
+			{
+				e.printStackTrace();
 			}
 		}
 

@@ -61,8 +61,8 @@ public class Constants
 		out.append("if ls " + getJobDirPath(jc.getUid().toString()) + jc.getJobName() + ".o* "
 				+ "1> /dev/null 2>&1; then\n"
 				+ "\techo \"The job has been executed . The output files are attached\" | mailx -r \"TeamIndra\" -s \"[Attention] : Job Completion Mail(Attachments)\" -a "
-				+ getJobDirPath(jc.getUid().toString()) + jc.getJobName()
-				+ ".o* \"pmmercha@iu.edu\" \nfi");
+				+ getJobDirPath(jc.getUid().toString()) + jc.getJobName() + ".o* \"" + jc.getEmail()
+				+ "\" \nfi");
 		return out.toString();
 	}
 

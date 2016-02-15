@@ -3,6 +3,7 @@ package edu.iu.indra.scigw.web;
 import org.apache.log4j.Logger;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -23,7 +24,7 @@ public class JobSubmitController
 	@Autowired
 	ApplicationManager applicationManager;
 
-	@RequestMapping(value = "/submitjob", method = RequestMethod.POST)
+	@RequestMapping(value = "submitjob", method = RequestMethod.POST, consumes = {MediaType.TEXT_HTML_VALUE, MediaType.MULTIPART_FORM_DATA_VALUE})
 	public @ResponseBody SimpleResponse submitJob(@RequestBody ApplicationDetails appDetails)
 	{
 		try

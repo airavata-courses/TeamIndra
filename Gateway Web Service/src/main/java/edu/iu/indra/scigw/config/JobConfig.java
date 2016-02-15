@@ -24,7 +24,7 @@ public class JobConfig
 	
 	@JsonIgnore
 	private String pbsScriptPath;
-
+	
 	public String getJobName()
 	{
 		return this.jobName;
