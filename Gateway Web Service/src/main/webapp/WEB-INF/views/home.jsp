@@ -137,7 +137,7 @@
 
 							<form class="form-search" role="form" id="jobStatusForm">
 								<input type="text" class="form-control" id="jobId"
-									placeholder="Enter Job Name">
+									placeholder="Enter Job ID">
 								<button type="submit" class="btn btn-default">Get
 									Status</button>
 								<textarea class="jobstatustextarea" disabled="disabled" rows="4"
