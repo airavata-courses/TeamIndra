@@ -36,8 +36,6 @@
 
 		<!-- Collapsible Panels - START -->
 		<div class="container">
-
-
 			<div class="row">
 				<div class="col-md-6">
 					<div class="panel panel-default">
@@ -52,9 +50,7 @@
 								method="post" action="./submitjob">
 
 								<div class="alert alert-success" id="result">
-									<a href="#" class="close" data-dismiss="alert"
-										aria-label="close" hidden="true">&times;</a> <strong>Yo!</strong>
-									Successfully submitted job to server
+									<label id="result_success">Success</label>
 								</div>
 
 								<div class="form-group">
@@ -239,13 +235,14 @@
 					data : JSON.stringify(jobConfig),
 					success : function(response) {
 						if (response.success) {
-							formSuccess();
+							formSuccess(response.message);
 						}
 					}
 				});
 			}
 
-			function formSuccess() {
+			function formSuccess(message) {
+				$("#result_success").text(message)
 				$("#result").show();
 				window.setTimeout(function() {
 					$("#result").slideUp(500, function() {
@@ -264,7 +261,7 @@
 
 				$.ajax({
 					type : "GET",
-					url : "./getJobStatus",
+					url : "./getjobstatus",
 					contentType : "application/json",
 					data : jobStatus,
 					success : function(response) {

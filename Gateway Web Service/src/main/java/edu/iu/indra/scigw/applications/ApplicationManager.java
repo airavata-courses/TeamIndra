@@ -26,12 +26,12 @@ public class ApplicationManager
 		return applications;
 	}
 
-	public void runApplication(JobConfig jobConfig, int appId) throws SciGwException
+	public String runApplication(JobConfig jobConfig, int appId) throws SciGwException
 	{
 		ApplicationHandler applicationHandler = applicationHandlerFactory
 				.getApplicationHandler(appId);
 
-		applicationHandler.submitJob(jobConfig);
+		return applicationHandler.submitJob(jobConfig);
 	}
 
 	public ApplicationHandlerFactory getApplicationHandlerFactory()

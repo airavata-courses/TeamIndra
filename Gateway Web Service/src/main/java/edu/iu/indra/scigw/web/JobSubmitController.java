@@ -14,6 +14,7 @@ import edu.iu.indra.scigw.applications.ApplicationManager;
 import edu.iu.indra.scigw.config.JobConfig;
 import edu.iu.indra.scigw.exceptions.SciGwException;
 import edu.iu.indra.scigw.exceptions.SciGwWebException;
+import edu.iu.indra.web.response.JobSubmissionResponse;
 import edu.iu.indra.web.response.SimpleResponse;
 
 @Controller
@@ -25,22 +26,24 @@ public class JobSubmitController
 	ApplicationManager applicationManager;
 
 	@RequestMapping(value = "submitjob", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
-	public @ResponseBody SimpleResponse submitJob(@RequestBody JobConfig jobConfig)
+	public @ResponseBody JobSubmissionResponse submitJob(@RequestBody JobConfig jobConfig)
 	{
+		String jobId = null;
+
 		try
 		{
-			//run mpi run by default for now
-			applicationManager.runApplication(jobConfig, 1);
+			// run mpi run by default for now
+			jobId = applicationManager.runApplication(jobConfig, 1);
 		} catch (SciGwException e)
 		{
 			throw new SciGwWebException(e.getErrorCode(), e.getMessage());
 		}
 
-		return new SimpleResponse(true, "Submitted job successfully to server");
+		return new JobSubmissionResponse(true, jobId, "Job submited to server. JobId: " + jobId);
 	}
 
 	@RequestMapping(value = "/submitjob", method = RequestMethod.GET)
-	public @ResponseBody SimpleResponse submitJob()
+	public @ResponseBody JobSubmissionResponse submitJob()
 	{
 		ObjectMapper mapper = new ObjectMapper();
 		String submitFormat = "";
@@ -51,7 +54,7 @@ public class JobSubmitController
 		{
 			e.printStackTrace();
 		}
-		return new SimpleResponse(true, "Submit job in following format: " + submitFormat);
+		return new JobSubmissionResponse(true, "Submit job in following format: " + submitFormat);
 	}
 
 }

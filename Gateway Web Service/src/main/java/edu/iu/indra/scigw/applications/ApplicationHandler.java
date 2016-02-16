@@ -50,8 +50,10 @@ public abstract class ApplicationHandler
 
 	}
 
-	public void submitJob(JobConfig jobConfig) throws SciGwException
+	public String submitJob(JobConfig jobConfig) throws SciGwException
 	{
+		String jobId = "";
+
 		try
 		{
 			// get required configuration from user
@@ -69,8 +71,8 @@ public abstract class ApplicationHandler
 			// transfer pbs script and input files to server
 			String destPbsScriptPath = fileHandler.transferApplicationFiles(jobConfig);
 
-			System.out.println(connectionHandler
-					.executeCommandGetResult(CommandHelper.getQsubCommand(destPbsScriptPath)));
+			jobId = connectionHandler
+					.executeCommandGetResult(CommandHelper.getQsubCommand(destPbsScriptPath));
 
 		} catch (SciGwException e)
 		{
@@ -79,6 +81,8 @@ public abstract class ApplicationHandler
 		}
 
 		logger.info("Scheduled execution for job ID: " + jobConfig.getUid().toString());
+
+		return jobId;
 
 	}
 
