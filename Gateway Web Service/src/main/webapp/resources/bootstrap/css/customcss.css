@@ -1,7 +1,8 @@
 @CHARSET "ISO-8859-1";
 
 .jobstatustextarea {
-	overflow-y: scroll;
+	overflow-x: scroll;
 	resize: none;
-	/* Remove this if you want the user to resize the textarea */
+	width: 100%
+		/* Remove this if you want the user to resize the textarea */
 }

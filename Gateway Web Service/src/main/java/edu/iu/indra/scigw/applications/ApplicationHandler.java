@@ -69,7 +69,8 @@ public abstract class ApplicationHandler
 			// transfer pbs script and input files to server
 			String destPbsScriptPath = fileHandler.transferApplicationFiles(jobConfig);
 
-			connectionHandler.executeCommand(CommandHelper.getQsubCommand(destPbsScriptPath));
+			System.out.println(connectionHandler
+					.executeCommandGetResult(CommandHelper.getQsubCommand(destPbsScriptPath)));
 
 		} catch (SciGwException e)
 		{

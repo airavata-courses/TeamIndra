@@ -144,10 +144,8 @@
 									placeholder="Enter Job Name">
 								<button type="submit" class="btn btn-default">Get
 									Status</button>
-								<div class="form-control">
-									<textarea class="jobstatustextarea" disabled="disabled"
-										rows="1" id="jobStatusText" readonly="readonly"></textarea>
-								</div>
+								<textarea class="jobstatustextarea" disabled="disabled" rows="4"
+									id="jobStatusText" ></textarea>
 							</form>
 						</div>
 					</div>
