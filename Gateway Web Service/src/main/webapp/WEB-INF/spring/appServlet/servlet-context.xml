@@ -30,7 +30,7 @@
 		<beans:property name="maxUploadSize" value="100000" />
 	</beans:bean>
 
-	<context:component-scan base-package="edu.iu.indra.." />
+	<context:component-scan base-package="edu.iu.indra." />
 
 
 
