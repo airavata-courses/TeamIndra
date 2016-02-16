@@ -146,6 +146,25 @@
 						</div>
 					</div>
 				</div>
+				<div class="col-md-5">
+					<div class="panel panel-default">
+						<div class="panel-heading">
+							<h3 class="panel-title">Cancel Job</h3>
+							<span class="pull-right clickable"><i
+								class="glyphicon glyphicon-chevron-up"></i></span>
+						</div>
+						<div class="panel-body">
+							<form class="form-search" role="form" id="jobcancel">
+								<input type="text" class="form-control" id="cancel_jobId"
+									placeholder="Enter Job ID">
+
+								<button type="submit" class="btn btn-default">Cancel Job</button>
+							</form>
+						</div>
+					</div>
+				</div>
+			</div>
+			
 			</div>
 
 		</div>
@@ -207,7 +226,36 @@
 				event.preventDefault();
 				getStatus();
 			});
+			
+			$("#jobcancel").submit(function(event) {
+				// cancels the form submission
+				event.preventDefault();
+				cancelJob();
+			});
 
+			function cancelJob() {
+				// Initiate Variables With Form Content
+				var jobId = $("#cancel_jobId").val();
+
+				var jobStatus = {
+					jobId : jobId
+				};
+
+				$.ajax({
+					type : "GET",
+					url : "./canceljob",
+					contentType : "application/json",
+					data : jobStatus,
+					success : function(response) {
+						if (response.success) {
+							//formSuccess();
+							$('#jobStatusText').val(response.message);
+						}
+					}
+				});
+			}
+			
+			
 			function submitForm() {
 				// Initiate Variables With Form Content
 				var jobName = $("#jobName").val();
@@ -271,6 +319,7 @@
 						}
 					}
 				});
+		
 			}
 		</script>
 		<!-- Collapsible Panels - END -->
