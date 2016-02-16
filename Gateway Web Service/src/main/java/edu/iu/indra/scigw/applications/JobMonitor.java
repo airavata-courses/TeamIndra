@@ -20,14 +20,12 @@ public class JobMonitor implements JobStatusHandler
 	@Override
 	public String getJobStatusByJobId(String jobId)
 	{
-		// TODO Auto-generated method stub
 		try
 		{
 			return connectionHandlerImpl
 					.executeCommandGetResult(CommandHelper.getJobStatusByjobIdCommand(jobId));
 		} catch (ExecutionFailedException e)
 		{
-			// TODO Auto-generated catch block
 			return e.toString();
 		}
 	}
@@ -41,7 +39,6 @@ public class JobMonitor implements JobStatusHandler
 					CommandHelper.getJobStatusCommand(this.userConfig.getUsername()));
 		} catch (ExecutionFailedException e)
 		{
-			// TODO Auto-generated catch block
 			return e.toString();
 		}
 	}

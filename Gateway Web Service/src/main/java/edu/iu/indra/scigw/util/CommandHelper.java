@@ -72,4 +72,9 @@ public class CommandHelper
 	{
 		return "qstat " + jobId;
 	}
+	
+	public static String getJobCancelByjobIdCommand(String jobId )
+	{
+		return "qdel " + jobId;
+	}
 }

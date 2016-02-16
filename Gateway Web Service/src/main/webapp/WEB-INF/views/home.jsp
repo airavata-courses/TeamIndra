@@ -157,7 +157,9 @@
 							<form class="form-search" role="form" id="jobcancel">
 								<input type="text" class="form-control" id="cancel_jobId"
 									placeholder="Enter Job ID">
-
+								<div class="alert alert-success" id="cancel_result">
+									<label id="cancel_result_success">Job successfully cancelled</label>
+								</div>
 								<button type="submit" class="btn btn-default">Cancel Job</button>
 							</form>
 						</div>
@@ -213,6 +215,7 @@
 		<script type="text/javascript">
 			$(window).load(function() {
 				$("#result").hide();
+				$("#cancel_result").hide();
 			});
 
 			$("#submitJobForm").submit(function(event) {
@@ -248,8 +251,7 @@
 					data : jobStatus,
 					success : function(response) {
 						if (response.success) {
-							//formSuccess();
-							$('#jobStatusText').val(response.message);
+							cancelFormSuccess();
 						}
 					}
 				});
@@ -295,6 +297,16 @@
 				window.setTimeout(function() {
 					$("#result").slideUp(500, function() {
 						$("#result").hide();
+					});
+				}, 10000);
+			}
+			
+			function cancelFormSuccess(message) {
+				$("#cancel_result_success").text(message)
+				$("#cancel_result").show();
+				window.setTimeout(function() {
+					$("#cancel_result").slideUp(500, function() {
+						$("#cancel_result").hide();
 					});
 				}, 5000);
 			}
