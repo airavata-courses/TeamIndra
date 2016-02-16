@@ -17,8 +17,7 @@
 	href="./resources/bootstrap/css/bootstrap.min.css" />
 <link rel="stylesheet" type="text/css"
 	href="./resources/font-awesome/css/font-awesome.min.css" />
-<link rel="stylesheet" type="text/css"
-	href="./resources/bootstrap/css/customcss.css" />
+
 
 <script type="text/javascript"
 	src="./resources/bootstrap/js/bootstrap.min.js"></script>
@@ -36,7 +35,7 @@
 
 		<!-- Collapsible Panels - START -->
 		<div class="container">
-
+			
 
 			<div class="row">
 				<div class="col-md-6">
@@ -137,19 +136,7 @@
 							<span class="pull-right clickable"><i
 								class="glyphicon glyphicon-chevron-up"></i></span>
 						</div>
-						<div class="panel-body">
-
-							<form class="form-search" role="form" id="jobStatusForm">
-								<input type="text" class="form-control" id="jobId"
-									placeholder="Enter Job Name">
-								<button type="submit" class="btn btn-default">Get
-									Status</button>
-								<div class="form-control">
-									<textarea class="jobstatustextarea" disabled="disabled"
-										rows="1" id="jobStatusText" readonly="readonly"></textarea>
-								</div>
-							</form>
-						</div>
+						<div class="panel-body">Monitor job here</div>
 					</div>
 				</div>
 			</div>
@@ -198,20 +185,15 @@
 		</script>
 
 		<script type="text/javascript">
-			$(window).load(function() {
-				$("#result").hide();
-			});
-
+		
+		 $(window).load(function(){
+			 $("#result").hide();
+		    });
+		 
 			$("#submitJobForm").submit(function(event) {
 				// cancels the form submission
 				event.preventDefault();
 				submitForm();
-			});
-
-			$("#jobStatusForm").submit(function(event) {
-				// cancels the form submission
-				event.preventDefault();
-				getStatus();
 			});
 
 			function submitForm() {
@@ -246,39 +228,19 @@
 					}
 				});
 			}
-
+			
 			function formSuccess() {
 				$("#result").show();
-				window.setTimeout(function() {
-					$("#result").slideUp(500, function() {
-						$("#result").hide();
-					});
-				}, 5000);
-			}
-
-			function getStatus() {
-				// Initiate Variables With Form Content
-				var jobId = $("#jobId").val();
-
-				var jobStatus = {
-					jobId : jobId
-				};
-
-				$.ajax({
-					type : "GET",
-					url : "./getJobStatus",
-					contentType : "application/json",
-					data : jobStatus,
-					success : function(response) {
-						if (response.success) {
-							//formSuccess();
-							$('#jobStatusText').val(response.message);
-						}
-					}
-				});
+				 window.setTimeout(function () {
+				     $("#result").slideUp(500, function () {
+				          $("#result").hide();
+				      });
+				 }, 5000);
 			}
 		</script>
+
 		<!-- Collapsible Panels - END -->
+
 	</div>
 </body>
 </html>

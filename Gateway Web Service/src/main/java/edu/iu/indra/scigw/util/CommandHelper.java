@@ -68,8 +68,4 @@ public class CommandHelper
 	{
 		return "qstat " + "-u " + userName;
 	}
-	public static String getJobStatusByjobIdCommand(String jobId )
-	{
-		return "qstat " + jobId;
-	}
 }

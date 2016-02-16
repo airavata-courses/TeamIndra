@@ -19,8 +19,8 @@ public class JobStatusController
 	@Autowired
 	JobMonitor jobMonitor;
 
-	@RequestMapping(value = "/getJobStatus", method = RequestMethod.GET)
-	public @ResponseBody SimpleResponse getJobStatus(@RequestParam String jobId)
+	@RequestMapping(value = "/getjobstatus/{jobid}", method = RequestMethod.GET)
+	public @ResponseBody SimpleResponse submitJob(@RequestParam String jobId)
 	{
 		String status = jobMonitor.getJobStatusByJobId(jobId);
 		return new SimpleResponse(true, status);

@@ -21,15 +21,7 @@ public class JobMonitor implements JobStatusHandler
 	public String getJobStatusByJobId(String jobId)
 	{
 		// TODO Auto-generated method stub
-		try
-		{
-			return connectionHandlerImpl
-					.executeCommandGetResult(CommandHelper.getJobStatusByjobIdCommand(jobId));
-		} catch (ExecutionFailedException e)
-		{
-			// TODO Auto-generated catch block
-			return e.toString();
-		}
+		return null;
 	}
 
 	@Override
