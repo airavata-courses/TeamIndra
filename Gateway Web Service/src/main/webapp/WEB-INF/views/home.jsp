@@ -109,6 +109,7 @@
 										type="file" id="userInputFile" placeholder="Select input file">
 									</div>
 								</div> -->
+
 								<div class="form-group">
 									<div class="col-sm-offset-2 col-sm-10">
 										<div class="checkbox" id="sendMail">
@@ -117,10 +118,13 @@
 										</div>
 									</div>
 								</div>
+
+
 								<div class="form-group">
 									<div class="col-sm-offset-2 col-sm-10">
 										<button type="submit" class="btn btn-default">Submit</button>
 									</div>
+
 								</div>
 							</form>
 						</div>
@@ -141,7 +145,7 @@
 								<button type="submit" class="btn btn-default">Get
 									Status</button>
 								<textarea class="jobstatustextarea" disabled="disabled" rows="4"
-									id="jobStatusText" ></textarea>
+									id="jobStatusText"></textarea>
 							</form>
 						</div>
 					</div>
@@ -158,19 +162,42 @@
 								<input type="text" class="form-control" id="cancel_jobId"
 									placeholder="Enter Job ID">
 								<div class="alert alert-success" id="cancel_result">
-									<label id="cancel_result_success">Job successfully cancelled</label>
+									<label id="cancel_result_success">Job successfully
+										cancelled</label>
 								</div>
-								<button type="submit" class="btn btn-default">Cancel Job</button>
+								<button type="submit" class="btn btn-default">Cancel
+									Job</button>
 							</form>
 						</div>
 					</div>
 				</div>
-			</div>
-			
+				
+				
+				<div class="col-md-5">
+					<div class="panel panel-default">
+						<div class="panel-heading">
+							<h3 class="panel-title">Input File Upload</h3>
+							<span class="pull-right clickable"><i
+								class="glyphicon glyphicon-chevron-up"></i></span>
+						</div>
+						<div class="panel-body">
+							<form class="form-search" enctype="multipart/form-data" role="form" id="uploadFile">
+								<input type="file" class="form-control" id="file_upload">
+							
+								<button type="submit" class="btn btn-default">Upload
+								</button>
+							</form>
+						</div>
+					</div>
+				</div>
+				
+				
 			</div>
 
 		</div>
-		<style>
+
+	</div>
+	<style>
 .panel-heading span {
 	margin-top: -20px;
 	font-size: 15px;
@@ -184,157 +211,205 @@
 .clickable {
 	cursor: pointer;
 }
+
+.btn-file {
+	position: relative;
+	overflow: hidden;
+}
+
+.btn-file input[type=file] {
+	position: absolute;
+	top: 0;
+	right: 0;
+	min-width: 100%;
+	min-height: 100%;
+	font-size: 100px;
+	text-align: right;
+	filter: alpha(opacity = 0);
+	opacity: 0;
+	outline: none;
+	background: white;
+	cursor: inherit;
+	display: block;
+}
 </style>
 
-		<script type="text/javascript">
-			jQuery(function($) {
-				$('.panel-heading span.clickable').on(
-						"click",
-						function(e) {
-							if ($(this).hasClass('panel-collapsed')) {
-								// expand the panel
-								$(this).parents('.panel').find('.panel-body')
-										.slideDown();
-								$(this).removeClass('panel-collapsed');
-								$(this).find('i').removeClass(
-										'glyphicon-chevron-down').addClass(
-										'glyphicon-chevron-up');
-							} else {
-								// collapse the panel
-								$(this).parents('.panel').find('.panel-body')
-										.slideUp();
-								$(this).addClass('panel-collapsed');
-								$(this).find('i').removeClass(
-										'glyphicon-chevron-up').addClass(
-										'glyphicon-chevron-down');
-							}
-						});
-			});
-		</script>
-
-		<script type="text/javascript">
-			$(window).load(function() {
-				$("#result").hide();
-				$("#cancel_result").hide();
-			});
-
-			$("#submitJobForm").submit(function(event) {
-				// cancels the form submission
-				event.preventDefault();
-				submitForm();
-			});
-
-			$("#jobStatusForm").submit(function(event) {
-				// cancels the form submission
-				event.preventDefault();
-				getStatus();
-			});
-			
-			$("#jobcancel").submit(function(event) {
-				// cancels the form submission
-				event.preventDefault();
-				cancelJob();
-			});
-
-			function cancelJob() {
-				// Initiate Variables With Form Content
-				var jobId = $("#cancel_jobId").val();
-
-				var jobStatus = {
-					jobId : jobId
-				};
-
-				$.ajax({
-					type : "GET",
-					url : "./canceljob",
-					contentType : "application/json",
-					data : jobStatus,
-					success : function(response) {
-						if (response.success) {
-							cancelFormSuccess();
+	<script type="text/javascript">
+		jQuery(function($) {
+			$('.panel-heading span.clickable').on(
+					"click",
+					function(e) {
+						if ($(this).hasClass('panel-collapsed')) {
+							// expand the panel
+							$(this).parents('.panel').find('.panel-body')
+									.slideDown();
+							$(this).removeClass('panel-collapsed');
+							$(this).find('i').removeClass(
+									'glyphicon-chevron-down').addClass(
+									'glyphicon-chevron-up');
+						} else {
+							// collapse the panel
+							$(this).parents('.panel').find('.panel-body')
+									.slideUp();
+							$(this).addClass('panel-collapsed');
+							$(this).find('i').removeClass(
+									'glyphicon-chevron-up').addClass(
+									'glyphicon-chevron-down');
 						}
-					}
-				});
-			}
-			
-			
-			function submitForm() {
-				// Initiate Variables With Form Content
-				var jobName = $("#jobName").val();
-				var email = $("#email").val();
-				var nodes = $("#nodes").val();
-				var maxMemory = $("#maxMemory").val();
-				var wallTime = $("#wallTime").val();
-				var cores = $("#cores").val();
-				var userInputFile = $("#userInputFile");
-
-				var jobConfig = {
-					jobName : jobName,
-					email : email,
-					nodes : nodes,
-					maxMemory : maxMemory,
-					wallTime : wallTime,
-					cores : cores
-				//userInputFile : userInputFile
-				};
-
-				$.ajax({
-					type : "POST",
-					url : "./submitjob",
-					contentType : "application/json",
-					data : JSON.stringify(jobConfig),
-					success : function(response) {
-						if (response.success) {
-							formSuccess(response.message);
-						}
-					}
-				});
-			}
-
-			function formSuccess(message) {
-				$("#result_success").text(message)
-				$("#result").show();
-				window.setTimeout(function() {
-					$("#result").slideUp(500, function() {
-						$("#result").hide();
 					});
-				}, 10000);
-			}
-			
-			function cancelFormSuccess(message) {
-				$("#cancel_result_success").text(message)
-				$("#cancel_result").show();
-				window.setTimeout(function() {
-					$("#cancel_result").slideUp(500, function() {
-						$("#cancel_result").hide();
-					});
-				}, 5000);
-			}
+		});
+	</script>
 
-			function getStatus() {
-				// Initiate Variables With Form Content
-				var jobId = $("#jobId").val();
+	<script type="text/javascript">
+		$(window).load(function() {
+			$("#result").hide();
+			$("#cancel_result").hide();
+		});
 
-				var jobStatus = {
-					jobId : jobId
-				};
+		$("#submitJobForm").submit(function(event) {
+			// cancels the form submission
+			event.preventDefault();
+			submitForm();
+		});
+		$("#uploadFile").submit(function(event) {
+			// cancels the form submission
+			event.preventDefault();
+			uploadFile();
+		});
 
-				$.ajax({
-					type : "GET",
-					url : "./getjobstatus",
-					contentType : "application/json",
-					data : jobStatus,
-					success : function(response) {
-						if (response.success) {
-							//formSuccess();
-							$('#jobStatusText').val(response.message);
-						}
+		$("#jobStatusForm").submit(function(event) {
+			// cancels the form submission
+			event.preventDefault();
+			getStatus();
+		});
+
+		$("#jobcancel").submit(function(event) {
+			// cancels the form submission
+			event.preventDefault();
+			cancelJob();
+		});
+
+		function cancelJob() {
+			// Initiate Variables With Form Content
+			var jobId = $("#cancel_jobId").val();
+
+			var jobStatus = {
+				jobId : jobId
+			};
+
+			$.ajax({
+				type : "GET",
+				url : "./canceljob",
+				contentType : "application/json",
+				data : jobStatus,
+				success : function(response) {
+					if (response.success) {
+						cancelFormSuccess();
 					}
+				}
+			});
+		}
+
+		function submitForm() {
+			// Initiate Variables With Form Content
+			var jobName = $("#jobName").val();
+			var email = $("#email").val();
+			var nodes = $("#nodes").val();
+			var maxMemory = $("#maxMemory").val();
+			var wallTime = $("#wallTime").val();
+			var cores = $("#cores").val();
+			var userInputFile = $("#fileinput");
+
+			var jobConfig = {
+				jobName : jobName,
+				email : email,
+				nodes : nodes,
+				maxMemory : maxMemory,
+				wallTime : wallTime,
+				cores : cores
+			//userInputFile : userInputFile
+			};
+
+			$.ajax({
+				type : "POST",
+				url : "./submitjob",
+				contentType : "application/json",
+				data : JSON.stringify(jobConfig),
+				success : function(response) {
+					if (response.success) {
+						formSuccess(response.message);
+					}
+				}
+			});
+
+		}
+
+		function uploadFile() {
+			
+			var filename = new FormData(document.getElementById("file_upload"));
+			alert(filename);
+
+			$.ajax({
+				type : "POST",
+				url : "./upload",
+				enctype: 'multipart/form-data',
+				data : filename,
+				processData : false,
+				contentType: false,
+			}).done(function( data ) {
+                alert("Upload done")
+            });
+			return false;
+		}
+
+		function passFile() {
+
+		}
+
+		function formSuccess(message) {
+			$("#result_success").text(message)
+			$("#result").show();
+			window.setTimeout(function() {
+				$("#result").slideUp(500, function() {
+					$("#result").hide();
 				});
-		
-			}
-		</script>
-		<!-- Collapsible Panels - END -->
+			}, 10000);
+		}
+
+		function cancelFormSuccess(message) {
+			$("#cancel_result_success").text(message)
+			$("#cancel_result").show();
+			window.setTimeout(function() {
+				$("#cancel_result").slideUp(500, function() {
+					$("#cancel_result").hide();
+				});
+			}, 5000);
+		}
+
+		function getStatus() {
+			// Initiate Variables With Form Content
+			var jobId = $("#jobId").val();
+
+			var jobStatus = {
+				jobId : jobId
+			};
+
+			$.ajax({
+				type : "GET",
+				url : "./getjobstatus",
+				contentType : "application/json",
+				data : jobStatus,
+				success : function(response) {
+					if (response.success) {
+						//formSuccess();
+						$('#jobStatusText').val(response.message);
+					}
+				}
+			});
+
+		}
+	</script>
+	<!-- Collapsible Panels - END -->
 	</div>
 </body>
 </html>
