@@ -181,10 +181,9 @@
 								class="glyphicon glyphicon-chevron-up"></i></span>
 						</div>
 						<div class="panel-body">
-							<form class="form-search" enctype="multipart/form-data" role="form" id="uploadFile">
-								<input type="file" class="form-control" id="file_upload">
-							
-								<button type="submit" class="btn btn-default">Upload
+							<form class="form-search" enctype="multipart/form-data" role="form" id="upload_file"  >
+								<input type="file" name="file" class="form-control" id="fileLoader">
+								<button type="submit" id="fileSubmit" class="btn btn-default">Upload
 								</button>
 							</form>
 						</div>
@@ -261,21 +260,26 @@
 	</script>
 
 	<script type="text/javascript">
+		
+	
 		$(window).load(function() {
 			$("#result").hide();
 			$("#cancel_result").hide();
 		});
+		
+
 
 		$("#submitJobForm").submit(function(event) {
 			// cancels the form submission
 			event.preventDefault();
 			submitForm();
 		});
-		$("#uploadFile").submit(function(event) {
+		
+	  	$("#upload_file").submit(function(event) {
 			// cancels the form submission
 			event.preventDefault();
-			uploadFile();
-		});
+			uploadFile(event);
+		});  
 
 		$("#jobStatusForm").submit(function(event) {
 			// cancels the form submission
@@ -288,7 +292,16 @@
 			event.preventDefault();
 			cancelJob();
 		});
-
+/*
+		function prepareUpload(event)
+		{
+		  files = event.target.files;
+		  alert("File added");
+		}
+		*/
+		
+		
+		
 		function cancelJob() {
 			// Initiate Variables With Form Content
 			var jobId = $("#cancel_jobId").val();
@@ -344,27 +357,43 @@
 
 		}
 
+		
 		function uploadFile() {
 			
-			var filename = new FormData(document.getElementById("file_upload"));
-			alert(filename);
+			//var datafields = $("upload_file");
+			//alert(filename);
+			var file = $('[name="file"]');
+			var filename = $.trim(file.val());  	
 
-			$.ajax({
-				type : "POST",
-				url : "./upload",
-				enctype: 'multipart/form-data',
-				data : filename,
-				processData : false,
-				contentType: false,
-			}).done(function( data ) {
-                alert("Upload done")
-            });
-			return false;
+				$.ajax({
+					type : "POST",
+					url : "./upload",
+					enctype: 'multipart/form-data',
+					data : new FormData(document.getElementById("upload_file")),
+					processData : false,
+					cache: false,
+					contentType: false,
+					success : function(response) {
+						if (response.success) {
+							//formSuccess(response.message);
+							alert("Success");
+						}
+					},
+				
+				 error: function (xhr, ajaxOptions, thrownError) {
+		                if (xhr.readyState == 0 || xhr.status == 0) {
+		                    // not really an error
+		                    return;
+		                } else {
+		                    alert("XHR Status = "+xhr.status);
+		                    alert("Thrown Error = "+thrownError);
+		                    alert("AjaxOptions = "+ajaxOptions)
+		                }
+		          }
+				});
+				
 		}
 
-		function passFile() {
-
-		}
 
 		function formSuccess(message) {
 			$("#result_success").text(message)
