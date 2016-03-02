@@ -145,8 +145,26 @@
 			<version>1.9.13</version>
 		</dependency>
 
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-jdbc</artifactId>
+			<version>4.2.3.RELEASE</version>
+		</dependency>
 
+		<!-- MySQL database driver -->
+		<dependency>
+			<groupId>mysql</groupId>
+			<artifactId>mysql-connector-java</artifactId>
+			<version>5.1.9</version>
+		</dependency>
+
+		<dependency>
+			<groupId>joda-time</groupId>
+			<artifactId>joda-time</artifactId>
+			<version>2.9.1</version>
+		</dependency>
 	</dependencies>
+	
 	<build>
 		<plugins>
 			<plugin>

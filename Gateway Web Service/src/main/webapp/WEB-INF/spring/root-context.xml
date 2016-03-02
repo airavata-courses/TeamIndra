@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
-	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
 	http://www.springframework.org/schema/context
 	http://www.springframework.org/schema/context/spring-context-2.5.xsd">
@@ -33,16 +32,27 @@
 	</bean>
 
 	<!-- Configuration for scheduling the job -->
-	<!-- <bean id="jobConfig" class="edu.iu.indra.scigw.config.JobConfig">
-		<property name="jobName" value="${job.name}" />
-		<property name="nodes" value="${job.nodes}" />
-		<property name="maxMemory" value="${job.maxMemory}" />
-		<property name="wallTime" value="${job.wallTime}" />
-		<property name="cores" value="${job.cores}" />
-		<property name="email" value="${job.email}" />
-	</bean> -->
+	<!-- <bean id="jobConfig" class="edu.iu.indra.scigw.config.JobConfig"> <property 
+		name="jobName" value="${job.name}" /> <property name="nodes" value="${job.nodes}" 
+		/> <property name="maxMemory" value="${job.maxMemory}" /> <property name="wallTime" 
+		value="${job.wallTime}" /> <property name="cores" value="${job.cores}" /> 
+		<property name="email" value="${job.email}" /> </bean> -->
 
 	<bean id="errorMessages" class="edu.iu.indra.scigw.errorcodes.ErrorMessages">
 		<property name="messageSource" ref="messageSource"></property>
+	</bean>
+
+	<bean id="dataSource"
+		class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+
+		<property name="driverClassName" value="com.mysql.jdbc.Driver" />
+		<property name="url" value="jdbc:mysql://localhost:3306/sciwg" />
+		<property name="username" value="root" />
+		<property name="password" value="OldMonk@321" />
+	</bean>
+
+	<bean id="jdbcTemplate"
+		class="org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate">
+		<constructor-arg ref="dataSource" />
 	</bean>
 </beans>
