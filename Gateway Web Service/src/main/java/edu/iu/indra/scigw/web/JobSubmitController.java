@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import edu.iu.indra.scigw.applications.ApplicationManager;
 import edu.iu.indra.scigw.config.JobConfig;
+import edu.iu.indra.scigw.dao.JobConfigDao;
 import edu.iu.indra.scigw.exceptions.SciGwException;
 import edu.iu.indra.scigw.exceptions.SciGwWebException;
 import edu.iu.indra.web.response.JobSubmissionResponse;
@@ -24,6 +25,9 @@ public class JobSubmitController
 
 	@Autowired
 	ApplicationManager applicationManager;
+
+	@Autowired
+	JobConfigDao jobConfigDAO;
 
 	@RequestMapping(value = "submitjob", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
 	public @ResponseBody JobSubmissionResponse submitJob(@RequestBody JobConfig jobConfig)
@@ -38,7 +42,8 @@ public class JobSubmitController
 		{
 			throw new SciGwWebException(e.getErrorCode(), e.getMessage());
 		}
-
+		jobConfig.setJobID(jobId);
+		jobConfigDAO.insertJobDetails(jobConfig);
 		return new JobSubmissionResponse(true, jobId, "Job submited to server. JobId: " + jobId);
 	}
 

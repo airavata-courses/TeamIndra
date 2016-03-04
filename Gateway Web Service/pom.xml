@@ -148,7 +148,7 @@
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-jdbc</artifactId>
-			<version>4.2.3.RELEASE</version>
+			<version>${org.springframework-version}</version>
 		</dependency>
 
 		<!-- MySQL database driver -->

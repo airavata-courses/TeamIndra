@@ -7,11 +7,13 @@ import java.util.UUID;
 import org.codehaus.jackson.annotate.JsonIgnore;
 import org.codehaus.jackson.annotate.JsonIgnoreProperties;
 
-@JsonIgnoreProperties(ignoreUnknown=true)
+@JsonIgnoreProperties(ignoreUnknown = true)
+
 public class JobConfig
 {
 	@JsonIgnore
 	private final UUID uid = UUID.randomUUID();
+	private String jobID;
 	private String jobName;
 	private Integer nodes = 0;
 	private Integer maxMemory = 0;
@@ -31,7 +33,7 @@ public class JobConfig
 	{
 		return this.jobName;
 	}
-	
+
 	public void setJobName(String jobName)
 	{
 		this.jobName = jobName;
@@ -149,6 +151,16 @@ public class JobConfig
 				+ this.cput + ", cores=" + this.cores + ", sendMail=" + this.sendMail + ", email="
 				+ this.email + ", inputFiles=" + this.inputFiles + ", pbsScriptPath="
 				+ this.pbsScriptPath + "]";
+	}
+
+	public String getJobID()
+	{
+		return jobID;
+	}
+
+	public void setJobID(String jobID)
+	{
+		this.jobID = jobID;
 	}
 
 }
