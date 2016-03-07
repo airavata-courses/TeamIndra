@@ -12,6 +12,6 @@ public interface JobConfigDao
 
 	public void deleteJob(String jobID);
 
-	public JobConfig getJobDetails(String jobName);
+	public JobConfig getJobDetailsByJobID(String jobID);
 
 }

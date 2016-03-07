@@ -9,6 +9,7 @@ import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Component;
 
 import edu.iu.indra.scigw.config.JobConfig;
+import edu.iu.indra.scigw.util.JobMapper;
 
 @Component("jobConfigDao")
 public class JobConfigDaoImpl implements JobConfigDao
@@ -20,15 +21,11 @@ public class JobConfigDaoImpl implements JobConfigDao
 	@Override
 	public List<JobConfig> getJobList()
 	{
-		// String getJobs = "select * from job_details";
-		// return jdbcTemplate.query(getJobs, new RowMapper<JobConfig>() {
-		// public JobConfig mapRow(ResultSet rs, int rowNum) throws SQLException
-		// {
-		// // TODO add mapping here
-		// return new JobConfig();
-		// }
-		// });
-		return null;
+		String SQL = "SELECT * FROM job_details";
+		Map<String, String> namedParameters = new HashMap<String, String>();//
+		List<JobConfig> jobRows = (List<JobConfig>) jdbcTemplate.query(SQL, namedParameters,
+				new JobMapper());
+		return jobRows;
 	}
 
 	@Override
@@ -49,14 +46,20 @@ public class JobConfigDaoImpl implements JobConfigDao
 	@Override
 	public void deleteJob(String jobID)
 	{
+		String sql = "DELETE from job_details WHERE JOBID = :JOBID";
+		Map<String, String> namedParameters = new HashMap<String, String>();//
+		jdbcTemplate.update(sql, namedParameters);
 		// TODO Auto-generated method stub
 
 	}
 
 	@Override
-	public JobConfig getJobDetails(String jobName)
+	public JobConfig getJobDetailsByJobID(String jobID)
 	{
 		// TODO Auto-generated method stub
-		return null;
+		String SQL = "SELECT * FROM job_details WHERE JOBID = :JOBID";
+		Map<String, String> namedParameters = new HashMap<String, String>();//
+		return (JobConfig) jdbcTemplate.query(SQL, namedParameters, new JobMapper());
 	}
+
 }
