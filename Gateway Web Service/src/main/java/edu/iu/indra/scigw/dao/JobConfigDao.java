@@ -3,10 +3,12 @@ package edu.iu.indra.scigw.dao;
 import java.util.List;
 
 import edu.iu.indra.scigw.config.JobConfig;
+import edu.iu.indra.scigw.config.JobStatus;
 
 public interface JobConfigDao
 {
-	public List<JobConfig> getJobList();
+
+	public List<JobStatus> getJobStatusForUser(String userName);
 
 	public void insertJobDetails(JobConfig jobRow);
 
