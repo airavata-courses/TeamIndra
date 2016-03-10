@@ -15,6 +15,8 @@
 <script type="text/javascript" src="./resources/js/jquery-1.10.2.min.js"></script>
 <link rel="stylesheet" type="text/css"
 	href="./resources/bootstrap/css/bootstrap.min.css" />
+	<link rel="stylesheet" type="text/css"
+	href="./resources/bootstrap/css/jquery.bootgrid.min.css" />
 <link rel="stylesheet" type="text/css"
 	href="./resources/font-awesome/css/font-awesome.min.css" />
 <link rel="stylesheet" type="text/css"
@@ -22,6 +24,10 @@
 
 <script type="text/javascript"
 	src="./resources/bootstrap/js/bootstrap.min.js"></script>
+	<script type="text/javascript"
+	src="./resources/bootstrap/js/jquery.bootgrid.fa.min.js"></script>
+	<script type="text/javascript"
+	src="./resources/bootstrap/js/jquery.bootgrid.min.js"></script>
 </head>
 <body>
 
@@ -138,15 +144,19 @@
 								class="glyphicon glyphicon-chevron-up"></i></span>
 						</div>
 						<div class="panel-body">
-
-							<form class="form-search" role="form" id="jobStatusForm">
-								<input type="text" class="form-control" id="jobId"
-									placeholder="Enter Job ID">
-								<button type="submit" class="btn btn-default">Get
-									Status</button>
-								<textarea class="jobstatustextarea" disabled="disabled" rows="4"
-									id="jobStatusText"></textarea>
-							</form>
+						
+						<table id="grid-basic" class="table table-condensed table-hover table-striped">
+						    <thead>
+						        <tr>
+						            <th data-column-id="jobId">Job Id</th>
+						            <th data-column-id="jobName">Job Name</th>
+						             <th data-column-id="status">Status</th>
+						            <!-- <th data-column-id="jobSubmitTime" data-order="desc">Submitted On</th> -->
+						        </tr>
+						    </thead>
+							<tbody>							
+							</tbody>
+							</table>
 						</div>
 					</div>
 				</div>
@@ -189,12 +199,8 @@
 						</div>
 					</div>
 				</div>
-				
-				
 			</div>
-
 		</div>
-
 	</div>
 	<style>
 .panel-heading span {
@@ -265,9 +271,8 @@
 		$(window).load(function() {
 			$("#result").hide();
 			$("#cancel_result").hide();
+			updateStatus();
 		});
-		
-
 
 		$("#submitJobForm").submit(function(event) {
 			// cancels the form submission
@@ -299,8 +304,6 @@
 		  alert("File added");
 		}
 		*/
-		
-		
 		
 		function cancelJob() {
 			// Initiate Variables With Form Content
@@ -354,10 +357,8 @@
 					}
 				}
 			});
-
 		}
 
-		
 		function uploadFile() {
 			
 			//var datafields = $("upload_file");
@@ -391,9 +392,7 @@
 		                }
 		          }
 				});
-				
 		}
-
 
 		function formSuccess(message) {
 			$("#result_success").text(message)
@@ -435,7 +434,21 @@
 					}
 				}
 			});
+		}
+		
+		function updateStatus() {
 
+			 $.ajax({
+				type : "GET",
+				url : "./gejobstatusforuser",
+				contentType : "application/json",
+				success : function(response) {
+					if (response.success) {
+						//$("#grid-basic").bootgrid()
+						$("#grid-basic").bootgrid().bootgrid("append", response.data);
+					}
+				}
+			});  
 		}
 	</script>
 	<!-- Collapsible Panels - END -->

@@ -22,6 +22,7 @@ public class JobConfig
 	private Integer cores = 0;
 	private Boolean sendMail = true;
 	private String email;
+	private String username;
 
 	@JsonIgnore
 	private Map<String, String> inputFiles;
@@ -37,6 +38,16 @@ public class JobConfig
 	public void setJobName(String jobName)
 	{
 		this.jobName = jobName;
+	}
+
+	public String getUsername()
+	{
+		return this.username;
+	}
+
+	public void setUsername(String username)
+	{
+		this.username = username;
 	}
 
 	public Integer getNodes()
@@ -146,11 +157,11 @@ public class JobConfig
 	@Override
 	public String toString()
 	{
-		return "JobConfig [uid=" + this.uid + ", jobName=" + this.jobName + ", nodes=" + this.nodes
-				+ ", maxMemory=" + this.maxMemory + ", wallTime=" + this.wallTime + ", cput="
-				+ this.cput + ", cores=" + this.cores + ", sendMail=" + this.sendMail + ", email="
-				+ this.email + ", inputFiles=" + this.inputFiles + ", pbsScriptPath="
-				+ this.pbsScriptPath + "]";
+		return "JobConfig [uid=" + this.uid + ", jobID=" + this.jobID + ", jobName=" + this.jobName
+				+ ", nodes=" + this.nodes + ", maxMemory=" + this.maxMemory + ", wallTime="
+				+ this.wallTime + ", cput=" + this.cput + ", cores=" + this.cores + ", sendMail="
+				+ this.sendMail + ", email=" + this.email + ", username=" + this.username
+				+ ", pbsScriptPath=" + this.pbsScriptPath + "]";
 	}
 
 	public String getJobID()

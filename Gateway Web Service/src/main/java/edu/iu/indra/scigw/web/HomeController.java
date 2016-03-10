@@ -31,7 +31,6 @@ public class HomeController
 	@RequestMapping(value = "/login", method = RequestMethod.GET)
 	public String login(Locale locale, Model model)
 	{
-		logger.debug("SciGW REST service running");
 		return "login";
 	}
 

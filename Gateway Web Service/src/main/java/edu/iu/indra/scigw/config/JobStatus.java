@@ -4,6 +4,11 @@ import java.util.UUID;
 
 public class JobStatus
 {
+	public enum JOB_STATUS
+	{
+		Q, C, CL, E, H, S, NA;
+	}
+
 	private UUID jobUID;
 	private String jobId;
 	private String jobName;

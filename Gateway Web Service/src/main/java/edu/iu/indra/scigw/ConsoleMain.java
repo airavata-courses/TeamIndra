@@ -11,12 +11,12 @@ import com.jcraft.jsch.Session;
 
 import edu.iu.indra.scigw.applications.ApplicationHandlerFactory;
 import edu.iu.indra.scigw.applications.ApplicationManager;
-import edu.iu.indra.scigw.applications.JobMonitor;
 import edu.iu.indra.scigw.config.JobConfig;
 import edu.iu.indra.scigw.connectionhandler.ConnectionHandler;
 import edu.iu.indra.scigw.exceptions.ConnectionFailedException;
 import edu.iu.indra.scigw.exceptions.ExecutionFailedException;
 import edu.iu.indra.scigw.exceptions.SciGwException;
+import edu.iu.indra.scigw.jobhandler.JobHandler;
 
 public class ConsoleMain
 {
@@ -53,7 +53,7 @@ public class ConsoleMain
 			pid = scanner.nextInt();
 			applicationManager.runApplication(jobConfig, pid);
 
-			JobMonitor jobObj = context.getBean(JobMonitor.class);
+			JobHandler jobObj = context.getBean(JobHandler.class);
 
 			while (true)
 			{
@@ -65,7 +65,7 @@ public class ConsoleMain
 				{
 					break;
 				}
-				System.out.println(jobObj.getJobStatusByUser());
+				System.out.println(jobObj.getAllJobsFromServer());
 			}
 
 			scanner.close();

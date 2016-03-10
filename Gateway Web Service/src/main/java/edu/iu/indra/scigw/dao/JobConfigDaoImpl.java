@@ -2,6 +2,7 @@ package edu.iu.indra.scigw.dao;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -14,6 +15,7 @@ import org.springframework.stereotype.Component;
 
 import edu.iu.indra.scigw.config.JobConfig;
 import edu.iu.indra.scigw.config.JobStatus;
+import edu.iu.indra.scigw.config.JobStatus.JOB_STATUS;
 import edu.iu.indra.scigw.util.JobMapper;
 
 @Component("jobConfigDao")
@@ -23,27 +25,22 @@ public class JobConfigDaoImpl implements JobConfigDao
 	@Autowired
 	private NamedParameterJdbcTemplate jdbcTemplate;
 
-	/*
-	 * @Override public List<JobConfig> getJobList() { String SQL =
-	 * "SELECT * FROM job_details"; Map<String, String> namedParameters = new
-	 * HashMap<String, String>();// List<JobConfig> jobRows = (List<JobConfig>)
-	 * jdbcTemplate.query(SQL, namedParameters, new JobMapper()); return
-	 * jobRows; }
-	 */
-
 	@Override
 	public void insertJobDetails(JobConfig jobRow)
 	{
-		// TODO Auto-generated method stub
 		Map<String, String> namedParameters = new HashMap<String, String>();//
 
+		Date date = new Date();
 		namedParameters.put("UUID", jobRow.getUid().toString());
 		namedParameters.put("JOBID", jobRow.getJobID());
 		namedParameters.put("WALLTIME", jobRow.getWallTime());
 		namedParameters.put("EMAIL", jobRow.getEmail());
-		String sql = "INSERT INTO job_details (UUID, JOBID, WALLTIME, EMAIL) VALUES (:UUID, :JOBID, :WALLTIME, :EMAIL)";
+		namedParameters.put("JOB_STATUS", JOB_STATUS.NA.name());
+		namedParameters.put("SUBMIT_TIME", "" + date.getTime());
+		namedParameters.put("USERNAME", jobRow.getUsername());
+		namedParameters.put("JOBNAME", jobRow.getJobName());
+		String sql = "INSERT INTO job_details (UUID, JOBID, WALLTIME, EMAIL, JOB_STATUS, SUBMIT_TIME, USERNAME, JOBNAME) VALUES (:UUID, :JOBID, :WALLTIME, :EMAIL, :JOB_STATUS, :SUBMIT_TIME, :USERNAME, :JOBNAME)";
 		jdbcTemplate.update(sql, namedParameters);
-
 	}
 
 	@Override
@@ -52,14 +49,11 @@ public class JobConfigDaoImpl implements JobConfigDao
 		String sql = "DELETE from job_details WHERE JOBID = :JOBID";
 		Map<String, String> namedParameters = new HashMap<String, String>();//
 		jdbcTemplate.update(sql, namedParameters);
-		// TODO Auto-generated method stub
-
 	}
 
 	@Override
 	public JobConfig getJobDetailsByJobID(String jobID)
 	{
-		// TODO Auto-generated method stub
 		String SQL = "SELECT * FROM job_details WHERE JOBID = :JOBID";
 		Map<String, String> namedParameters = new HashMap<String, String>();//
 		return (JobConfig) jdbcTemplate.query(SQL, namedParameters, new JobMapper());
@@ -68,24 +62,39 @@ public class JobConfigDaoImpl implements JobConfigDao
 	@Override
 	public List<JobStatus> getJobStatusForUser(String userName)
 	{
-		// TODO Auto-generated method stub
-		String SQL = "SELECT * FROM job_details";
+		String SQL = "SELECT * FROM job_details where username = :USERNAME";
 		Map<String, String> namedParameters = new HashMap<String, String>();//
+		namedParameters.put("USERNAME", userName);
+
 		List<JobStatus> jobRows = (List<JobStatus>) jdbcTemplate.query(SQL, namedParameters,
 				new RowMapper<JobStatus>() {
 
 					@Override
 					public JobStatus mapRow(ResultSet rs, int rowNum) throws SQLException
 					{
-						// TODO Auto-generated method stub
 						JobStatus jobRow = new JobStatus();
 						jobRow.setJobId(rs.getString("JOBID"));
-						jobRow.setJobUID(UUID.fromString(rs.getString("JOBUID")));
+						jobRow.setJobUID(UUID.fromString(rs.getString("UUID")));
+						jobRow.setStatus(rs.getString("JOB_STATUS"));
+						jobRow.setJobSubmitTime(rs.getLong("SUBMIT_TIME"));
+						jobRow.setJobName(rs.getString("JOBNAME"));
 						return jobRow;
 					}
-
 				});
 		return jobRows;
 	}
 
+	@Override
+	public void updateJobStatus(List<JobStatus> jobs)
+	{
+		for (JobStatus status : jobs)
+		{
+			Map<String, String> namedParameters = new HashMap<String, String>();//
+
+			namedParameters.put("JOBID", status.getJobId());
+			namedParameters.put("STATUS", status.getStatus());
+			String sql = "UPDATE job_details set job_status=:STATUS where JOBID=:JOBID";
+			jdbcTemplate.update(sql, namedParameters);
+		}
+	}
 }
