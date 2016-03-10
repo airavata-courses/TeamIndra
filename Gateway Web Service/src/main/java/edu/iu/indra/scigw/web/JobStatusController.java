@@ -39,7 +39,7 @@ public class JobStatusController
 	{
 		String status = jobMonitor.getJobStatusByUser();
 		// jobMonitor.getJobStatusByJobId(jobId);
-		status = jobConfigDAO.getJobList();
+		//status = jobConfigDAO.getJobList();
 		return new ListResponse<JobStatus>(null, true, status);
 	}
 
