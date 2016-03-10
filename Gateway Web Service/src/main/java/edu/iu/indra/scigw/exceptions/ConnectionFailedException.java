@@ -2,17 +2,17 @@ package edu.iu.indra.scigw.exceptions;
 
 import edu.iu.indra.scigw.errorcodes.ErrorCodes;
 
-public class ConnectionFaliedException extends SciGwException
+public class ConnectionFailedException extends SciGwException
 {
 
 	private static final long serialVersionUID = 1L;
 
-	public ConnectionFaliedException()
+	public ConnectionFailedException()
 	{
 		super(ErrorCodes.ErrorInAuth);
 	}
 
-	public ConnectionFaliedException(final String errorCode)
+	public ConnectionFailedException(final String errorCode)
 	{
 		super(errorCode);
 	}

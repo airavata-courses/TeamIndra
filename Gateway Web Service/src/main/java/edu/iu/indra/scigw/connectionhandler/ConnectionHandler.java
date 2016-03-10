@@ -4,16 +4,16 @@ import com.jcraft.jsch.ChannelExec;
 import com.jcraft.jsch.ChannelSftp;
 import com.jcraft.jsch.Session;
 
-import edu.iu.indra.scigw.exceptions.ConnectionFaliedException;
+import edu.iu.indra.scigw.exceptions.ConnectionFailedException;
 import edu.iu.indra.scigw.exceptions.ExecutionFailedException;
 
 public interface ConnectionHandler
 {
-	public ChannelSftp getSftpChannel() throws ConnectionFaliedException;
+	public ChannelSftp getSftpChannel() throws ConnectionFailedException;
 
-	public ChannelExec getExecChannel() throws ConnectionFaliedException;
+	public ChannelExec getExecChannel() throws ConnectionFailedException;
 
-	public Session getSession() throws ConnectionFaliedException;
+	public Session getSession() throws ConnectionFailedException;
 
 	public void executeCommand(String command) throws ExecutionFailedException;
 	

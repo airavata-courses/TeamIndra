@@ -12,7 +12,7 @@ import com.jcraft.jsch.JSch;
 import com.jcraft.jsch.JSchException;
 import com.jcraft.jsch.Session;
 
-import edu.iu.indra.scigw.exceptions.ConnectionFaliedException;
+import edu.iu.indra.scigw.exceptions.ConnectionFailedException;
 import edu.iu.indra.scigw.exceptions.ExecutionFailedException;
 import edu.iu.indra.scigw.input.UserInput;
 
@@ -28,7 +28,7 @@ public class ConnectionHandlerImpl implements ConnectionHandler
 
 	Session session;
 
-	private Session mGetSession() throws ConnectionFaliedException
+	private Session mGetSession() throws ConnectionFailedException
 	{
 		if (session == null || !session.isConnected())
 		{
@@ -43,7 +43,7 @@ public class ConnectionHandlerImpl implements ConnectionHandler
 			} catch (JSchException e)
 			{
 				logger.error("Error in creating session", e);
-				throw new ConnectionFaliedException();
+				throw new ConnectionFailedException();
 			}
 		}
 
@@ -51,7 +51,7 @@ public class ConnectionHandlerImpl implements ConnectionHandler
 	}
 
 	@Override
-	public ChannelSftp getSftpChannel() throws ConnectionFaliedException
+	public ChannelSftp getSftpChannel() throws ConnectionFailedException
 	{
 		Session session = mGetSession();
 		try
@@ -60,12 +60,12 @@ public class ConnectionHandlerImpl implements ConnectionHandler
 		} catch (JSchException e)
 		{
 			logger.error("Error in creating channel", e);
-			throw new ConnectionFaliedException();
+			throw new ConnectionFailedException();
 		}
 	}
 
 	@Override
-	public ChannelExec getExecChannel() throws ConnectionFaliedException
+	public ChannelExec getExecChannel() throws ConnectionFailedException
 	{
 		Session session = mGetSession();
 		try
@@ -74,12 +74,12 @@ public class ConnectionHandlerImpl implements ConnectionHandler
 		} catch (JSchException e)
 		{
 			logger.error("Error in creating channel", e);
-			throw new ConnectionFaliedException();
+			throw new ConnectionFailedException();
 		}
 	}
 
 	@Override
-	public Session getSession() throws ConnectionFaliedException
+	public Session getSession() throws ConnectionFailedException
 	{
 		return mGetSession();
 	}
@@ -93,7 +93,7 @@ public class ConnectionHandlerImpl implements ConnectionHandler
 			exec.setCommand(command);
 			exec.connect();
 			Thread.sleep(1000);
-		} catch (ConnectionFaliedException e)
+		} catch (ConnectionFailedException e)
 		{
 			logger.error("Error in executing command : " + command, e);
 			throw new ExecutionFailedException();

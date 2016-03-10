@@ -1,7 +1,13 @@
 package edu.iu.indra.scigw.filehandler;
 
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStream;
 import java.util.Map;
 
 import org.apache.log4j.Logger;
@@ -14,9 +20,10 @@ import com.jcraft.jsch.SftpException;
 
 import edu.iu.indra.scigw.config.JobConfig;
 import edu.iu.indra.scigw.connectionhandler.ConnectionHandler;
-import edu.iu.indra.scigw.exceptions.ConnectionFaliedException;
+import edu.iu.indra.scigw.exceptions.ConnectionFailedException;
 import edu.iu.indra.scigw.exceptions.FileTransferException;
 import edu.iu.indra.scigw.util.Constants;
+
 @Service("fileHandler")
 
 public class SftpFileHandlerImpl implements FileHandler
@@ -38,7 +45,7 @@ public class SftpFileHandlerImpl implements FileHandler
 			sftp.connect();
 			sftp.put(source, destination);
 
-		} catch (ConnectionFaliedException e)
+		} catch (ConnectionFailedException e)
 		{
 			throw new FileTransferException(e.getMessage());
 		} catch (SftpException e)
@@ -131,6 +138,47 @@ public class SftpFileHandlerImpl implements FileHandler
 	public void setConstants(Constants constants)
 	{
 		this.constants = constants;
+	}
+
+	@Override
+	public String downloadFile(String source) throws FileTransferException
+	{
+		try
+		{
+			ChannelSftp sftp = connectionHandler.getSftpChannel();
+			sftp.connect();
+			byte[] buffer = new byte[1024];
+			BufferedInputStream bis = new BufferedInputStream(sftp.get(source));
+			File newFile = new File("E://Test.java");
+			OutputStream os = new FileOutputStream(newFile);
+			BufferedOutputStream bos = new BufferedOutputStream(os);
+			int readCount;
+			// System.out.println("Getting: " + theLine);
+			while ((readCount = bis.read(buffer)) > 0)
+			{
+				System.out.println("Writing: ");
+				bos.write(buffer, 0, readCount);
+			}
+			bis.close();
+			bos.close();
+		} catch (ConnectionFailedException e)
+		{
+			throw new FileTransferException(e.getMessage());
+		} catch (SftpException e)
+		{
+			throw new FileTransferException();
+		} catch (JSchException e)
+		{
+			throw new FileTransferException(e.getMessage());
+		} catch (FileNotFoundException e)
+		{
+			// TODO Auto-generated catch block
+		} catch (IOException e)
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return "Success";
 	}
 
 }

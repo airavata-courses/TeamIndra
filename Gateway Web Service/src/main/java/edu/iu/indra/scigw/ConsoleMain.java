@@ -3,7 +3,6 @@ package edu.iu.indra.scigw;
 import java.util.List;
 import java.util.Scanner;
 
-
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
@@ -15,7 +14,7 @@ import edu.iu.indra.scigw.applications.ApplicationManager;
 import edu.iu.indra.scigw.applications.JobMonitor;
 import edu.iu.indra.scigw.config.JobConfig;
 import edu.iu.indra.scigw.connectionhandler.ConnectionHandler;
-import edu.iu.indra.scigw.exceptions.ConnectionFaliedException;
+import edu.iu.indra.scigw.exceptions.ConnectionFailedException;
 import edu.iu.indra.scigw.exceptions.ExecutionFailedException;
 import edu.iu.indra.scigw.exceptions.SciGwException;
 
@@ -70,7 +69,7 @@ public class ConsoleMain
 			}
 
 			scanner.close();
-			
+
 		} catch (Exception e)
 		{
 			throw new ExecutionFailedException("Failed to run the application");
@@ -84,7 +83,7 @@ public class ConsoleMain
 			{
 				session = con.getSession();
 				session.disconnect();
-			} catch (ConnectionFaliedException e)
+			} catch (ConnectionFailedException e)
 			{
 				logger.error("Failed to close the session");
 			}

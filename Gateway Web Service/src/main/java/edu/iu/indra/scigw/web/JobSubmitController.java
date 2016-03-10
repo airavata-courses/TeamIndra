@@ -16,7 +16,6 @@ import edu.iu.indra.scigw.dao.JobConfigDao;
 import edu.iu.indra.scigw.exceptions.SciGwException;
 import edu.iu.indra.scigw.exceptions.SciGwWebException;
 import edu.iu.indra.web.response.JobSubmissionResponse;
-import edu.iu.indra.web.response.SimpleResponse;
 
 @Controller
 public class JobSubmitController

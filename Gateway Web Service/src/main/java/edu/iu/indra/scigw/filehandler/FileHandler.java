@@ -13,9 +13,11 @@ public interface FileHandler
 	 */
 	public void copyFile(String source, String destination) throws FileTransferException;
 
+	public String downloadFile(String source) throws FileTransferException;
+
 	/**
-	 * transfers job files from jobConfig to server and returns destination path of pbs script
-	 * for scheduling
+	 * transfers job files from jobConfig to server and returns destination path
+	 * of pbs script for scheduling
 	 * 
 	 * @param config
 	 * @return PBS script path on server
