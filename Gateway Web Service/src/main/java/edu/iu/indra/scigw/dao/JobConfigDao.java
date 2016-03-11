@@ -14,7 +14,7 @@ public interface JobConfigDao
 
 	public void deleteJob(String jobID);
 
-	public JobConfig getJobDetailsByJobID(String jobID);
+	public JobStatus getJobDetailsByJobID(String jobID);
 
 	public void updateJobStatus(List<JobStatus> jobs);
 }

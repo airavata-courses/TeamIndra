@@ -9,6 +9,8 @@ import java.util.Map;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
+import org.springframework.jdbc.core.ResultSetExtractor;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Component;
@@ -16,7 +18,6 @@ import org.springframework.stereotype.Component;
 import edu.iu.indra.scigw.config.JobConfig;
 import edu.iu.indra.scigw.config.JobStatus;
 import edu.iu.indra.scigw.config.JobStatus.JOB_STATUS;
-import edu.iu.indra.scigw.util.JobMapper;
 
 @Component("jobConfigDao")
 public class JobConfigDaoImpl implements JobConfigDao
@@ -52,11 +53,23 @@ public class JobConfigDaoImpl implements JobConfigDao
 	}
 
 	@Override
-	public JobConfig getJobDetailsByJobID(String jobID)
+	public JobStatus getJobDetailsByJobID(String jobID)
 	{
 		String SQL = "SELECT * FROM job_details WHERE JOBID = :JOBID";
-		Map<String, String> namedParameters = new HashMap<String, String>();//
-		return (JobConfig) jdbcTemplate.query(SQL, namedParameters, new JobMapper());
+		Map<String, String> namedParameters = new HashMap<String, String>();
+		namedParameters.put("JOBID", jobID);
+		return jdbcTemplate.query(SQL, namedParameters, new ResultSetExtractor<JobStatus>() {
+
+			@Override
+			public JobStatus extractData(ResultSet rs) throws SQLException, DataAccessException
+			{
+				rs.next();
+				JobStatus jobRow = new JobStatus();
+				jobRow.setJobUID(UUID.fromString(rs.getString("UUID")));
+				jobRow.setJobId(rs.getString("JOBID"));
+				return jobRow;
+			}
+		});
 	}
 
 	@Override

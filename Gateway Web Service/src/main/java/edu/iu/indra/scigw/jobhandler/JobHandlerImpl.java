@@ -17,9 +17,11 @@ import edu.iu.indra.scigw.dao.JobConfigDao;
 import edu.iu.indra.scigw.exceptions.ExecutionFailedException;
 import edu.iu.indra.scigw.exceptions.SciGwException;
 import edu.iu.indra.scigw.exceptions.SciGwWebException;
+import edu.iu.indra.scigw.filehandler.FileHandler;
 import edu.iu.indra.scigw.input.UserInput;
 import edu.iu.indra.scigw.parser.JobStatusParser;
 import edu.iu.indra.scigw.util.CommandHelper;
+import edu.iu.indra.scigw.util.Constants;
 
 @Service("jobHandler")
 public class JobHandlerImpl implements JobHandler
@@ -42,6 +44,12 @@ public class JobHandlerImpl implements JobHandler
 	@Autowired
 	ApplicationManager applicationManager;
 
+	@Autowired
+	Constants constants;
+
+	@Autowired
+	FileHandler fileHandler;
+
 	@Override
 	public String submitJob(JobConfig jobConfig)
 	{
@@ -55,7 +63,7 @@ public class JobHandlerImpl implements JobHandler
 			jobId = applicationManager.runApplication(jobConfig, 1);
 			jobId = jobId.trim();
 			System.out.println(jobId);
-			
+
 			jobConfig.setJobID(jobId);
 
 			Authentication auth = SecurityContextHolder.getContext().getAuthentication();
@@ -115,10 +123,30 @@ public class JobHandlerImpl implements JobHandler
 	}
 
 	@Override
-	public void downloadFilesForJob(String jobId)
+	public String downloadFilesForJob(String jobId)
 	{
-		// TODO Auto-generated method stub
 
+		logger.info("Downloading output of job : " + jobId);
+
+		try
+		{
+			// fetch corresponding job details from database
+			JobStatus job = jobConfigDao.getJobDetailsByJobID(jobId);
+
+			if (job == null)
+			{
+				throw new SciGwWebException("JOB_NOT_FOUND");
+			}
+
+			String jobDir = constants.getJobDirPath(job.getJobUID().toString());
+
+			return fileHandler.downloadDirectoryAsZip(jobDir);
+
+		} catch (Exception e)
+		{
+			logger.error("Error in downloading file", e);
+			throw new SciGwWebException();
+		}
 	}
 
 	@Override

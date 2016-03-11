@@ -1,13 +1,10 @@
 package edu.iu.indra.scigw.filehandler;
 
 import java.io.BufferedInputStream;
-import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.OutputStream;
 import java.util.Map;
 import java.util.Vector;
 import java.util.zip.ZipEntry;
@@ -25,6 +22,7 @@ import edu.iu.indra.scigw.config.JobConfig;
 import edu.iu.indra.scigw.connectionhandler.ConnectionHandler;
 import edu.iu.indra.scigw.exceptions.ConnectionFailedException;
 import edu.iu.indra.scigw.exceptions.FileTransferException;
+import edu.iu.indra.scigw.exceptions.SciGwWebException;
 import edu.iu.indra.scigw.util.Constants;
 
 @Service("fileHandler")
@@ -144,99 +142,55 @@ public class SftpFileHandlerImpl implements FileHandler
 	}
 
 	@Override
-	public String downloadFile(String source) throws FileTransferException
-	{
-		try
-		{
-			ChannelSftp sftp = connectionHandler.getSftpChannel();
-			sftp.connect();
-			byte[] buffer = new byte[1024];
-			BufferedInputStream bis = new BufferedInputStream(sftp.get(source));
-			File newFile = new File("E://Test.java");
-			OutputStream os = new FileOutputStream(newFile);
-			BufferedOutputStream bos = new BufferedOutputStream(os);
-			int readCount;
-			// System.out.println("Getting: " + theLine);
-			while ((readCount = bis.read(buffer)) > 0)
-			{
-				System.out.println("Writing: ");
-				bos.write(buffer, 0, readCount);
-			}
-			bis.close();
-			bos.close();
-		} catch (ConnectionFailedException e)
-		{
-			throw new FileTransferException(e.getMessage());
-		} catch (SftpException e)
-		{
-			throw new FileTransferException();
-		} catch (JSchException e)
-		{
-			throw new FileTransferException(e.getMessage());
-		} catch (FileNotFoundException e)
-		{
-			// TODO Auto-generated catch block
-		} catch (IOException e)
-		{
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		return "Success";
-	}
-
-	@Override
 	public String downloadDirectoryAsZip(String folder) throws FileTransferException
 	{
+		logger.info("Downloading directory " + folder);
 
-		ChannelSftp sftp;
-
-		FileOutputStream fileOutputStream = null;
-		try
-		{
-			fileOutputStream = new FileOutputStream("E:\\Test.zip");
-		} catch (FileNotFoundException e2)
-		{
-			// TODO Auto-generated catch block
-			return e2.getMessage();
-		}
-		ZipOutputStream zipOutputStream = new ZipOutputStream(fileOutputStream);
+		// create temp zip file
+		File file;
 
 		try
 		{
+			file = File.createTempFile("temp-zip", ".zip");
+
+			FileOutputStream fileOutputStream = new FileOutputStream(file);
+
+			// get sftp channel
+			ChannelSftp sftp = connectionHandler.getSftpChannel();
 			sftp = connectionHandler.getSftpChannel();
 			sftp.connect();
+
+			ZipOutputStream zipOutputStream = new ZipOutputStream(fileOutputStream);
 			Vector<ChannelSftp.LsEntry> list = new Vector<ChannelSftp.LsEntry>();
 
+			// list of all files from directory
 			list = sftp.ls(folder);
-			System.out.println(list.size());
 
 			for (ChannelSftp.LsEntry listItem : list)
 			{
-				// System.out.println(listItem.getFilename().replaceAll(".",
-				// "").length());
+				// skip directory files
 				if (!listItem.getFilename().matches(".") && !listItem.getFilename().matches(".."))
 				{
-					System.out.println(folder + listItem.getFilename());
-					SftpFileHandlerImpl.zipFile(
-							new BufferedInputStream(sftp.get(folder + listItem.getFilename())),
-							listItem.getFilename(), zipOutputStream);
+					String filePath = folder + listItem.getFilename();
+					zipFile(new BufferedInputStream(sftp.get(filePath)), listItem.getFilename(),
+							zipOutputStream);
 				}
-
 			}
+
 			zipOutputStream.close();
 
 		} catch (Exception e)
 		{
-			return e.getMessage();
+			logger.error("Error in downloading file", e);
+			throw new SciGwWebException();
 		}
 
-		return "Success";
+		return file.getAbsolutePath();
 	}
 
-	public static void zipFile(BufferedInputStream fileInputStream, String parentName,
+	public void zipFile(BufferedInputStream fileInputStream, String parentName,
 			ZipOutputStream zipOutputStream)
 	{
-
 		try
 		{
 			// A ZipEntry represents a file entry in the zip archive
@@ -244,7 +198,6 @@ public class SftpFileHandlerImpl implements FileHandler
 			ZipEntry zipEntry = new ZipEntry(parentName);
 			zipOutputStream.putNextEntry(zipEntry);
 
-			// FileInputStream fileInputStream = new FileInputStream(inputFile);
 			byte[] buf = new byte[1024];
 			int bytesRead;
 
@@ -258,15 +211,10 @@ public class SftpFileHandlerImpl implements FileHandler
 			// close ZipEntry to store the stream to the file
 			zipOutputStream.closeEntry();
 
-			// System.out.println("Regular file :" +
-			// inputFile.getCanonicalPath()
-			// + " is zipped to archive :" + ZIPPED_FOLDER);
-
 		} catch (IOException e)
 		{
 			e.printStackTrace();
 		}
-
 	}
 
 }

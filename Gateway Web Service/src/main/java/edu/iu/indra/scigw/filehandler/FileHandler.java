@@ -13,8 +13,6 @@ public interface FileHandler
 	 */
 	public void copyFile(String source, String destination) throws FileTransferException;
 
-	public String downloadFile(String source) throws FileTransferException;
-
 	public String downloadDirectoryAsZip(String folder) throws FileTransferException;
 
 	/**

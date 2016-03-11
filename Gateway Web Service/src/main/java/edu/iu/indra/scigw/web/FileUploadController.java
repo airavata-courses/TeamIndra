@@ -2,8 +2,13 @@ package edu.iu.indra.scigw.web;
 
 import java.io.BufferedOutputStream;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
 
+import javax.servlet.http.HttpServletResponse;
+
+import org.apache.commons.io.IOUtils;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -12,16 +17,16 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
-import edu.iu.indra.scigw.exceptions.FileTransferException;
-import edu.iu.indra.scigw.filehandler.FileHandler;
+import edu.iu.indra.scigw.jobhandler.JobHandler;
 import edu.iu.indra.web.response.SimpleResponse;
 
 @Controller
 public class FileUploadController
 {
+	final static Logger logger = Logger.getLogger(FileUploadController.class);
 
 	@Autowired
-	protected FileHandler fileHandler;
+	JobHandler jobHandler;
 
 	@RequestMapping(value = "/upload", method = RequestMethod.GET)
 	public @ResponseBody String provideUploadInfo()
@@ -32,15 +37,11 @@ public class FileUploadController
 	@RequestMapping(value = "/upload", method = RequestMethod.POST)
 	public @ResponseBody String handleFileUpload(@RequestParam("file") MultipartFile file)
 	{
-
-		System.out.println("test");
 		if (!file.isEmpty())
 		{
 			try
 			{
-				System.out.println("Coming here");
-				File fname = new File(
-						"C:\\Users\\Pratish\\Documents\\Assignments\\SG\\WebService\\Test Files\\newinputfile.txt");
+				File fname = new File("newinputfile.txt");
 				byte[] bytes = file.getBytes();
 				BufferedOutputStream stream = new BufferedOutputStream(new FileOutputStream(fname));
 				stream.write(bytes);
@@ -56,24 +57,38 @@ public class FileUploadController
 		}
 	}
 
-	@RequestMapping(value = "/getFolder", method = RequestMethod.GET)
-
-	public @ResponseBody SimpleResponse getJobStatus()
+	@RequestMapping(value = "/downloadoutput", method = RequestMethod.GET, produces = "application/zip")
+	public @ResponseBody SimpleResponse downloadOutput(@RequestParam String jobId,
+			HttpServletResponse response)
 	{
-		String status = "Failed";
+		File file = null;
+
 		try
 		{
-			status = fileHandler.downloadDirectoryAsZip("//N//u//smhaiska//Karst//Test//");
-		} catch (FileTransferException e)
-		{
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		;
-		// String status = jobMonitor.getJobStatusByUser();
-		// jobMonitor.getJobStatusByJobId(jobId);
-		// status = jobConfigDAO.getJobList();
-		return new SimpleResponse(true, status);
-	}
+			String filePath = jobHandler.downloadFilesForJob(jobId);
+			file = new File(filePath);
 
+			if (file.exists())
+			{
+				String outFile = "filename=" + jobId + "_output.zip";
+				response.setHeader("Content-Disposition", "attachment; " + outFile);
+				FileInputStream fis = new FileInputStream(file);
+				IOUtils.copy(fis, response.getOutputStream());
+				response.flushBuffer();
+			}
+		} catch (Exception e)
+		{
+			logger.error("Error in file download", e);
+			return new SimpleResponse(false, "Error in downloading file");
+		} finally
+		{
+			// delete temp file
+			if (file != null && file.exists())
+			{
+				file.delete();
+			}
+		}
+
+		return new SimpleResponse(true, "File downloaded successfully");
+	}
 }
