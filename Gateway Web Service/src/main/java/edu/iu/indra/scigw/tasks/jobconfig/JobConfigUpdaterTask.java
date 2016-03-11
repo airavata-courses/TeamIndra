@@ -1,5 +1,7 @@
 package edu.iu.indra.scigw.tasks.jobconfig;
 
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 
 import org.apache.log4j.Logger;
@@ -42,6 +44,19 @@ public class JobConfigUpdaterTask implements JobStatusSynchronizer
 
 		// get the job status from the host server
 		List<JobStatus> jobs = jobHandler.getAllJobsFromServer();
+		//Create a HashMap 
+		HashMap<String,JobStatus> compareJobs = new HashMap<String,JobStatus>();
+		for (JobStatus js : jobs){
+			compareJobs.put(js.getJobId() , js);
+		}
+		
+		List<JobStatus> jobsfrmdb = jobDao.getJobStatusOfAllJobs();
+		for (JobStatus js : jobsfrmdb){
+			if (!compareJobs.containsKey(js.getJobId())){
+				js.setStatus(JobStatus.JOB_STATUS.C.toString());
+				jobs.add(js);
+			}
+		}
 
 		// update the job status in database
 		jobDao.updateJobStatus(jobs);
