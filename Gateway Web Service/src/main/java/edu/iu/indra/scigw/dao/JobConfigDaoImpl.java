@@ -2,6 +2,7 @@ package edu.iu.indra.scigw.dao;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -96,13 +97,40 @@ public class JobConfigDaoImpl implements JobConfigDao
 				});
 		return jobRows;
 	}
+	
+	
+	@Override
+	public List<JobStatus> getJobStatusOfAllJobs()
+	{
+		String SQL = "SELECT * FROM job_details where job_status not like 'C'";
+		Map<String, String> namedParameters = new HashMap<String, String>();//
+
+		return jdbcTemplate.query(SQL, namedParameters,
+				new RowMapper<JobStatus>() {
+
+					@Override
+					public JobStatus mapRow(ResultSet rs, int rowNum) throws SQLException
+					{
+						JobStatus jobRow = new JobStatus();
+						jobRow.setJobId(rs.getString("JOBID"));
+						jobRow.setJobUID(UUID.fromString(rs.getString("UUID")));
+						jobRow.setStatus(rs.getString("JOB_STATUS"));
+						jobRow.setJobSubmitTime(rs.getLong("SUBMIT_TIME"));
+						jobRow.setJobName(rs.getString("JOBNAME"));
+						return jobRow;
+					}
+				});
+		
+		
+		
+	}
 
 	@Override
 	public void updateJobStatus(List<JobStatus> jobs)
 	{
 		for (JobStatus status : jobs)
 		{
-			Map<String, String> namedParameters = new HashMap<String, String>();//
+			Map<String, String> namedParameters = new HashMap<String, String>();
 
 			namedParameters.put("JOBID", status.getJobId());
 			namedParameters.put("STATUS", status.getStatus());

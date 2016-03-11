@@ -17,4 +17,6 @@ public interface JobConfigDao
 	public JobStatus getJobDetailsByJobID(String jobID);
 
 	public void updateJobStatus(List<JobStatus> jobs);
+	
+	public List<JobStatus> getJobStatusOfAllJobs();
 }
