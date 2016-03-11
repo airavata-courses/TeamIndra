@@ -64,7 +64,7 @@
 									<div class="col-sm-10">
 										<input type="text" class="form-control" id="jobName"
 											placeholder="Enter name for job">
-									</div>
+						  			</div>
 								</div>
 								<div class="form-group">
 									<label class="control-label col-sm-2" for="email">IU
@@ -151,6 +151,7 @@
 						            <th data-column-id="jobId">Job Id</th>
 						            <th data-column-id="jobName">Job Name</th>
 						             <th data-column-id="status">Status</th>
+						             <th data-column-id="link">Download</th>
 						            <!-- <th data-column-id="jobSubmitTime" data-order="desc">Submitted On</th> -->
 						        </tr>
 						    </thead>
@@ -444,7 +445,11 @@
 				contentType : "application/json",
 				success : function(response) {
 					if (response.success) {
-						//$("#grid-basic").bootgrid()
+						
+						$(response.data).each(function(index){
+						    this.link = '<a href=' + '\"./downloadoutput?jobId=' + this.jobId + "\"" + '><img src="./resources/images/download.png" alt="download output" width="30" height="30" border="0"></a>';
+						});
+						
 						$("#grid-basic").bootgrid().bootgrid("append", response.data);
 					}
 				}
