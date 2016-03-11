@@ -9,6 +9,9 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.util.Map;
+import java.util.Vector;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipOutputStream;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -179,6 +182,91 @@ public class SftpFileHandlerImpl implements FileHandler
 			e.printStackTrace();
 		}
 		return "Success";
+	}
+
+	@Override
+	public String downloadDirectoryAsZip(String folder) throws FileTransferException
+	{
+
+		ChannelSftp sftp;
+
+		FileOutputStream fileOutputStream = null;
+		try
+		{
+			fileOutputStream = new FileOutputStream("E:\\Test.zip");
+		} catch (FileNotFoundException e2)
+		{
+			// TODO Auto-generated catch block
+			return e2.getMessage();
+		}
+		ZipOutputStream zipOutputStream = new ZipOutputStream(fileOutputStream);
+
+		try
+		{
+			sftp = connectionHandler.getSftpChannel();
+			sftp.connect();
+			Vector<ChannelSftp.LsEntry> list = new Vector<ChannelSftp.LsEntry>();
+
+			list = sftp.ls(folder);
+			System.out.println(list.size());
+
+			for (ChannelSftp.LsEntry listItem : list)
+			{
+				// System.out.println(listItem.getFilename().replaceAll(".",
+				// "").length());
+				if (!listItem.getFilename().matches(".") && !listItem.getFilename().matches(".."))
+				{
+					System.out.println(folder + listItem.getFilename());
+					SftpFileHandlerImpl.zipFile(
+							new BufferedInputStream(sftp.get(folder + listItem.getFilename())),
+							listItem.getFilename(), zipOutputStream);
+				}
+
+			}
+			zipOutputStream.close();
+
+		} catch (Exception e)
+		{
+			return e.getMessage();
+		}
+
+		return "Success";
+	}
+
+	public static void zipFile(BufferedInputStream fileInputStream, String parentName,
+			ZipOutputStream zipOutputStream)
+	{
+
+		try
+		{
+			// A ZipEntry represents a file entry in the zip archive
+			// We name the ZipEntry after the original file's name
+			ZipEntry zipEntry = new ZipEntry(parentName);
+			zipOutputStream.putNextEntry(zipEntry);
+
+			// FileInputStream fileInputStream = new FileInputStream(inputFile);
+			byte[] buf = new byte[1024];
+			int bytesRead;
+
+			// Read the input file by chucks of 1024 bytes
+			// and write the read bytes to the zip stream
+			while ((bytesRead = fileInputStream.read(buf)) > 0)
+			{
+				zipOutputStream.write(buf, 0, bytesRead);
+			}
+
+			// close ZipEntry to store the stream to the file
+			zipOutputStream.closeEntry();
+
+			// System.out.println("Regular file :" +
+			// inputFile.getCanonicalPath()
+			// + " is zipped to archive :" + ZIPPED_FOLDER);
+
+		} catch (IOException e)
+		{
+			e.printStackTrace();
+		}
+
 	}
 
 }

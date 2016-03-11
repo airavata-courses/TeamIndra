@@ -6,7 +6,6 @@ import java.io.FileOutputStream;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -57,14 +56,14 @@ public class FileUploadController
 		}
 	}
 
-	@RequestMapping(value = "/getFile", method = RequestMethod.GET)
+	@RequestMapping(value = "/getFolder", method = RequestMethod.GET)
 
-	public @ResponseBody SimpleResponse getJobStatus(@RequestParam String fileName)
+	public @ResponseBody SimpleResponse getJobStatus()
 	{
 		String status = "Failed";
 		try
 		{
-			status = fileHandler.downloadFile("//N//u//smhaiska//Karst//mpi_hello.c");
+			status = fileHandler.downloadDirectoryAsZip("//N//u//smhaiska//Karst//Test//");
 		} catch (FileTransferException e)
 		{
 			// TODO Auto-generated catch block

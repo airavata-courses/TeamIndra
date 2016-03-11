@@ -15,6 +15,8 @@ public interface FileHandler
 
 	public String downloadFile(String source) throws FileTransferException;
 
+	public String downloadDirectoryAsZip(String folder) throws FileTransferException;
+
 	/**
 	 * transfers job files from jobConfig to server and returns destination path
 	 * of pbs script for scheduling
