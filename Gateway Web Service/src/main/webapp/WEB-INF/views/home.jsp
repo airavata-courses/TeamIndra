@@ -196,6 +196,9 @@
 								<input type="file" name="file" class="form-control" id="fileLoader">
 								<button type="submit" id="fileSubmit" class="btn btn-default">Upload
 								</button>
+								<div class="alert alert-success" id="file_upload_result">
+									<label id="file_upload_result_success">Success</label>
+								</div>
 							</form>
 						</div>
 					</div>
@@ -272,6 +275,7 @@
 		$(window).load(function() {
 			$("#result").hide();
 			$("#cancel_result").hide();
+			$("#file_upload_result").hide();
 			updateStatus();
 		});
 
@@ -376,10 +380,10 @@
 					cache: false,
 					contentType: false,
 					success : function(response) {
-						if (response.success) {
+						
 							//formSuccess(response.message);
-							alert("Success");
-						}
+							uploadSuccess(response.message);
+					
 					},
 				
 				 error: function (xhr, ajaxOptions, thrownError) {
@@ -401,6 +405,16 @@
 			window.setTimeout(function() {
 				$("#result").slideUp(500, function() {
 					$("#result").hide();
+				});
+			}, 10000);
+		}
+		
+		function uploadSuccess(message) {
+			$("#file_upload_result_success").text(message)
+			$("#file_upload_result").show();
+			window.setTimeout(function() {
+				$("#file_upload_result").slideUp(500, function() {
+					$("#file_upload_result").hide();
 				});
 			}, 10000);
 		}

@@ -17,6 +17,10 @@ public class Constants
 	public static final String default_filename = "job.tar";
 	public static final String sortAppExe = "sortApp";
 	public static final String mpiAppExe = "mpirun";
+	public static final String mdAppExe = "mdrun";
+	public static final String hostname = "--hostname";
+	public static final String inputFilePath = "C:\\Users\\Pratish\\Documents\\Assignments\\SG\\Input File for Portal\\gromacs\\";
+	
 
 	public String getUsername()
 	{
@@ -33,6 +37,7 @@ public class Constants
 		return scratch_dir_path + getUsername() + "//" + "sortapp" + "//";
 	}
 
+
 	public String getSortAppExeCommand(String inputFile)
 	{
 		return getSortAppDirPath() + sortAppExe + " " + inputFile;
@@ -47,8 +52,22 @@ public class Constants
 	{
 		return mpiAppExe + " -n " + (jobconfig.getNodes() * jobconfig.getCores()) + " "
 				+ getMpiAppExePath();
+		
+		
+	}
+	
+	public String getMdrunCommand(JobConfig jobconfig){
+		return mdAppExe + " -nice 0 -v -s " + getJobDirPath(jobconfig.getUid().toString())+"input.tpr"  + " -o " + getJobDirPath(jobconfig.getUid().toString())+"jobOutput.trr";
 	}
 
+	public String getGromacsRunCommand(JobConfig jobconfig)
+	{
+		return mpiAppExe +  " -np " + (jobconfig.getNodes() * jobconfig.getCores()) + " "
+				+ getMdrunCommand(jobconfig);
+	}
+	
+	
+	
 	public String getMpiAppExePath()
 	{
 		return scratch_dir_path + getUsername() + "//helloapp//hello";

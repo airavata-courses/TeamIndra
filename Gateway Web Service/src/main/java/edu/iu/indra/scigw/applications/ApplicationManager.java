@@ -19,9 +19,9 @@ public class ApplicationManager
 	{
 		// TODO: fetch from separate listing
 		List<String> applications = new ArrayList<String>();
-
-		applications.add("1. Hello MPI world");
-		applications.add("2. Large number Sorter");
+		applications.add("1. Gromacs");
+		applications.add("2. Hello MPI world");
+		applications.add("3. Large number Sorter");
 
 		return applications;
 	}

@@ -11,18 +11,25 @@ public class SimpleApplicationHandlerFactory implements ApplicationHandlerFactor
 
 	@Autowired
 	MpiHelloApplicationHandler mpiHandler;
+	
+	@Autowired
+	GromacsApplicationHandler groHandler;
 
 	@Override
 	public ApplicationHandler getApplicationHandler(int id)
 	{
 		ApplicationHandler applicationHandler = null;
-		if (id == 2)
+		if (id == 1)
+		{
+			applicationHandler = groHandler;
+		} else if (id == 2)
 		{
 			applicationHandler = sortHandler;
-		} else if (id == 1)
+		}else if (id == 3)
 		{
 			applicationHandler = mpiHandler;
-		} else
+		}
+		else
 		{
 			System.out.println("Try something else :P ");
 
@@ -49,6 +56,16 @@ public class SimpleApplicationHandlerFactory implements ApplicationHandlerFactor
 	public void setMpiHandler(MpiHelloApplicationHandler mpiHandler)
 	{
 		this.mpiHandler = mpiHandler;
+	}
+	
+	public GromacsApplicationHandler getGromacsHandler()
+	{
+		return this.groHandler;
+	}
+	
+	public void setGromacsHandler(GromacsApplicationHandler groHandler)
+	{
+		this.groHandler = groHandler;
 	}
 
 }

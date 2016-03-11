@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import edu.iu.indra.scigw.jobhandler.JobHandler;
+import edu.iu.indra.scigw.util.Constants;
 import edu.iu.indra.web.response.SimpleResponse;
 
 @Controller
@@ -35,25 +36,32 @@ public class FileUploadController
 	}
 
 	@RequestMapping(value = "/upload", method = RequestMethod.POST)
-	public @ResponseBody String handleFileUpload(@RequestParam("file") MultipartFile file)
+	public @ResponseBody SimpleResponse handleFileUpload(@RequestParam("file") MultipartFile file)
 	{
 		if (!file.isEmpty())
 		{
 			try
 			{
-				File fname = new File("newinputfile.txt");
+//				File fname = File.createTempFile("input-file", ".tpr");
+				File fname = new File(Constants.inputFilePath+"input.tpr");
+				System.out.println("Inside files structure");
 				byte[] bytes = file.getBytes();
 				BufferedOutputStream stream = new BufferedOutputStream(new FileOutputStream(fname));
 				stream.write(bytes);
 				stream.close();
-				return "You successfully uploaded ConfigFile !";
+				
+				System.out.println("Came here");
+				return new SimpleResponse(true, "You successfully uploaded ConfigFile !");
+				
 			} catch (Exception e)
 			{
-				return "You failed to upload ConfigFile => " + e.getMessage();
+				System.out.println("Failed");
+				return new SimpleResponse(false,"You failed to upload ConfigFile => " + e.getMessage());
 			}
 		} else
 		{
-			return "You failed to upload Config because the file was empty.";
+			System.out.println("Failed");
+			return new SimpleResponse(false,"You failed to upload Config because the file was empty.");
 		}
 	}
 
