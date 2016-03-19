@@ -1,7 +1,6 @@
 package edu.iu.indra.scigw.jobhandler;
 
 import java.util.List;
-import java.util.zip.ZipFile;
 
 import edu.iu.indra.scigw.config.JobConfig;
 import edu.iu.indra.scigw.config.JobStatus;

@@ -29,6 +29,9 @@ public class FileUploadController
 	@Autowired
 	JobHandler jobHandler;
 
+	@Autowired
+	Constants constants;
+
 	@RequestMapping(value = "/upload", method = RequestMethod.GET)
 	public @ResponseBody String provideUploadInfo()
 	{
@@ -42,26 +45,25 @@ public class FileUploadController
 		{
 			try
 			{
-//				File fname = File.createTempFile("input-file", ".tpr");
-				File fname = new File(Constants.inputFilePath+"input.tpr");
-				System.out.println("Inside files structure");
+				File fname = new File(constants.getGromacsUSerInputFilePath());
+				System.out.println("Inside files structure" + fname.getAbsolutePath());
 				byte[] bytes = file.getBytes();
 				BufferedOutputStream stream = new BufferedOutputStream(new FileOutputStream(fname));
 				stream.write(bytes);
 				stream.close();
-				
-				System.out.println("Came here");
 				return new SimpleResponse(true, "You successfully uploaded ConfigFile !");
-				
+
 			} catch (Exception e)
 			{
 				System.out.println("Failed");
-				return new SimpleResponse(false,"You failed to upload ConfigFile => " + e.getMessage());
+				return new SimpleResponse(false,
+						"You failed to upload ConfigFile => " + e.getMessage());
 			}
 		} else
 		{
 			System.out.println("Failed");
-			return new SimpleResponse(false,"You failed to upload Config because the file was empty.");
+			return new SimpleResponse(false,
+					"You failed to upload Config because the file was empty.");
 		}
 	}
 

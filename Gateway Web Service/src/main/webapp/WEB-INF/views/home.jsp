@@ -457,6 +457,7 @@
 				type : "GET",
 				url : "./gejobstatusforuser",
 				contentType : "application/json",
+				timeout : 10000000,
 				success : function(response) {
 					if (response.success) {
 						

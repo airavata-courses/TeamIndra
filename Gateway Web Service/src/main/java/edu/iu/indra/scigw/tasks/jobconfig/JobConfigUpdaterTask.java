@@ -1,7 +1,6 @@
 package edu.iu.indra.scigw.tasks.jobconfig;
 
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 
 import org.apache.log4j.Logger;
@@ -37,7 +36,7 @@ public class JobConfigUpdaterTask implements JobStatusSynchronizer
 	JobStatusParser jobStatusParser;
 
 	@Override
-	@Scheduled(fixedDelay = 10000)
+	@Scheduled(fixedDelay = 20000)
 	public void syncJobStatusInfo()
 	{
 		logger.info("Running Job Config Updater Task");

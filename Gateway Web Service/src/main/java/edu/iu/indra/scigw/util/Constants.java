@@ -1,15 +1,23 @@
 package edu.iu.indra.scigw.util;
 
-import edu.iu.indra.scigw.config.JobConfig;
+import java.io.File;
+
+import javax.servlet.ServletContext;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 
+import edu.iu.indra.scigw.config.JobConfig;
 import edu.iu.indra.scigw.input.UserInput;
 
 @Component
 public class Constants
 {
+	@Autowired
+	ServletContext servletContext;
+
 	@Autowired
 	public UserInput userConfig;
 
@@ -19,8 +27,23 @@ public class Constants
 	public static final String mpiAppExe = "mpirun";
 	public static final String mdAppExe = "mdrun";
 	public static final String hostname = "--hostname";
-	public static final String inputFilePath = "C:\\Users\\Pratish\\Documents\\Assignments\\SG\\Input File for Portal\\gromacs\\";
-	
+	public static final String gromacsUserInput = "";
+
+	public String getGromacsUSerInputFilePath()
+	{
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		String tmpDirPath = servletContext.getRealPath("/WEB-INF/temp/");
+		File rootDir = new File(tmpDirPath);
+
+		if (!rootDir.exists())
+		{
+			rootDir.mkdir();
+		}
+
+		String inputFilePath = rootDir.getAbsolutePath() + "\\" + "user_input_" + auth.getName()
+				+ ".tpr";
+		return inputFilePath;
+	}
 
 	public String getUsername()
 	{
@@ -37,7 +60,6 @@ public class Constants
 		return scratch_dir_path + getUsername() + "//" + "sortapp" + "//";
 	}
 
-
 	public String getSortAppExeCommand(String inputFile)
 	{
 		return getSortAppDirPath() + sortAppExe + " " + inputFile;
@@ -52,22 +74,22 @@ public class Constants
 	{
 		return mpiAppExe + " -n " + (jobconfig.getNodes() * jobconfig.getCores()) + " "
 				+ getMpiAppExePath();
-		
-		
+
 	}
-	
-	public String getMdrunCommand(JobConfig jobconfig){
-		return mdAppExe + " -nice 0 -v -s " + getJobDirPath(jobconfig.getUid().toString())+"input.tpr"  + " -o " + getJobDirPath(jobconfig.getUid().toString())+"jobOutput.trr";
+
+	public String getMdrunCommand(JobConfig jobconfig)
+	{
+		return mdAppExe + " -nice 0 -v -s " + getJobDirPath(jobconfig.getUid().toString())
+				+ "input.tpr" + " -o " + getJobDirPath(jobconfig.getUid().toString())
+				+ "jobOutput.trr";
 	}
 
 	public String getGromacsRunCommand(JobConfig jobconfig)
 	{
-		return mpiAppExe +  " -np " + (jobconfig.getNodes() * jobconfig.getCores()) + " "
+		return mpiAppExe + " -np " + (jobconfig.getNodes() * jobconfig.getCores()) + " "
 				+ getMdrunCommand(jobconfig);
 	}
-	
-	
-	
+
 	public String getMpiAppExePath()
 	{
 		return scratch_dir_path + getUsername() + "//helloapp//hello";
