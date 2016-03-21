@@ -37,6 +37,9 @@
 			<h1>
 				Team Indra <small>Portal to schedule job and check job
 					status</small>
+				<div class="pull-right">
+					<h4><a href="j_spring_security_logout">logout</a></h4>
+				</div>
 			</h1>
 		</div>
 
@@ -194,6 +197,7 @@
 						<div class="panel-body">
 							<form class="form-search" enctype="multipart/form-data" role="form" id="upload_file"  >
 								<input type="file" name="file" class="form-control" id="fileLoader">
+								<br />
 								<button type="submit" id="fileSubmit" class="btn btn-default">Upload
 								</button>
 								<div class="alert alert-success" id="file_upload_result">
