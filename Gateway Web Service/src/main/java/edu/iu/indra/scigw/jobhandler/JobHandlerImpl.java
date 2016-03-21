@@ -105,8 +105,6 @@ public class JobHandlerImpl implements JobHandler
 
 		return jobs;
 	}
-	
-
 
 	@Override
 	public void cancelJob(String jobId)
@@ -118,6 +116,7 @@ public class JobHandlerImpl implements JobHandler
 		try
 		{
 			connectionHandlerImpl.executeCommand(command);
+			jobConfigDao.deleteJob(jobId);
 		} catch (Exception e)
 		{
 			throw new SciGwWebException("Failed to cancel job with id " + jobId);

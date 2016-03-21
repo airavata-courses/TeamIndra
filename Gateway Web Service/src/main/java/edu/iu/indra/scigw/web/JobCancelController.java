@@ -30,6 +30,6 @@ public class JobCancelController
 		{
 			return new SimpleResponse(false, "Job cancel failed");
 		}
-		return new SimpleResponse(true, "Successfully job cancelled");
+		return new SimpleResponse(true, "Successfully cancelled job");
 	}
 }
