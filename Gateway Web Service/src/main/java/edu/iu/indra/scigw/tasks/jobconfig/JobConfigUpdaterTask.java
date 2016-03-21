@@ -36,12 +36,12 @@ public class JobConfigUpdaterTask implements JobStatusSynchronizer
 	JobStatusParser jobStatusParser;
 
 	@Override
-	@Scheduled(fixedDelay = 20000)
+	@Scheduled(fixedDelay = 30000)
 	public void syncJobStatusInfo()
 	{
 		logger.info("Running Job Config Updater Task");
 
-		List<JobStatus> jobsfrmdb = jobDao.getJobStatusOfAllJobs();
+		List<JobStatus> jobsfrmdb = jobDao.getAllQuedJobs();
 
 		if (jobsfrmdb.isEmpty())
 		{
@@ -72,5 +72,36 @@ public class JobConfigUpdaterTask implements JobStatusSynchronizer
 		jobDao.updateJobStatus(jobs);
 
 		logger.info("Job status updated successfully in database");
+	}
+
+	@Override
+	@Scheduled(fixedDelay = 600000)
+	public void syncJobResults()
+	{
+		logger.info("Running Job Config syncJobResults Task");
+
+		List<JobStatus> jobsfrmdb = jobDao.getJobsForOutputSync();
+
+		if (jobsfrmdb.isEmpty())
+		{
+			logger.info("No jobs completed, exiting task");
+			return;
+		}
+
+		for (JobStatus js : jobsfrmdb)
+		{
+			logger.info("Currently syncing output for job ID: " + js.getJobId());
+			
+			//download the output dir as zip
+			String filePath = jobHandler.downloadFilesForJob(js.getJobId());
+			
+			//update the job status
+			js.setLocalPath(filePath);
+		}
+
+		// update the job status in database
+		jobDao.updateJobStatus(jobsfrmdb);
+
+		logger.info("Job outputs synced successfully");
 	}
 }

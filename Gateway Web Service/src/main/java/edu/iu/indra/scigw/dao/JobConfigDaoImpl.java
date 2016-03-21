@@ -40,7 +40,7 @@ public class JobConfigDaoImpl implements JobConfigDao
 		namedParameters.put("SUBMIT_TIME", "" + date.getTime());
 		namedParameters.put("USERNAME", jobRow.getUsername());
 		namedParameters.put("JOBNAME", jobRow.getJobName());
-		String sql = "INSERT INTO job_details (UUID, JOBID, WALLTIME, EMAIL, JOB_STATUS, SUBMIT_TIME, USERNAME, JOBNAME) VALUES (:UUID, :JOBID, :WALLTIME, :EMAIL, :JOB_STATUS, :SUBMIT_TIME, :USERNAME, :JOBNAME)";
+		String sql = "INSERT INTO job_details (UUID, JOBID, WALLTIME, EMAIL, JOB_STATUS, SUBMIT_TIME, USERNAME, JOBNAME, LOCAL_PATH) VALUES (:UUID, :JOBID, :WALLTIME, :EMAIL, :JOB_STATUS, :SUBMIT_TIME, :USERNAME, :JOBNAME, NULL)";
 		jdbcTemplate.update(sql, namedParameters);
 	}
 
@@ -68,6 +68,7 @@ public class JobConfigDaoImpl implements JobConfigDao
 				JobStatus jobRow = new JobStatus();
 				jobRow.setJobUID(UUID.fromString(rs.getString("UUID")));
 				jobRow.setJobId(rs.getString("JOBID"));
+				jobRow.setLocalPath(rs.getString("LOCAL_PATH"));
 				return jobRow;
 			}
 		});
@@ -100,7 +101,7 @@ public class JobConfigDaoImpl implements JobConfigDao
 	
 	
 	@Override
-	public List<JobStatus> getJobStatusOfAllJobs()
+	public List<JobStatus> getAllQuedJobs()
 	{
 		String SQL = "SELECT * FROM job_details where job_status not like 'C'";
 		Map<String, String> namedParameters = new HashMap<String, String>();//
@@ -120,9 +121,30 @@ public class JobConfigDaoImpl implements JobConfigDao
 						return jobRow;
 					}
 				});
-		
-		
-		
+	}
+	
+	@Override
+	public List<JobStatus> getJobsForOutputSync()
+	{
+		String SQL = "SELECT * FROM job_details where job_status like 'C' and local_path is null";
+		Map<String, String> namedParameters = new HashMap<String, String>();//
+
+		return jdbcTemplate.query(SQL, namedParameters,
+				new RowMapper<JobStatus>() {
+
+					@Override
+					public JobStatus mapRow(ResultSet rs, int rowNum) throws SQLException
+					{
+						JobStatus jobRow = new JobStatus();
+						jobRow.setJobId(rs.getString("JOBID"));
+						jobRow.setJobUID(UUID.fromString(rs.getString("UUID")));
+						jobRow.setStatus(rs.getString("JOB_STATUS"));
+						jobRow.setJobSubmitTime(rs.getLong("SUBMIT_TIME"));
+						jobRow.setJobName(rs.getString("JOBNAME"));
+						jobRow.setLocalPath(rs.getString("LOCAL_PATH"));
+						return jobRow;
+					}
+				});
 	}
 
 	@Override
@@ -134,7 +156,8 @@ public class JobConfigDaoImpl implements JobConfigDao
 
 			namedParameters.put("JOBID", status.getJobId());
 			namedParameters.put("STATUS", status.getStatus());
-			String sql = "UPDATE job_details set job_status=:STATUS where JOBID=:JOBID";
+			namedParameters.put("LOCAL_PATH", status.getLocalPath());
+			String sql = "UPDATE job_details set job_status=:STATUS, local_path=:LOCAL_PATH where JOBID=:JOBID";
 			jdbcTemplate.update(sql, namedParameters);
 		}
 	}
