@@ -18,5 +18,7 @@ public interface JobConfigDao
 
 	public void updateJobStatus(List<JobStatus> jobs);
 	
-	public List<JobStatus> getJobStatusOfAllJobs();
+	public List<JobStatus> getJobsForOutputSync();
+
+	public List<JobStatus> getAllQuedJobs();
 }

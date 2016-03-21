@@ -139,9 +139,17 @@ public class JobHandlerImpl implements JobHandler
 				throw new SciGwWebException("JOB_NOT_FOUND");
 			}
 
-			String jobDir = constants.getJobDirPath(job.getJobUID().toString());
+			String downloadedFilePath = job.getLocalPath();
 
-			return fileHandler.downloadDirectoryAsZip(jobDir);
+			// check if file is already synced locally
+			if (downloadedFilePath == null || downloadedFilePath.isEmpty())
+			{
+				logger.info("Output files not synced locally, downloading from server");
+				String jobDir = constants.getJobDirPath(job.getJobUID().toString());
+				downloadedFilePath = fileHandler.downloadDirectoryAsZip(jobDir);
+			}
+			
+			return downloadedFilePath;
 
 		} catch (Exception e)
 		{

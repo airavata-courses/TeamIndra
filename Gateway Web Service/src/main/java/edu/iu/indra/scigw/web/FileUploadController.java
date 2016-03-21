@@ -68,7 +68,7 @@ public class FileUploadController
 	}
 
 	@RequestMapping(value = "/downloadoutput", method = RequestMethod.GET, produces = "application/zip")
-	public @ResponseBody SimpleResponse downloadOutput(@RequestParam String jobId,
+	public void downloadOutput(@RequestParam String jobId,
 			HttpServletResponse response)
 	{
 		File file = null;
@@ -89,7 +89,6 @@ public class FileUploadController
 		} catch (Exception e)
 		{
 			logger.error("Error in file download", e);
-			return new SimpleResponse(false, "Error in downloading file");
 		} finally
 		{
 			// delete temp file
@@ -98,7 +97,5 @@ public class FileUploadController
 				file.delete();
 			}
 		}
-
-		return new SimpleResponse(true, "File downloaded successfully");
 	}
 }

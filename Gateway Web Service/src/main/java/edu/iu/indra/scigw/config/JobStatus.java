@@ -14,6 +14,7 @@ public class JobStatus
 	private String jobName;
 	private String status;
 	private long jobSubmitTime;
+	private String localPath;
 
 	public UUID getJobUID()
 	{
@@ -64,4 +65,23 @@ public class JobStatus
 	{
 		this.jobSubmitTime = jobSubmitTime;
 	}
+
+	public String getLocalPath()
+	{
+		return this.localPath;
+	}
+
+	public void setLocalPath(String localPath)
+	{
+		this.localPath = localPath;
+	}
+
+	@Override
+	public String toString()
+	{
+		return "JobStatus [jobUID=" + this.jobUID + ", jobId=" + this.jobId + ", jobName="
+				+ this.jobName + ", status=" + this.status + ", jobSubmitTime=" + this.jobSubmitTime
+				+ ", localPath=" + this.localPath + "]";
+	}
+
 }
