@@ -49,6 +49,7 @@ public class JobConfigDaoImpl implements JobConfigDao
 	{
 		String sql = "DELETE from job_details WHERE JOBID = :JOBID";
 		Map<String, String> namedParameters = new HashMap<String, String>();//
+		namedParameters.put("JOBID", jobID);
 		jdbcTemplate.update(sql, namedParameters);
 	}
 

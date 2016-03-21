@@ -41,17 +41,28 @@ public class JobConfigUpdaterTask implements JobStatusSynchronizer
 	{
 		logger.info("Running Job Config Updater Task");
 
+		List<JobStatus> jobsfrmdb = jobDao.getJobStatusOfAllJobs();
+
+		if (jobsfrmdb.isEmpty())
+		{
+			logger.info("No jobs to monitor, exiting task");
+			return;
+		}
+
 		// get the job status from the host server
 		List<JobStatus> jobs = jobHandler.getAllJobsFromServer();
-		//Create a HashMap 
-		HashMap<String,JobStatus> compareJobs = new HashMap<String,JobStatus>();
-		for (JobStatus js : jobs){
-			compareJobs.put(js.getJobId() , js);
+
+		// Create a HashMap
+		HashMap<String, JobStatus> compareJobs = new HashMap<String, JobStatus>();
+		for (JobStatus js : jobs)
+		{
+			compareJobs.put(js.getJobId(), js);
 		}
-		
-		List<JobStatus> jobsfrmdb = jobDao.getJobStatusOfAllJobs();
-		for (JobStatus js : jobsfrmdb){
-			if (!compareJobs.containsKey(js.getJobId())){
+
+		for (JobStatus js : jobsfrmdb)
+		{
+			if (!compareJobs.containsKey(js.getJobId()))
+			{
 				js.setStatus(JobStatus.JOB_STATUS.C.toString());
 				jobs.add(js);
 			}
