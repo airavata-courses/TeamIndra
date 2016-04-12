@@ -148,6 +148,7 @@ public class SftpFileHandlerImpl implements FileHandler
 
 		// create temp zip file
 		File file;
+		ZipOutputStream zipOutputStream = null;
 
 		try
 		{
@@ -160,7 +161,7 @@ public class SftpFileHandlerImpl implements FileHandler
 			sftp = connectionHandler.getSftpChannel();
 			sftp.connect();
 
-			ZipOutputStream zipOutputStream = new ZipOutputStream(fileOutputStream);
+			zipOutputStream = new ZipOutputStream(fileOutputStream);
 			Vector<ChannelSftp.LsEntry> list = new Vector<ChannelSftp.LsEntry>();
 
 			// list of all files from directory
@@ -183,6 +184,18 @@ public class SftpFileHandlerImpl implements FileHandler
 		{
 			logger.error("Error in downloading file", e);
 			throw new SciGwWebException();
+		} finally
+		{
+			if (zipOutputStream != null)
+			{
+				try
+				{
+					zipOutputStream.close();
+				} catch (IOException e)
+				{
+					// give up
+				}
+			}
 		}
 
 		return file.getAbsolutePath();
@@ -213,7 +226,7 @@ public class SftpFileHandlerImpl implements FileHandler
 
 		} catch (IOException e)
 		{
-			e.printStackTrace();
+			logger.error("Error in zipping file", e);
 		}
 	}
 

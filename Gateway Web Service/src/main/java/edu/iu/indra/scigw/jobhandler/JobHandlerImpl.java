@@ -105,8 +105,6 @@ public class JobHandlerImpl implements JobHandler
 
 		return jobs;
 	}
-	
-
 
 	@Override
 	public void cancelJob(String jobId)
@@ -118,6 +116,7 @@ public class JobHandlerImpl implements JobHandler
 		try
 		{
 			connectionHandlerImpl.executeCommand(command);
+			jobConfigDao.deleteJob(jobId);
 		} catch (Exception e)
 		{
 			throw new SciGwWebException("Failed to cancel job with id " + jobId);
@@ -140,9 +139,17 @@ public class JobHandlerImpl implements JobHandler
 				throw new SciGwWebException("JOB_NOT_FOUND");
 			}
 
-			String jobDir = constants.getJobDirPath(job.getJobUID().toString());
+			String downloadedFilePath = job.getLocalPath();
 
-			return fileHandler.downloadDirectoryAsZip(jobDir);
+			// check if file is already synced locally
+			if (downloadedFilePath == null || downloadedFilePath.isEmpty())
+			{
+				logger.info("Output files not synced locally, downloading from server");
+				String jobDir = constants.getJobDirPath(job.getJobUID().toString());
+				downloadedFilePath = fileHandler.downloadDirectoryAsZip(jobDir);
+			}
+			
+			return downloadedFilePath;
 
 		} catch (Exception e)
 		{
