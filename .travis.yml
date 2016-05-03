@@ -1,6 +1,45 @@
 language: java
+branches:
+  only:
+    - Milestone_5
 jdk:
   - oraclejdk8
 sudo: false
 install: true
-script: cd "Gateway Web Service" && mvn clean && mvn package -DskipTests=true
+
+script: cd "Gateway Web Service" && mvn clean install -DskipTests=true
+
+before_deploy:
+  - cd ..
+  - zip -r "GatewayWebService.zip" "Gateway Web Service" appspec.yml install.sh|| true
+  - mkdir -p "dpl_cd_upload"
+  - mv GatewayWebService.zip  dpl_cd_upload/GatewayWebService.zip  || true
+
+deploy:
+  - provider: s3
+    access_key_id: $AWS_ACCESS_KEY # declared in Travis repo settings
+    secret_access_key: $AWS_SECRET_KEY
+    local_dir: dpl_cd_upload
+    bucket: teamindrabucket
+    region: us-west-2
+    skip_cleanup: true
+    acl: public_read
+    detect_encoding: true
+    on:
+      repo: airavata-courses/TeamIndra
+      all_branches: true
+  - provider: codedeploy
+    access_key_id: $AWS_ACCESS_KEY # declared in Travis repo settings
+    secret_access_key: $AWS_SECRET_KEY
+    bucket: teamindrabucket
+    key: GatewayWebService.zip
+    bundle_type: zip
+    application: TeamIndraCodeDeployHook
+    deployment_group: Production
+    region: us-west-2
+    on:
+      repo: airavata-courses/TeamIndra
+      all_branches: true
+after_deploy:
+  - echo "Performing after deploy procedures..."
+

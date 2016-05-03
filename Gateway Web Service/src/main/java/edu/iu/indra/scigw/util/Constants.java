@@ -25,6 +25,7 @@ public class Constants
 	public static final String default_filename = "job.tar";
 	public static final String sortAppExe = "sortApp";
 	public static final String mpiAppExe = "mpirun";
+	public static final String aprunAppExe = "aprun";
 	public static final String mdAppExe = "mdrun";
 	public static final String hostname = "--hostname";
 	public static final String gromacsUserInput = "";
@@ -79,14 +80,20 @@ public class Constants
 
 	public String getMdrunCommand(JobConfig jobconfig)
 	{
-		return mdAppExe + " -nice 0 -v -s " + getJobDirPath(jobconfig.getUid().toString())
+		return mdAppExe + " -s " + getJobDirPath(jobconfig.getUid().toString())
 				+ "input.tpr" + " -o " + getJobDirPath(jobconfig.getUid().toString())
 				+ "jobOutput.trr";
 	}
 
-	public String getGromacsRunCommand(JobConfig jobconfig)
+	public String getGromacsKarstRunCommand(JobConfig jobconfig)
 	{
 		return mpiAppExe + " -np " + (jobconfig.getNodes() * jobconfig.getCores()) + " "
+				+ getMdrunCommand(jobconfig);
+	}
+	
+	public String getGromacsBR2RunCommand(JobConfig jobconfig)
+	{
+		return aprunAppExe + " -n "   + (jobconfig.getNodes() * jobconfig.getCores())+ " gmx_mpi" + " "
 				+ getMdrunCommand(jobconfig);
 	}
 
