@@ -5,6 +5,6 @@ files:
     destination: /home/ec2-user/builds
 hooks:
   AfterInstall:
-    - location: '/Gateway\ Web\ Service/install.sh'
+    - location: "/Gateway Web Service/install.sh"
       timeout: 300
       runas: root
