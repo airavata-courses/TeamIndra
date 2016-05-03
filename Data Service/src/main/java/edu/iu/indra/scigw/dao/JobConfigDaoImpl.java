@@ -1,4 +1,4 @@
-/*package edu.iu.indra.scigw.dao;
+package edu.iu.indra.scigw.dao;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -98,53 +98,50 @@ public class JobConfigDaoImpl implements JobConfigDao
 				});
 		return jobRows;
 	}
-	
-	
+
 	@Override
 	public List<JobStatus> getAllQuedJobs()
 	{
 		String SQL = "SELECT * FROM job_details where job_status not like 'C'";
 		Map<String, String> namedParameters = new HashMap<String, String>();//
 
-		return jdbcTemplate.query(SQL, namedParameters,
-				new RowMapper<JobStatus>() {
+		return jdbcTemplate.query(SQL, namedParameters, new RowMapper<JobStatus>() {
 
-					@Override
-					public JobStatus mapRow(ResultSet rs, int rowNum) throws SQLException
-					{
-						JobStatus jobRow = new JobStatus();
-						jobRow.setJobId(rs.getString("JOBID"));
-						jobRow.setJobUID(UUID.fromString(rs.getString("UUID")));
-						jobRow.setStatus(rs.getString("JOB_STATUS"));
-						jobRow.setJobSubmitTime(rs.getLong("SUBMIT_TIME"));
-						jobRow.setJobName(rs.getString("JOBNAME"));
-						return jobRow;
-					}
-				});
+			@Override
+			public JobStatus mapRow(ResultSet rs, int rowNum) throws SQLException
+			{
+				JobStatus jobRow = new JobStatus();
+				jobRow.setJobId(rs.getString("JOBID"));
+				jobRow.setJobUID(UUID.fromString(rs.getString("UUID")));
+				jobRow.setStatus(rs.getString("JOB_STATUS"));
+				jobRow.setJobSubmitTime(rs.getLong("SUBMIT_TIME"));
+				jobRow.setJobName(rs.getString("JOBNAME"));
+				return jobRow;
+			}
+		});
 	}
-	
+
 	@Override
 	public List<JobStatus> getJobsForOutputSync()
 	{
 		String SQL = "SELECT * FROM job_details where job_status like 'C' and local_path is null";
 		Map<String, String> namedParameters = new HashMap<String, String>();//
 
-		return jdbcTemplate.query(SQL, namedParameters,
-				new RowMapper<JobStatus>() {
+		return jdbcTemplate.query(SQL, namedParameters, new RowMapper<JobStatus>() {
 
-					@Override
-					public JobStatus mapRow(ResultSet rs, int rowNum) throws SQLException
-					{
-						JobStatus jobRow = new JobStatus();
-						jobRow.setJobId(rs.getString("JOBID"));
-						jobRow.setJobUID(UUID.fromString(rs.getString("UUID")));
-						jobRow.setStatus(rs.getString("JOB_STATUS"));
-						jobRow.setJobSubmitTime(rs.getLong("SUBMIT_TIME"));
-						jobRow.setJobName(rs.getString("JOBNAME"));
-						jobRow.setLocalPath(rs.getString("LOCAL_PATH"));
-						return jobRow;
-					}
-				});
+			@Override
+			public JobStatus mapRow(ResultSet rs, int rowNum) throws SQLException
+			{
+				JobStatus jobRow = new JobStatus();
+				jobRow.setJobId(rs.getString("JOBID"));
+				jobRow.setJobUID(UUID.fromString(rs.getString("UUID")));
+				jobRow.setStatus(rs.getString("JOB_STATUS"));
+				jobRow.setJobSubmitTime(rs.getLong("SUBMIT_TIME"));
+				jobRow.setJobName(rs.getString("JOBNAME"));
+				jobRow.setLocalPath(rs.getString("LOCAL_PATH"));
+				return jobRow;
+			}
+		});
 	}
 
 	@Override
@@ -161,5 +158,15 @@ public class JobConfigDaoImpl implements JobConfigDao
 			jdbcTemplate.update(sql, namedParameters);
 		}
 	}
+
+	public NamedParameterJdbcTemplate getJdbcTemplate()
+	{
+		return this.jdbcTemplate;
+	}
+
+	public void setJdbcTemplate(NamedParameterJdbcTemplate jdbcTemplate)
+	{
+		this.jdbcTemplate = jdbcTemplate;
+	}
+
 }
-*/

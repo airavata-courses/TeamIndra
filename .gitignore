@@ -12,3 +12,5 @@ Gateway Web Service/.springBeans
 *.project
 Gateway Web Service/.classpath
 Gateway Web Service/.settings/org.eclipse.wst.common.project.facet.core.xml
+Auth Service/.classpath
+*.jsdtscope

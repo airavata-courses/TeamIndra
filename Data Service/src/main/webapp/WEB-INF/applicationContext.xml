@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.2.xsd">
+
+
+	<bean id="dataServiceExporter" class="org.springframework.remoting.rmi.RmiServiceExporter">
+		<property name="serviceName" value="jdbcService" />
+		<property name="service" ref="jdbcDao" />
+		<property name="serviceInterface" value="edu.iu.indra.scigw.dao.JobConfigDao" />
+		<property name="registryPort" value="1336" />
+	</bean>
+
+	<bean id="jdbcDao" class="edu.iu.indra.scigw.dao.JobConfigDaoImpl">
+		<property name="jdbcTemplate" ref="jdbcTemplate" />
+	</bean>
+
+	<bean id="dataSource"
+		class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+
+		<property name="driverClassName" value="com.mysql.jdbc.Driver" />
+		<property name="url" value="jdbc:mysql://localhost:3306/scigw" />
+		<property name="username" value="root" />
+		<property name="password" value="OldMonk@321" />
+	</bean>
+
+	<bean id="jdbcTemplate"
+		class="org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate">
+		<constructor-arg ref="dataSource" />
+	</bean>
+
+</beans>

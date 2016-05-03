@@ -43,22 +43,20 @@
 		<property name="serviceInterface"
 			value="org.springframework.security.core.userdetails.UserDetailsService" />
 	</bean>
-	
+
 	<bean id="errorMessages" class="edu.iu.indra.scigw.errorcodes.ErrorMessages">
 		<property name="messageSource" ref="messageSource"></property>
 	</bean>
 
-	<bean id="dataSource"
-		class="org.springframework.jdbc.datasource.DriverManagerDataSource">
-
-		<property name="driverClassName" value="com.mysql.jdbc.Driver" />
-		<property name="url" value="jdbc:mysql://localhost:3306/scigw" />
-		<property name="username" value="root" />
-		<property name="password" value="OldMonk@321" />
+	<bean id="jobConfigDao" class="org.springframework.remoting.rmi.RmiProxyFactoryBean">
+		<property name="serviceUrl" value="rmi://localhost:1336/jdbcService" />
+		<property name="serviceInterface" value="edu.iu.indra.scigw.dao.JobConfigDao" />
 	</bean>
 
-	<bean id="jdbcTemplate"
-		class="org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate">
-		<constructor-arg ref="dataSource" />
-	</bean>
+	<!-- <bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource"> 
+		<property name="driverClassName" value="com.mysql.jdbc.Driver" /> <property 
+		name="url" value="jdbc:mysql://localhost:3306/scigw" /> <property name="username" 
+		value="root" /> <property name="password" value="OldMonk@321" /> </bean> 
+		<bean id="jdbcTemplate" class="org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate"> 
+		<constructor-arg ref="dataSource" /> </bean> -->
 </beans>
