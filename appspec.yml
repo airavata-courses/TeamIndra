@@ -3,9 +3,8 @@ os: linux
 files:
   - source: /
     destination: /home/ec2-user/builds
-	
 hooks:
   AfterInstall:
-    - location: "/Gateway Web Service/install.sh"
+    - location: /GatewayApp/install.sh
       timeout: 300
       runas: root
