@@ -3,6 +3,7 @@ language: java
 branches:
   only:
     - Milestone-5
+
 notifications:
   email:
     - smhaiska@iu.edu
