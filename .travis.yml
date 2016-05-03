@@ -1,6 +1,7 @@
 language: java
 branches:
   only:
+    - master
     - Milestone_5
 jdk:
   - oraclejdk8
