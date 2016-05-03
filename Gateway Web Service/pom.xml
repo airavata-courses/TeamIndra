@@ -19,6 +19,7 @@
 		<!-- Spring -->
 		<dependency>
 			<groupId>org.springframework</groupId>
+			
 			<artifactId>spring-context</artifactId>
 			<version>${org.springframework-version}</version>
 			<exclusions>
@@ -82,7 +83,6 @@
 					<artifactId>jmxri</artifactId>
 				</exclusion>
 			</exclusions>
-
 		</dependency>
 
 		<!-- @Inject -->
