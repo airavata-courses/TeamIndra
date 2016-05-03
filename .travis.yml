@@ -1,3 +1,4 @@
+
 language: java
 branches:
   only:
@@ -42,6 +43,5 @@ deploy:
     on:
       repo: airavata-courses/TeamIndra
       all_branches: true
-	  
 after_deploy:
   - echo "Performing after deploy procedures..."
