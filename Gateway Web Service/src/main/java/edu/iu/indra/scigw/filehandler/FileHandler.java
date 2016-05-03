@@ -11,9 +11,9 @@ public interface FileHandler
 	 * @param source
 	 * @param destination
 	 */
-	public void copyFile(String source, String destination) throws FileTransferException;
+	public void copyFile(String source, String destination, String hostname) throws FileTransferException;
 
-	public String downloadDirectoryAsZip(String folder) throws FileTransferException;
+	public String downloadDirectoryAsZip(String folder, String hostname) throws FileTransferException;
 
 	/**
 	 * transfers job files from jobConfig to server and returns destination path

@@ -15,6 +15,17 @@ public class JobStatus
 	private String status;
 	private long jobSubmitTime;
 	private String localPath;
+	private String hostname;
+
+	public String getHostname()
+	{
+		return this.hostname;
+	}
+
+	public void setHostname(String hostname)
+	{
+		this.hostname = hostname;
+	}
 
 	public UUID getJobUID()
 	{

@@ -5,7 +5,6 @@ import com.jcraft.jsch.UserInfo;
 public class UserInput implements UserInfo
 {
 
-	private String host;
 	private String passphrase;
 	private String pathToSSHKey;
 	private String username;
@@ -13,7 +12,6 @@ public class UserInput implements UserInfo
 	public UserInput(String host, String passphrase, String pathToFile, String username)
 	{
 		super();
-		this.host = host;
 		this.passphrase = passphrase;
 		this.pathToSSHKey = pathToFile;
 		this.username = username;
@@ -59,16 +57,6 @@ public class UserInput implements UserInfo
 	public String getPassphrase()
 	{
 		return this.passphrase;
-	}
-
-	public String getHost()
-	{
-		return this.host;
-	}
-
-	public void setHost(String host)
-	{
-		this.host = host;
 	}
 
 	public String getPathToSSHKey()

@@ -72,7 +72,7 @@ public abstract class ApplicationHandler
 			String destPbsScriptPath = fileHandler.transferApplicationFiles(jobConfig);
 
 			jobId = connectionHandler
-					.executeCommandGetResult(CommandHelper.getQsubCommand(destPbsScriptPath));
+					.executeCommandGetResult(CommandHelper.getQsubCommand(destPbsScriptPath), jobConfig.getHostname());
 
 		} catch (SciGwException e)
 		{

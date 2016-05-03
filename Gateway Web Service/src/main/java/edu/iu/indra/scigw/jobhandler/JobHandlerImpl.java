@@ -53,7 +53,7 @@ public class JobHandlerImpl implements JobHandler
 	@Override
 	public String submitJob(JobConfig jobConfig)
 	{
-		String jobId = null;
+		String jobId = "qw";
 
 		try
 		{
@@ -90,11 +90,17 @@ public class JobHandlerImpl implements JobHandler
 		try
 		{
 			// get all jobs in string format
-			String jobStatus = connectionHandlerImpl
-					.executeCommandGetResult(CommandHelper.getJobStatusCommand(username));
+			// Karst
+			String jobStatus = connectionHandlerImpl.executeCommandGetResult(
+					CommandHelper.getJobStatusCommand(username), constants.karst);
 
 			// use parser to get list of job status for individual jobs
 			jobs = jobStatusParser.parseJobStatus(jobStatus);
+
+			jobStatus = connectionHandlerImpl.executeCommandGetResult(
+					CommandHelper.getJobStatusCommand(username), constants.bigred);
+
+			jobs.addAll(jobStatusParser.parseJobStatus(jobStatus));
 
 			return jobs;
 
@@ -115,7 +121,9 @@ public class JobHandlerImpl implements JobHandler
 
 		try
 		{
-			connectionHandlerImpl.executeCommand(command);
+			// fetch corresponding job details from database
+			JobStatus job = jobConfigDao.getJobDetailsByJobID(jobId);
+			connectionHandlerImpl.executeCommand(command, job.getHostname());
 			jobConfigDao.deleteJob(jobId);
 		} catch (Exception e)
 		{
@@ -146,9 +154,9 @@ public class JobHandlerImpl implements JobHandler
 			{
 				logger.info("Output files not synced locally, downloading from server");
 				String jobDir = constants.getJobDirPath(job.getJobUID().toString());
-				downloadedFilePath = fileHandler.downloadDirectoryAsZip(jobDir);
+				downloadedFilePath = fileHandler.downloadDirectoryAsZip(jobDir, job.getHostname());
 			}
-			
+
 			return downloadedFilePath;
 
 		} catch (Exception e)

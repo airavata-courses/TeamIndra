@@ -1,6 +1,8 @@
 package edu.iu.indra.scigw.connectionhandler;
 
 import java.io.InputStream;
+import java.util.HashMap;
+import java.util.Map;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,34 +28,40 @@ public class ConnectionHandlerImpl implements ConnectionHandler
 
 	JSch jsch;
 
-	Session session;
+	Map<String, Session> sessions = new HashMap<String, Session>();
 
-	private Session mGetSession() throws ConnectionFailedException
+	private Session mGetSession(String hostname) throws ConnectionFailedException
 	{
+		Session session = sessions.get(hostname);
+
 		if (session == null || !session.isConnected())
 		{
 			try
 			{
 				jsch = new JSch();
 				jsch.addIdentity(userInput.getPathToSSHKey());
-				session = jsch.getSession(userInput.getUsername(), userInput.getHost(), 22);
+				session = jsch.getSession(userInput.getUsername(), hostname, 22);
 				session.setConfig("StrictHostKeyChecking", "no");
 				session.setUserInfo(userInput);
 				session.connect();
+				sessions.put(hostname, session);
 			} catch (JSchException e)
 			{
 				logger.error("Error in creating session", e);
 				throw new ConnectionFailedException();
 			}
+		} else
+		{
+
 		}
 
 		return session;
 	}
 
 	@Override
-	public ChannelSftp getSftpChannel() throws ConnectionFailedException
+	public ChannelSftp getSftpChannel(String hostname) throws ConnectionFailedException
 	{
-		Session session = mGetSession();
+		Session session = mGetSession(hostname);
 		try
 		{
 			return (ChannelSftp) session.openChannel("sftp");
@@ -65,9 +73,9 @@ public class ConnectionHandlerImpl implements ConnectionHandler
 	}
 
 	@Override
-	public ChannelExec getExecChannel() throws ConnectionFailedException
+	public ChannelExec getExecChannel(String hostname) throws ConnectionFailedException
 	{
-		Session session = mGetSession();
+		Session session = mGetSession(hostname);
 		try
 		{
 			return (ChannelExec) session.openChannel("exec");
@@ -79,17 +87,17 @@ public class ConnectionHandlerImpl implements ConnectionHandler
 	}
 
 	@Override
-	public Session getSession() throws ConnectionFailedException
+	public Session getSession(String hostname) throws ConnectionFailedException
 	{
-		return mGetSession();
+		return mGetSession(hostname);
 	}
 
 	@Override
-	public void executeCommand(String command) throws ExecutionFailedException
+	public void executeCommand(String command, String hostname) throws ExecutionFailedException
 	{
 		try
 		{
-			ChannelExec exec = getExecChannel();
+			ChannelExec exec = getExecChannel(hostname);
 			exec.setCommand(command);
 			exec.connect();
 			Thread.sleep(1000);
@@ -109,23 +117,24 @@ public class ConnectionHandlerImpl implements ConnectionHandler
 	}
 
 	@Override
-	public void executeCommand(String[] commands) throws ExecutionFailedException
+	public void executeCommand(String[] commands, String hostname) throws ExecutionFailedException
 	{
 		for (String command : commands)
 		{
-			executeCommand(command);
+			executeCommand(command, hostname);
 		}
 	}
 
 	@Override
-	public String executeCommandGetResult(String command) throws ExecutionFailedException
+	public String executeCommandGetResult(String command, String hostname)
+			throws ExecutionFailedException
 	{
 		// TODO Auto-generated method stub
 		StringBuilder out = new StringBuilder();
 
 		try
 		{
-			ChannelExec exec = getExecChannel();
+			ChannelExec exec = getExecChannel(hostname);
 			exec.setCommand(command);
 			exec.setInputStream(null);
 			InputStream in = exec.getInputStream();
@@ -149,7 +158,6 @@ public class ConnectionHandlerImpl implements ConnectionHandler
 					System.out.println("exit-status: " + exec.getExitStatus());
 					break;
 				}
-
 			}
 			try
 			{

@@ -40,7 +40,8 @@ public class JobConfigDaoImpl implements JobConfigDao
 		namedParameters.put("SUBMIT_TIME", "" + date.getTime());
 		namedParameters.put("USERNAME", jobRow.getUsername());
 		namedParameters.put("JOBNAME", jobRow.getJobName());
-		String sql = "INSERT INTO job_details (UUID, JOBID, WALLTIME, EMAIL, JOB_STATUS, SUBMIT_TIME, USERNAME, JOBNAME, LOCAL_PATH) VALUES (:UUID, :JOBID, :WALLTIME, :EMAIL, :JOB_STATUS, :SUBMIT_TIME, :USERNAME, :JOBNAME, NULL)";
+		namedParameters.put("HOSTNAME", jobRow.getHostname());
+		String sql = "INSERT INTO job_details (UUID, JOBID, WALLTIME, EMAIL, JOB_STATUS, SUBMIT_TIME, USERNAME, JOBNAME, LOCAL_PATH, HOSTNAME) VALUES (:UUID, :JOBID, :WALLTIME, :EMAIL, :JOB_STATUS, :SUBMIT_TIME, :USERNAME, :JOBNAME, NULL, :HOSTNAME)";
 		jdbcTemplate.update(sql, namedParameters);
 	}
 
@@ -69,6 +70,7 @@ public class JobConfigDaoImpl implements JobConfigDao
 				jobRow.setJobUID(UUID.fromString(rs.getString("UUID")));
 				jobRow.setJobId(rs.getString("JOBID"));
 				jobRow.setLocalPath(rs.getString("LOCAL_PATH"));
+				jobRow.setHostname(rs.getString("HOSTNAME"));
 				return jobRow;
 			}
 		});
@@ -93,6 +95,7 @@ public class JobConfigDaoImpl implements JobConfigDao
 						jobRow.setStatus(rs.getString("JOB_STATUS"));
 						jobRow.setJobSubmitTime(rs.getLong("SUBMIT_TIME"));
 						jobRow.setJobName(rs.getString("JOBNAME"));
+						jobRow.setHostname(rs.getString("HOSTNAME"));
 						return jobRow;
 					}
 				});
@@ -116,6 +119,7 @@ public class JobConfigDaoImpl implements JobConfigDao
 				jobRow.setStatus(rs.getString("JOB_STATUS"));
 				jobRow.setJobSubmitTime(rs.getLong("SUBMIT_TIME"));
 				jobRow.setJobName(rs.getString("JOBNAME"));
+				jobRow.setHostname(rs.getString("HOSTNAME"));
 				return jobRow;
 			}
 		});
@@ -139,6 +143,7 @@ public class JobConfigDaoImpl implements JobConfigDao
 				jobRow.setJobSubmitTime(rs.getLong("SUBMIT_TIME"));
 				jobRow.setJobName(rs.getString("JOBNAME"));
 				jobRow.setLocalPath(rs.getString("LOCAL_PATH"));
+				jobRow.setHostname(rs.getString("HOSTNAME"));
 				return jobRow;
 			}
 		});

@@ -38,11 +38,11 @@ public class SftpFileHandlerImpl implements FileHandler
 	Constants constants;
 
 	@Override
-	public void copyFile(String source, String destination) throws FileTransferException
+	public void copyFile(String source, String destination, String hostname) throws FileTransferException
 	{
 		try
 		{
-			ChannelSftp sftp = connectionHandler.getSftpChannel();
+			ChannelSftp sftp = connectionHandler.getSftpChannel(hostname);
 			sftp.connect();
 			sftp.put(source, destination);
 
@@ -81,7 +81,7 @@ public class SftpFileHandlerImpl implements FileHandler
 		{
 			// create a new directory for job
 			String dirPath = constants.getJobDirPath(uid);
-			ChannelSftp sftp = connectionHandler.getSftpChannel();
+			ChannelSftp sftp = connectionHandler.getSftpChannel(config.getHostname());
 			sftp.connect();
 			sftp.mkdir(dirPath);
 			sftp.cd(dirPath);
@@ -142,7 +142,7 @@ public class SftpFileHandlerImpl implements FileHandler
 	}
 
 	@Override
-	public String downloadDirectoryAsZip(String folder) throws FileTransferException
+	public String downloadDirectoryAsZip(String folder, String hostname) throws FileTransferException
 	{
 		logger.info("Downloading directory " + folder);
 
@@ -157,8 +157,8 @@ public class SftpFileHandlerImpl implements FileHandler
 			FileOutputStream fileOutputStream = new FileOutputStream(file);
 
 			// get sftp channel
-			ChannelSftp sftp = connectionHandler.getSftpChannel();
-			sftp = connectionHandler.getSftpChannel();
+			ChannelSftp sftp = connectionHandler.getSftpChannel(hostname);
+			sftp = connectionHandler.getSftpChannel(hostname);
 			sftp.connect();
 
 			zipOutputStream = new ZipOutputStream(fileOutputStream);
