@@ -5,11 +5,11 @@
 	http://www.springframework.org/schema/security
 	http://www.springframework.org/schema/security/spring-security-3.2.xsd">
 
-    <http security="none" pattern="/login" />
-    <http security="none" pattern="/resources/**" />
-    
-	<http auto-config="true" >
-		<intercept-url pattern="/**" access="ROLE_USER" />
+	<http security="none" pattern="/login" />
+	<http security="none" pattern="/resources/**" />
+
+	<http auto-config="true">
+		<intercept-url pattern="/**" access="IS_AUTHENTICATED_FULLY" />
 
 		<form-login login-page="/login" default-target-url="/"
 			authentication-failure-url="/login?error" username-parameter="username"
@@ -17,13 +17,8 @@
 		<logout logout-success-url="/login?logout" />
 	</http>
 
-	<authentication-manager>
-		<authentication-provider>
-			<user-service>
-				<user name="test" password="test1234" authorities="ROLE_USER" />
-				<user name="user" password="user1234" authorities="ROLE_USER" />
-			</user-service>
-		</authentication-provider>
+	<authentication-manager alias="authenticationManager">
+		<authentication-provider user-service-ref="userService" />
 	</authentication-manager>
 
 </beans:beans>

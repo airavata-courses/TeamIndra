@@ -38,6 +38,12 @@
 		value="${job.wallTime}" /> <property name="cores" value="${job.cores}" /> 
 		<property name="email" value="${job.email}" /> </bean> -->
 
+	<bean id="userService" class="org.springframework.remoting.rmi.RmiProxyFactoryBean">
+		<property name="serviceUrl" value="rmi://localhost:1099/UserService" />
+		<property name="serviceInterface"
+			value="org.springframework.security.core.userdetails.UserDetailsService" />
+	</bean>
+	
 	<bean id="errorMessages" class="edu.iu.indra.scigw.errorcodes.ErrorMessages">
 		<property name="messageSource" ref="messageSource"></property>
 	</bean>
