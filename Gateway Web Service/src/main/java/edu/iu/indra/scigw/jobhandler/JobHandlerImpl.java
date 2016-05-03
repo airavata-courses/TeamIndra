@@ -58,7 +58,6 @@ public class JobHandlerImpl implements JobHandler
 		try
 		{
 			logger.info("Submitting job with UID : " + jobConfig.getUid().toString());
-			jobConfig.setHostname(userConfig.getHost());
 			// run mpi run by default for now
 			jobId = applicationManager.runApplication(jobConfig, 1);
 			jobId = jobId.trim();

@@ -15,7 +15,7 @@
 <script type="text/javascript" src="./resources/js/jquery-1.10.2.min.js"></script>
 <link rel="stylesheet" type="text/css"
 	href="./resources/bootstrap/css/bootstrap.min.css" />
-	<link rel="stylesheet" type="text/css"
+<link rel="stylesheet" type="text/css"
 	href="./resources/bootstrap/css/jquery.bootgrid.min.css" />
 <link rel="stylesheet" type="text/css"
 	href="./resources/font-awesome/css/font-awesome.min.css" />
@@ -24,9 +24,9 @@
 
 <script type="text/javascript"
 	src="./resources/bootstrap/js/bootstrap.min.js"></script>
-	<script type="text/javascript"
+<script type="text/javascript"
 	src="./resources/bootstrap/js/jquery.bootgrid.fa.min.js"></script>
-	<script type="text/javascript"
+<script type="text/javascript"
 	src="./resources/bootstrap/js/jquery.bootgrid.min.js"></script>
 </head>
 <body>
@@ -38,7 +38,9 @@
 				Team Indra <small>Portal to schedule job and check job
 					status</small>
 				<div class="pull-right">
-					<h4><a href="j_spring_security_logout">logout</a></h4>
+					<h4>
+						<a href="j_spring_security_logout">logout</a>
+					</h4>
 				</div>
 			</h1>
 		</div>
@@ -63,11 +65,20 @@
 								</div>
 
 								<div class="form-group">
-									<label class="control-label col-sm-2" for="jobName">Job-name:</label>
+									<label class="control-label col-sm-2" for="jobName">Job
+										name:</label>
 									<div class="col-sm-10">
 										<input type="text" class="form-control" id="jobName"
 											placeholder="Enter name for job">
-						  			</div>
+									</div>
+								</div>
+								<div class="form-group">
+								<label class="control-label col-sm-2" for="hostname">Host:</label>
+									<label class="radio-inline"> <input type="radio"
+										name="hostname" id="hostname" value="karst.uits.iu.edu">Karst
+									</label> <label class="radio-inline"> <input type="radio"
+										name="hostname" id="hostname" value="bigred2.uits.iu.edu">BigRed
+									</label>
 								</div>
 								<div class="form-group">
 									<label class="control-label col-sm-2" for="email">IU
@@ -147,19 +158,20 @@
 								class="glyphicon glyphicon-chevron-up"></i></span>
 						</div>
 						<div class="panel-body">
-						
-						<table id="grid-basic" class="table table-condensed table-hover table-striped">
-						    <thead>
-						        <tr>
-						            <th data-column-id="jobId">Job Id</th>
-						            <th data-column-id="jobName">Job Name</th>
-						             <th data-column-id="status">Status</th>
-						             <th data-column-id="link">Download</th>
-						            <!-- <th data-column-id="jobSubmitTime" data-order="desc">Submitted On</th> -->
-						        </tr>
-						    </thead>
-							<tbody>							
-							</tbody>
+
+							<table id="grid-basic"
+								class="table table-condensed table-hover table-striped">
+								<thead>
+									<tr>
+										<th data-column-id="jobId">Job Id</th>
+										<th data-column-id="jobName">Job Name</th>
+										<th data-column-id="status">Status</th>
+										<th data-column-id="link">Download</th>
+										<!-- <th data-column-id="jobSubmitTime" data-order="desc">Submitted On</th> -->
+									</tr>
+								</thead>
+								<tbody>
+								</tbody>
 							</table>
 						</div>
 					</div>
@@ -185,8 +197,8 @@
 						</div>
 					</div>
 				</div>
-				
-				
+
+
 				<div class="col-md-5">
 					<div class="panel panel-default">
 						<div class="panel-heading">
@@ -195,9 +207,10 @@
 								class="glyphicon glyphicon-chevron-up"></i></span>
 						</div>
 						<div class="panel-body">
-							<form class="form-search" enctype="multipart/form-data" role="form" id="upload_file"  >
-								<input type="file" name="file" class="form-control" id="fileLoader">
-								<br />
+							<form class="form-search" enctype="multipart/form-data"
+								role="form" id="upload_file">
+								<input type="file" name="file" class="form-control"
+									id="fileLoader"> <br />
 								<button type="submit" id="fileSubmit" class="btn btn-default">Upload
 								</button>
 								<div class="alert alert-success" id="file_upload_result">
@@ -274,8 +287,6 @@
 	</script>
 
 	<script type="text/javascript">
-		
-	
 		$(window).load(function() {
 			$("#result").hide();
 			$("#cancel_result").hide();
@@ -288,12 +299,12 @@
 			event.preventDefault();
 			submitForm();
 		});
-		
-	  	$("#upload_file").submit(function(event) {
+
+		$("#upload_file").submit(function(event) {
 			// cancels the form submission
 			event.preventDefault();
 			uploadFile(event);
-		});  
+		});
 
 		$("#jobStatusForm").submit(function(event) {
 			// cancels the form submission
@@ -306,14 +317,14 @@
 			event.preventDefault();
 			cancelJob();
 		});
-/*
-		function prepareUpload(event)
-		{
-		  files = event.target.files;
-		  alert("File added");
-		}
-		*/
-		
+		/*
+		 function prepareUpload(event)
+		 {
+		 files = event.target.files;
+		 alert("File added");
+		 }
+		 */
+
 		function cancelJob() {
 			// Initiate Variables With Form Content
 			var jobId = $("#cancel_jobId").val();
@@ -338,6 +349,7 @@
 		function submitForm() {
 			// Initiate Variables With Form Content
 			var jobName = $("#jobName").val();
+			var hostname = $("input[name=hostname]:checked").val();
 			var email = $("#email").val();
 			var nodes = $("#nodes").val();
 			var maxMemory = $("#maxMemory").val();
@@ -351,7 +363,8 @@
 				nodes : nodes,
 				maxMemory : maxMemory,
 				wallTime : wallTime,
-				cores : cores
+				cores : cores,
+				hostname : hostname
 			//userInputFile : userInputFile
 			};
 
@@ -369,38 +382,38 @@
 		}
 
 		function uploadFile() {
-			
+
 			//var datafields = $("upload_file");
 			//alert(filename);
 			var file = $('[name="file"]');
-			var filename = $.trim(file.val());  	
+			var filename = $.trim(file.val());
 
-				$.ajax({
-					type : "POST",
-					url : "./upload",
-					enctype: 'multipart/form-data',
-					data : new FormData(document.getElementById("upload_file")),
-					processData : false,
-					cache: false,
-					contentType: false,
-					success : function(response) {
-						
-							//formSuccess(response.message);
-							uploadSuccess(response.message);
-					
-					},
-				
-				 error: function (xhr, ajaxOptions, thrownError) {
-		                if (xhr.readyState == 0 || xhr.status == 0) {
-		                    // not really an error
-		                    return;
-		                } else {
-		                    alert("XHR Status = "+xhr.status);
-		                    alert("Thrown Error = "+thrownError);
-		                    alert("AjaxOptions = "+ajaxOptions)
-		                }
-		          }
-				});
+			$.ajax({
+				type : "POST",
+				url : "./upload",
+				enctype : 'multipart/form-data',
+				data : new FormData(document.getElementById("upload_file")),
+				processData : false,
+				cache : false,
+				contentType : false,
+				success : function(response) {
+
+					//formSuccess(response.message);
+					uploadSuccess(response.message);
+
+				},
+
+				error : function(xhr, ajaxOptions, thrownError) {
+					if (xhr.readyState == 0 || xhr.status == 0) {
+						// not really an error
+						return;
+					} else {
+						alert("XHR Status = " + xhr.status);
+						alert("Thrown Error = " + thrownError);
+						alert("AjaxOptions = " + ajaxOptions)
+					}
+				}
+			});
 		}
 
 		function formSuccess(message) {
@@ -412,7 +425,7 @@
 				});
 			}, 10000);
 		}
-		
+
 		function uploadSuccess(message) {
 			$("#file_upload_result_success").text(message)
 			$("#file_upload_result").show();
@@ -454,25 +467,33 @@
 				}
 			});
 		}
-		
+
 		function updateStatus() {
 
-			 $.ajax({
-				type : "GET",
-				url : "./gejobstatusforuser",
-				contentType : "application/json",
-				timeout : 10000000,
-				success : function(response) {
-					if (response.success) {
-						
-						$(response.data).each(function(index){
-						    this.link = '<a href=' + '\"./downloadoutput?jobId=' + this.jobId + "\"" + '><img src="./resources/images/download.png" alt="download output" width="30" height="30" border="0"></a>';
-						});
-						
-						$("#grid-basic").bootgrid().bootgrid("append", response.data);
-					}
-				}
-			});  
+			$
+					.ajax({
+						type : "GET",
+						url : "./gejobstatusforuser",
+						contentType : "application/json",
+						timeout : 10000000,
+						success : function(response) {
+							if (response.success) {
+
+								$(response.data)
+										.each(
+												function(index) {
+													this.link = '<a href='
+															+ '\"./downloadoutput?jobId='
+															+ this.jobId
+															+ "\""
+															+ '><img src="./resources/images/download.png" alt="download output" width="30" height="30" border="0"></a>';
+												});
+
+								$("#grid-basic").bootgrid().bootgrid("append",
+										response.data);
+							}
+						}
+					});
 		}
 	</script>
 	<!-- Collapsible Panels - END -->
