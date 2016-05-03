@@ -6,6 +6,7 @@ jdk:
   - oraclejdk8
 sudo: false
 install: true
+
 script: cd "Gateway Web Service" && mvn clean install -DskipTests=true
 
 before_deploy:
@@ -41,3 +42,4 @@ deploy:
       all_branches: true
 after_deploy:
   - echo "Performing after deploy procedures..."
+
