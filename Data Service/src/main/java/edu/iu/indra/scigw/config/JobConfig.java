@@ -1,11 +1,17 @@
 package edu.iu.indra.scigw.config;
 
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
 
-public class JobConfig {
+public class JobConfig implements Serializable
+{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private final UUID uid = UUID.randomUUID();
 	private String jobID;
 	private String jobName;

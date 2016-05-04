@@ -1,9 +1,15 @@
 package edu.iu.indra.scigw.config;
 
+import java.io.Serializable;
 import java.util.UUID;
 
-public class JobStatus
+public class JobStatus implements Serializable
 {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 	public enum JOB_STATUS
 	{
 		Q, C, CL, E, H, S, NA;
