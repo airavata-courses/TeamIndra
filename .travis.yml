@@ -11,7 +11,7 @@ script: cd "Gateway Web Service" && mvn clean install -DskipTests=true
 
 before_deploy:
   - cd ..
-  - zip -r "GatewayWebService.zip" "Gateway Web Service" appspec.yml install.sh|| true
+  - zip -r "GatewayWebService.zip" "Gateway Web Service" appspec.yml install.sh "Auth Service" "Data Service"|| true
   - mkdir -p "dpl_cd_upload"
   - mv GatewayWebService.zip  dpl_cd_upload/GatewayWebService.zip  || true
 
