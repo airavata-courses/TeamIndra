@@ -13,7 +13,6 @@ mvn -f '/home/ec2-user/builds/Data Service/pom.xml' install;
 cp '/home/ec2-user/builds/Data Service/target/indra-dao-1.0.0.war' '/home/ec2-user/apache-tomcat-8.0.33/webapps'
 
 sh '/home/ec2-user/apache-tomcat-8.0.33/bin/startup.sh'
-
 sudo chmod a+w -R '/home/ec2-user/builds/Gateway Web Service/'
 mvn -f '/home/ec2-user/builds/Gateway Web Service/pom.xml' clean;
 mvn -f '/home/ec2-user/builds/Gateway Web Service/pom.xml' install;
