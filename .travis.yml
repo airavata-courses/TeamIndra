@@ -1,14 +1,18 @@
 language: java
 branches:
   only:
-    - master
     - Milestone-6
 jdk:
   - oraclejdk8
 sudo: false
 install: true
-script: cd "Auth Service" && mvn clean install -DskipTests=true
-script: cd "Data Service" && mvn clean install -DskipTests=true
+script: 
+  -cd "Auth Service" && mvn clean install -DskipTests=true
+  -cd ..
+	
+script: 
+  -cd "Data Service" && mvn clean install -DskipTests=true
+  -cd ..
 script: cd "Gateway Web Service" && mvn clean install -DskipTests=true
 
 before_deploy:
