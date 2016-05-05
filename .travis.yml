@@ -7,13 +7,11 @@ jdk:
 sudo: false
 install: true
 script: 
-  -cd "Auth Service" && mvn clean install -DskipTests=true
-  -cd ..
-	
-script: 
-  -cd "Data Service" && mvn clean install -DskipTests=true
-  -cd ..
-script: cd "Gateway Web Service" && mvn clean install -DskipTests=true
+  - cd "Auth Service" && mvn clean install -DskipTests=true
+  - cd ..	
+  - cd "Data Service" && mvn clean install -DskipTests=true
+  - cd ..
+  - cd "Gateway Web Service" && mvn clean install -DskipTests=true
 
 before_deploy:
   - cd ..
