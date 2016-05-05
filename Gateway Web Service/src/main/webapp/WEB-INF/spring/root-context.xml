@@ -27,7 +27,9 @@
 	<bean id="userConfig" class="edu.iu.indra.scigw.input.UserInput">
 		<property name="username" value="${host.username}" />
 		<property name="passphrase" value="${sshkey.passphrase}" />
+		<property name="bigredpass" value="${bigred.sshkey.passphrase}" />
 		<property name="pathToSSHKey" value="${sshkey.key_path}" />
+		<property name="bigredkey" value="${bigred.sshkey.key_path}" />
 	</bean>
 
 	<!-- Configuration for scheduling the job -->

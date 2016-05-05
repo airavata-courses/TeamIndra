@@ -17,6 +17,7 @@ import com.jcraft.jsch.Session;
 import edu.iu.indra.scigw.exceptions.ConnectionFailedException;
 import edu.iu.indra.scigw.exceptions.ExecutionFailedException;
 import edu.iu.indra.scigw.input.UserInput;
+import edu.iu.indra.scigw.util.Constants;
 
 @Service("connectionHandler")
 public class ConnectionHandlerImpl implements ConnectionHandler
@@ -39,7 +40,15 @@ public class ConnectionHandlerImpl implements ConnectionHandler
 			try
 			{
 				jsch = new JSch();
-				jsch.addIdentity(userInput.getPathToSSHKey());
+
+				if (hostname.matches(Constants.bigred))
+				{
+					jsch.addIdentity(userInput.getBigredkey());
+					userInput.setPassphrase(userInput.getBigredpass());
+				} else
+				{
+					jsch.addIdentity(userInput.getPathToSSHKey());
+				}
 				session = jsch.getSession(userInput.getUsername(), hostname, 22);
 				session.setConfig("StrictHostKeyChecking", "no");
 				session.setUserInfo(userInput);

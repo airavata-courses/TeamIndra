@@ -8,18 +8,33 @@ public class UserInput implements UserInfo
 	private String passphrase;
 	private String pathToSSHKey;
 	private String username;
+	private String bigredkey;
+	private String bigredpass;
 
-	public UserInput(String host, String passphrase, String pathToFile, String username)
+	public UserInput(String host, String passphrase, String pathToFile, String username,
+			String bigredkey, String bigredpass)
 	{
 		super();
 		this.passphrase = passphrase;
 		this.pathToSSHKey = pathToFile;
 		this.username = username;
+		this.bigredkey = bigredkey;
+		this.bigredpass = bigredpass;
 	}
 
 	public UserInput()
 	{
 
+	}
+
+	public String getBigredpass()
+	{
+		return this.bigredpass;
+	}
+
+	public void setBigredpass(String bigredpass)
+	{
+		this.bigredpass = bigredpass;
 	}
 
 	// TODO: implement when needed
@@ -83,4 +98,15 @@ public class UserInput implements UserInfo
 	{
 		this.passphrase = passphrase;
 	}
+
+	public String getBigredkey()
+	{
+		return this.bigredkey;
+	}
+
+	public void setBigredkey(String bigredkey)
+	{
+		this.bigredkey = bigredkey;
+	}
+
 }
