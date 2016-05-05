@@ -12,7 +12,6 @@ script:
   - cd "Data Service" && mvn clean install -DskipTests=true
   - cd ..
   - cd "Gateway Web Service" && mvn clean install -DskipTests=true
-
 before_deploy:
   - cd ..
   - zip -r "GatewayWebService.zip" "Gateway Web Service" appspec.yml install.sh "Auth Service" "Data Service"|| true
