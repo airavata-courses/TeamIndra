@@ -1,5 +1,4 @@
 #!/bin/bash
-
 ps aux | grep 'java -jar'| awk '{print $2}' | xargs kill -9
 
 mvn -f '/home/ec2-user/builds/Auth Service/pom.xml' clean;
