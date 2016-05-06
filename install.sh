@@ -1,4 +1,5 @@
 #!/bin/bash
+
 ps aux | grep 'java -jar'| awk '{print $2}' | xargs kill -9
 sudo mvn -f '/home/ec2-user/builds/Auth Service/pom.xml' clean;
 sudo mvn -f '/home/ec2-user/builds/Auth Service/pom.xml' install;
