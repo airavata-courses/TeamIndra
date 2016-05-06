@@ -41,7 +41,6 @@ CREATE TABLE `job_details` (
 --
 -- Dumping data for table `job_details`
 --
-
 LOCK TABLES `job_details` WRITE;
 /*!40000 ALTER TABLE `job_details` DISABLE KEYS */;
 /*!40000 ALTER TABLE `job_details` ENABLE KEYS */;
