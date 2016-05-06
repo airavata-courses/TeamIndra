@@ -14,7 +14,9 @@
 /*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
 /*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
-
+DROP SCHEMA IF EXISTS `scigw`;
+CREATE SCHEMA `scigw`;
+use `scigw`
 --
 -- Table structure for table `job_details`
 --
@@ -31,7 +33,8 @@ CREATE TABLE `job_details` (
   `submit_time` bigint(15) DEFAULT NULL,
   `username` varchar(45) DEFAULT NULL,
   `jobname` varchar(45) DEFAULT NULL,
-  `local_path` varchar(255) DEFAULT NULL
+  `local_path` varchar(255) DEFAULT NULL,
+  `hostname` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
